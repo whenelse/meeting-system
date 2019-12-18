@@ -4,9 +4,7 @@
     <resultMap id="MeetingResultMap" type="com.suixingpay.meeting.pojo.Meeting">
         <id column="meeting_id" property="meetingId" jdbcType="INTEGER"/>
         <result column="meeting_initiation_type" property="meetingInitiationType" jdbcType="VARCHAR"/>
-        <result column="meeting_housekeeper_name" property="meetingHousekeeperName" jdbcType="VARCHAR"/>
-        <result column="meeting_housekeeper_id" property="meetingHousekeeperId" jdbcType="VARCHAR"/>
-        <result column="meeting_housekeeper_company" property="meetingHousekeeperCompany" jdbcType="VARCHAR"/>
+        <result column="meeting_user_id" property="meetingUserName" jdbcType="INTEGER"/>
         <result column="meeting_name" property="meetingName" jdbcType="VARCHAR"/>
         <result column="meeting_type" property="meetingType" jdbcType="VARCHAR"/>
         <result column="meeting_sponsor" property="meetingSponsor" jdbcType="VARCHAR"/>
