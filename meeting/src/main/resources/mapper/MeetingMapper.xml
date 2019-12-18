@@ -18,8 +18,8 @@
     </resultMap>
 
     <sql id="meeting_cloumn_list">
-        meeting_id,meeting_initiation_type,meeting_housekeeper_name,meeting_housekeeper_id,meeting_housekeeper_company,
-        meeting_name,meeting_type,meeting_sponsor,meeting_charge,meeting_start_time,meeting_address,meeting_detailed_address,
+        meeting_id,meeting_initiation_type,meeting_user_id,meeting_name,meeting_type,
+        meeting_sponsor,meeting_charge,meeting_start_time,meeting_address,meeting_detailed_address,
         meeting_enroll_end_time,meeting_describe,meeting_audit_status
     </sql>
     

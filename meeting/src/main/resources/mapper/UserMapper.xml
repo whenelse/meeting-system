@@ -2,12 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.suixingpay.meeting.mapper.UserMapper">
     <resultMap id="UserResultMap" type="com.suixingpay.meeting.pojo.User">
-        <id column="id" property="id" jdbcType="INTEGER"/>
-        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <id column="user_id" property="userId" jdbcType="INTEGER"/>
         <result column="user_name" property="userName" jdbcType="VARCHAR"/>
         <result column="telephone" property="telephone" jdbcType="VARCHAR"/>
-        <result column="root_user_id" property="rootUserId" jdbcType="VARCHAR"/>
-        <result column="p_user_id" property="pUserId" jdbcType="VARCHAR"/>
+        <result column="root_user_id" property="rootUserId" jdbcType="INTEGER"/>
+        <result column="p_user_id" property="pUserId" jdbcType="INTEGER"/>
         <result column="referral_code" property="referralCode" jdbcType="VARCHAR"/>
         <result column="level_no" property="levelNo" jdbcType="CHAR"/>
         <result column="user_city" property="userCity" jdbcType="VARCHAR"/>
@@ -17,7 +16,13 @@
     </resultMap>
 
     <sql id="user_column_list">
-        id,user_id,user_name,telephone,root_user_id,p_user_id,referral_code,level_no,user_province,
+        user_id,user_name,telephone,root_user_id,p_user_id,referral_code,level_no,user_province,
         user_city,create_date,update_date,status
     </sql>
+
+    <select id="selectUserByUserId" parameterType="Integer" resultMap="UserResultMap">
+        select
+        <include refid="user_column_list"/>
+        from user where user_id = #{userId}
+    </select>
 </mapper>
