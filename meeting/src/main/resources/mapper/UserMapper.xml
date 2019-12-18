@@ -3,14 +3,26 @@
 <mapper namespace="com.suixingpay.meeting.mapper.UserMapper">
     <resultMap id="UserResultMap" type="com.suixingpay.meeting.pojo.User">
         <id column="user_id" property="userId" jdbcType="INTEGER"/>
-        <result column="user_phone" property="userPhone" jdbcType="VARCHAR"/>
         <result column="user_name" property="userName" jdbcType="VARCHAR"/>
-        <result column="user_company" property="userCompany" jdbcType="VARCHAR"/>
-        <result column="user_province" property="userProvince" jdbcType="VARCHAR"/>
+        <result column="telephone" property="telephone" jdbcType="VARCHAR"/>
+        <result column="root_user_id" property="rootUserId" jdbcType="INTEGER"/>
+        <result column="p_user_id" property="pUserId" jdbcType="INTEGER"/>
+        <result column="referral_code" property="referralCode" jdbcType="VARCHAR"/>
+        <result column="level_no" property="levelNo" jdbcType="CHAR"/>
         <result column="user_city" property="userCity" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="status" property="status" jdbcType="CHAR"/>
     </resultMap>
 
     <sql id="user_column_list">
-        user_id,user_phone,user_name,user_company,user_province,user_city
+        user_id,user_name,telephone,root_user_id,p_user_id,referral_code,level_no,user_province,
+        user_city,create_date,update_date,status
     </sql>
+
+    <select id="selectUserByUserId" parameterType="Integer" resultMap="UserResultMap">
+        select
+        <include refid="user_column_list"/>
+        from user where user_id = #{userId}
+    </select>
 </mapper>
