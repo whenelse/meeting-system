@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.suixingpay.meeting.mapper.RecordMapper">
+    <resultMap id="RecordResultMap" type="com.suixingpay.meeting.pojo.Record">
+        <id column="record_id" property="recordId" jdbcType="INTEGER"/>
+        <result column="record_meeting_id" property="recordMeetingId" jdbcType="INTEGER"/>
+        <result column="record_user_id" property="recordUserId" jdbcType="INTEGER"/>
+        <result column="record_enroll_time" property="recordEnrollTime" jdbcType="TIMESTAMP"/>
+        <result column="record_sign_in_time" property="recordSignInTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="record_column_list">
+        record_id, record_meeting_id, record_housekeeper_id, record_housekeeper_phone, record_housekeeper_name,
+        record_housekeeper_province, record_housekeeper_city, record_enroll_time, record_sign_in_time
+    </sql>
+</mapper>

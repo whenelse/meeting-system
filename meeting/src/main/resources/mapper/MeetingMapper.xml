@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.suixingpay.meeting.mapper.MeetingMapper">
+    <resultMap id="MeetingResultMap" type="com.suixingpay.meeting.pojo.Meeting">
+        <id column="meeting_id" property="meetingId" jdbcType="INTEGER"/>
+        <result column="meeting_initiation_type" property="meetingInitiationType" jdbcType="VARCHAR"/>
+        <result column="meeting_housekeeper_name" property="meetingHousekeeperName" jdbcType="VARCHAR"/>
+        <result column="meeting_housekeeper_id" property="meetingHousekeeperId" jdbcType="VARCHAR"/>
+        <result column="meeting_housekeeper_company" property="meetingHousekeeperCompany" jdbcType="VARCHAR"/>
+        <result column="meeting_name" property="meetingName" jdbcType="VARCHAR"/>
+        <result column="meeting_type" property="meetingType" jdbcType="VARCHAR"/>
+        <result column="meeting_sponsor" property="meetingSponsor" jdbcType="VARCHAR"/>
+        <result column="meeting_charge" property="meetingCharge" jdbcType="INTEGER"/>
+        <result column="meeting_start_time" property="meetingStartTime" jdbcType="TIMESTAMP"/>
+        <result column="meeting_address" property="meetingAddress" jdbcType="VARCHAR"/>
+        <result column="meeting_detailed_address" property="meetingDetailedAddress" jdbcType="VARCHAR"/>
+        <result column="meeting_enroll_end_time" property="meetingEnrollEndTime" jdbcType="TIMESTAMP"/>
+        <result column="meeting_describe" property="meetingDescribe" jdbcType="VARCHAR"/>
+        <result column="meeting_audit_status" property="meetingAuditStatus" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="meeting_cloumn_list">
+        meeting_id,meeting_initiation_type,meeting_housekeeper_name,meeting_housekeeper_id,meeting_housekeeper_company,
+        meeting_name,meeting_type,meeting_sponsor,meeting_charge,meeting_start_time,meeting_address,meeting_detailed_address,
+        meeting_enroll_end_time,meeting_describe,meeting_audit_status
+    </sql>
+    
+</mapper>
