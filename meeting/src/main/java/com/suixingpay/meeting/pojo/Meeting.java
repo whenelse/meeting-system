@@ -3,6 +3,7 @@ package com.suixingpay.meeting.pojo;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @Data
@@ -23,5 +24,6 @@ public class Meeting {
     Date meetingEnrollEndTime;
     String meetingDescribe;
     int meetingAuditStatus;
+
 
 }
