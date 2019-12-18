@@ -10,9 +10,7 @@ import java.util.Date;
 public class Meeting {
     int meetingId;
     String meetingInitiationType;
-    String meetingHousekeeperName;
-    String meetingHousekeeperId;
-    String meetingHousekeeperCompany;
+    int meetingUserId;
     String meetingName;
     String meetingType;
     String meetingSponsor;
@@ -22,6 +20,7 @@ public class Meeting {
     String meetingDetailedAddress;
     Date meetingEnrollEndTime;
     String meetingDescribe;
+    //会议审核状态 0 待审批 1驳回 2审核通过
     int meetingAuditStatus;
 
 }
