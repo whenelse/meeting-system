@@ -21,6 +21,14 @@
         user_city,create_date,update_date,status
     </sql>
 
+
+    <select id="selectUserLogin" parameterType="String"  resultMap="UserResultMap">
+        select <include refid="User_Column_List" />
+        from user where telephone = #{userPhone}
+    </select>
+
+
+
     <select id="selectUserByUserId" parameterType="Integer" resultMap="UserResultMap">
         select
         <include refid="user_column_list"/>
