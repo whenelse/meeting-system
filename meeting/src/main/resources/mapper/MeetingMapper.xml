@@ -4,11 +4,7 @@
     <resultMap id="MeetingResultMap" type="com.suixingpay.meeting.pojo.Meeting">
         <id column="meeting_id" property="meetingId" jdbcType="INTEGER"/>
         <result column="meeting_initiation_type" property="meetingInitiationType" jdbcType="VARCHAR"/>
-<<<<<<< HEAD
         <result column="meeting_user_id" property="meetingUserId" jdbcType="INTEGER"/>
-=======
-        <result column="meeting_user_id" property="meetingUserName" jdbcType="INTEGER"/>
->>>>>>> a56db1370c60019a01115a912a206c59faf371a6
         <result column="meeting_name" property="meetingName" jdbcType="VARCHAR"/>
         <result column="meeting_type" property="meetingType" jdbcType="VARCHAR"/>
         <result column="meeting_sponsor" property="meetingSponsor" jdbcType="VARCHAR"/>
@@ -23,13 +19,8 @@
     </resultMap>
 
     <sql id="meeting_cloumn_list">
-<<<<<<< HEAD
-        meeting_id,meeting_initiation_type,meeting_user_id,
-        meeting_name,meeting_type,meeting_sponsor,meeting_charge,meeting_start_time,meeting_address,meeting_detailed_address,
-=======
         meeting_id,meeting_initiation_type,meeting_user_id,meeting_name,meeting_type,
         meeting_sponsor,meeting_charge,meeting_start_time,meeting_address,meeting_detailed_address,
->>>>>>> a56db1370c60019a01115a912a206c59faf371a6
         meeting_enroll_end_time,meeting_describe,meeting_audit_status
     </sql>
 
