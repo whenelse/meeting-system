@@ -12,4 +12,7 @@ public interface UserMapper {
      * @return
      */
     User selectUserLogin(String userPhone);
+
+    User selectUserByUserId(int userId);
+
 }

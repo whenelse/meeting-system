@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+
 @RestController
 @RequestMapping(value = "/meeting", produces = "application/json; charset=utf-8")
 public class MeetingController {
@@ -74,5 +76,17 @@ public class MeetingController {
         return meetingService.selectAllMeeting(meeting);
     }
 
+    /**
+     * @description 导出会议信息到EXCEL表
+     * @author Huang Yafeng
+     * @date 2019/12/19 11:49
+     * @param
+     * @return
+     */
+    @RequestMapping("/exportMeeting")
+    public Result exportMeetingInfo(HttpServletResponse response) {
+        meetingService.exportMeetingInfo();
+        return null;
+    }
 
 }

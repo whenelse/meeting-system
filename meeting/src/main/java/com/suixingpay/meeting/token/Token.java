@@ -34,7 +34,7 @@ public class Token {
     //推荐码
     private String referralCode;
     //用户等级
-    private String levelNo;
+    private int levelNo;
     //落地省
     private String userProvince;
     //落地市
