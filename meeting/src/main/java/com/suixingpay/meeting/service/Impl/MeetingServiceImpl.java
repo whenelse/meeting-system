@@ -143,6 +143,3 @@ public class MeetingServiceImpl implements MeetingService {
         return result;
     }
 }
-
-
-}
