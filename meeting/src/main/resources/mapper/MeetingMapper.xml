@@ -79,7 +79,7 @@
             </if>
         </where>
     </select>
-    
+
     <update id="updateMeeting" parameterType="com.suixingpay.meeting.pojo.Meeting">
         update meeting
         <trim prefix="SET" prefixOverrides=",">
@@ -113,7 +113,7 @@
 <!--    查询会议详细信息-->
     <select id="selectMeetingDetails" resultMap="MeetingResultMap">
         select <include refid="meeting_column_list"/>,u.user_name ,u.telephone
-        from (select <include refid="meeting_column_list"/> from meeting where meeting_id = 1) m
+        from (select <include refid="meeting_column_list"/> from meeting where meeting_id = #{meetingId}) m
         left join user u on m.meeting_user_id = u.user_id
     </select>
 </mapper>
