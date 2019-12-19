@@ -13,4 +13,6 @@ public class Record {
     int recordUserId;
     Date recordEnrollTime;
     Date recordSignInTime;
+
+
 }

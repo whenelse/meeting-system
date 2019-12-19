@@ -13,4 +13,16 @@
         record_id, record_meeting_id, record_housekeeper_id, record_housekeeper_phone, record_housekeeper_name,
         record_housekeeper_province, record_housekeeper_city, record_enroll_time, record_sign_in_time
     </sql>
+
+    <select id="signIn"  parameterType="com.suixingpay.meeting.pojo.Record" resultType="com.suixingpay.meeting.pojo.Record">
+        select <include refid="record_column_list"/>
+        from record where record_meeting_id=#{record_meeting_id} and #record_user_id={record_user_id}
+    </select>
+
+    <update id="updateSignIn" parameterType="com.suixingpay.meeting.pojo.Record" >
+        update record set record_sign_in_time=#{record_sign_in_time}
+    </update>
+    <insert id="insertSingIn">
+        insert  into record()
+    </insert>
 </mapper>

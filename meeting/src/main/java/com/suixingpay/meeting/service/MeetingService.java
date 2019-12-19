@@ -1,7 +1,8 @@
 package com.suixingpay.meeting.service;
 
-import javax.servlet.http.HttpServletRequest;
+
+import com.suixingpay.meeting.pojo.Record;
 
 public interface MeetingService {
-    String QRcode(Integer meetingId, HttpServletRequest request);
+    Record signIn(Integer recordMeetingId, Integer recordUserId);
 }

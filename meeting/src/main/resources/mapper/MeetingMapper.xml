@@ -18,14 +18,14 @@
     </resultMap>
 
     <sql id="meeting_cloumn_list">
-        meeting_id,meeting_initiation_type,meeting_housekeeper_name,meeting_housekeeper_id,meeting_housekeeper_company,
-        meeting_name,meeting_type,meeting_sponsor,meeting_charge,meeting_start_time,meeting_address,meeting_detailed_address,
-        meeting_enroll_end_time,meeting_describe,meeting_audit_status
+    meeting_id,meeting_initiation_type,meeting_user_id,meeting_name,meeting_type,
+    meeting_sponsor,meeting_charge,meeting_start_time,meeting_address,meeting_detailed_address,
+    meeting_enroll_end_time,meeting_describe,meeting_audit_status
     </sql>
-    <select id="QRcode"   parameterType="com.suixingpay.meeting.pojo.Meeting" >
-       select meeting_id,meeting_initiation_type,meeting_housekeeper_name,meeting_housekeeper_id,meeting_housekeeper_company,
-        meeting_name,meeting_type,meeting_sponsor,meeting_charge,meeting_start_time,meeting_address,meeting_detailed_address,
-        meeting_enroll_end_time,meeting_describe,meeting_audit_status from meeting where meeting_id=#{meetingId}
+    <select id="QRcode"   parameterType="com.suixingpay.meeting.pojo.Meeting"  resultType="com.suixingpay.meeting.pojo.Meeting">
+       select
+       <include refid="meeting_cloumn_list"/>
+       from meeting where meeting_id=#{meetingId}
     </select>
     
 </mapper>
