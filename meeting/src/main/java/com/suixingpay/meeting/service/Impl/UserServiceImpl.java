@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
         try {
             User user = userMapper.selectUserLogin(userPhone);
             if (user == null) {
-                result.set(200, "账号不存在", null);
+                result.set(200, "账号不存在", new Token());
             } else if (user.getUserId() == 1) {
                 result.set(200, "管理员登录", user);
             } else {
@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
             }
         } catch (Exception e) {
             log.info("查询异常{ }", e);
-            result.set(200, "登录异常", null);
+            result.set(200, "登录异常", new Token());
         }
         return result;
     }

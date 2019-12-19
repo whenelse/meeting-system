@@ -3,6 +3,9 @@ package com.suixingpay.meeting.service;
 import com.suixingpay.meeting.pojo.Meeting;
 import com.suixingpay.meeting.pojo.Result;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 public interface MeetingService {
 
     //查找所有会议
@@ -43,5 +46,5 @@ public interface MeetingService {
      * @param
      * @return
      */
-    Result exportMeetingInfo();
+    void exportMeetingInfo(HttpServletResponse response) throws IOException;
 }

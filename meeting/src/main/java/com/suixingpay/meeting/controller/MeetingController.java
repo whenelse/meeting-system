@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
 
 @RestController
 @RequestMapping(value = "/meeting", produces = "application/json; charset=utf-8")
@@ -84,9 +86,8 @@ public class MeetingController {
      * @return
      */
     @RequestMapping("/exportMeeting")
-    public Result exportMeetingInfo(HttpServletResponse response) {
-        meetingService.exportMeetingInfo();
-        return null;
+    public void exportMeetingInfo(HttpServletResponse response) throws IOException {
+        meetingService.exportMeetingInfo(response);
     }
 
 }

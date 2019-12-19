@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -179,7 +180,7 @@ public class MeetingServiceImpl implements MeetingService {
      * @return
      */
     @Override
-    public Result exportMeetingInfo() {
+    public void exportMeetingInfo(HttpServletResponse response) throws IOException {
 
         HSSFWorkbook wb = new HSSFWorkbook();
 
@@ -223,15 +224,14 @@ public class MeetingServiceImpl implements MeetingService {
             sheet.autoSizeColumn(i);
         }
 
-        /*response.setContentType("application/vnd.ms-excel;charset=utf-8");
+        response.setContentType("application/vnd.ms-excel;charset=utf-8");
         OutputStream os = response.getOutputStream();
         response.setHeader("Content-disposition", "attachment;filename=user.xls");//默认Excel名称
         wb.write(os);
         os.flush();
-        os.close();*/
+        os.close();
 
 
-        return null;
     }
 
 }

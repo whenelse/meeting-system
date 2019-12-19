@@ -1,5 +1,6 @@
 package com.suixingpay.meeting.token;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -40,8 +41,10 @@ public class Token {
     //落地市
     private String userCity;
     //创建时间
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private Date createDate;
     //修改时间
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private Date updateDate;
     //状态（0:正常，1删除）
     private String status;
