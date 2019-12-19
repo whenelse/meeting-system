@@ -1,8 +1,11 @@
 package com.suixingpay.meeting.pojo;
 
+
+
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
+
 
 /**
  * @Description 响应报文信息
@@ -27,6 +30,7 @@ public class Result {
      * 数据
      */
     private Object data;
+
 
     /**
      * @Description 设置返回结果信息

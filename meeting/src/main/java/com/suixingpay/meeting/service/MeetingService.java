@@ -5,6 +5,12 @@ import com.suixingpay.meeting.pojo.Result;
 
 public interface MeetingService {
 
+    Result selectAll();
+
+    Result auditPass(Meeting meeting);
+
+    Result auditReject(Meeting meeting);
+
     Result queryMeetingByPUser(int userId);
 
     Result selectMeetingById(int meetingId);

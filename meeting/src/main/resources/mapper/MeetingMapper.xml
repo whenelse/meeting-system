@@ -4,7 +4,11 @@
     <resultMap id="MeetingResultMap" type="com.suixingpay.meeting.pojo.Meeting">
         <id column="meeting_id" property="meetingId" jdbcType="INTEGER"/>
         <result column="meeting_initiation_type" property="meetingInitiationType" jdbcType="VARCHAR"/>
+<<<<<<< HEAD
+        <result column="meeting_user_id" property="meetingUserId" jdbcType="INTEGER"/>
+=======
         <result column="meeting_user_id" property="meetingUserName" jdbcType="INTEGER"/>
+>>>>>>> a56db1370c60019a01115a912a206c59faf371a6
         <result column="meeting_name" property="meetingName" jdbcType="VARCHAR"/>
         <result column="meeting_type" property="meetingType" jdbcType="VARCHAR"/>
         <result column="meeting_sponsor" property="meetingSponsor" jdbcType="VARCHAR"/>
@@ -19,8 +23,13 @@
     </resultMap>
 
     <sql id="meeting_cloumn_list">
+<<<<<<< HEAD
+        meeting_id,meeting_initiation_type,meeting_user_id,
+        meeting_name,meeting_type,meeting_sponsor,meeting_charge,meeting_start_time,meeting_address,meeting_detailed_address,
+=======
         meeting_id,meeting_initiation_type,meeting_user_id,meeting_name,meeting_type,
         meeting_sponsor,meeting_charge,meeting_start_time,meeting_address,meeting_detailed_address,
+>>>>>>> a56db1370c60019a01115a912a206c59faf371a6
         meeting_enroll_end_time,meeting_describe,meeting_audit_status
     </sql>
 
@@ -41,4 +50,27 @@
 <!--        </where>-->
 <!--    </select>-->
     
+    <update id="updateMeeting" parameterType="com.suixingpay.meeting.pojo.Meeting">
+        update meeting
+        <trim prefix="SET" prefixOverrides=",">
+            <if test="meetingInitiationType!=null">meeting_initiation_type=#{meetingInitiationType,jdbcType=VARCHAR}</if>
+            <if test="meetingUserId!=null">,meeting_user_id=#{meetingUserId,jdbcType=VARCHAR}</if>
+            <if test="meetingName!=null">,meeting_name=#{meetingName,jdbcType=VARCHAR}</if>
+            <if test="meetingType!=null">,meeting_type=#{meetingType,jdbcType=VARCHAR}</if>
+            <if test="meetingSponsor!=null">,meeting_sponsor=#{meetingSponsor,jdbcType=VARCHAR}</if>
+            <if test="meetingCharge!=null">,meeting_charge=#{meetingCharge,jdbcType=INTEGER}</if>
+            <if test="meetingStartTime!=null">,meeting_start_time=#{meetingStartTime,jdbcType=TIMESTAMP}</if>
+            <if test="meetingAddress!=null">,meeting_address=#{meetingAddress,jdbcType=VARCHAR}</if>
+            <if test="meetingDetailedAddress!=null">,meeting_detailed_address=#{meetingDetailedAddress,jdbcType=VARCHAR}</if>
+            <if test="meetingEnrollEndTime!=null">,meeting_enroll_end_time=#{meetingEnrollEndTime,jdbcType=TIMESTAMP}</if>
+            <if test="meetingDescribe!=null">,meeting_describe=#{meetingDescribe,jdbcType=VARCHAR}</if>
+            <if test="meetingAuditStatus!=null">,meeting_audit_status=#{meetingAuditStatus,jdbcType=INTEGER}</if>
+        </trim>
+        where meeting_id=#{meetingId,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectAll" resultMap="MeetingResultMap" >
+        select <include refid="meeting_cloumn_list"/>
+        from meeting
+    </select>
 </mapper>
