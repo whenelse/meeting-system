@@ -36,4 +36,8 @@
         from record
         where record_user_id=#{recordUserId}
     </select>
+
+    
+    <select id="selectEnrollList" resultMap="RecordResultMap"></select>
+
 </mapper>

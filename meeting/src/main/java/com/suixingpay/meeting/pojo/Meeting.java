@@ -1,14 +1,19 @@
 package com.suixingpay.meeting.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.suixingpay.meeting.groups.SelectById;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
 @Component
 public class Meeting {
+    @Min(value = 0, message = "会议Id不能小于0", groups = SelectById.class)
+    //会议Id
     int meetingId;
     //发起类型
     String meetingInitiationType;
@@ -36,5 +41,15 @@ public class Meeting {
     String meetingDescribe;
     //会议审核状态 0 待审批 1驳回 2审核通过
     int meetingAuditStatus;
+    //会议发起人姓名
+    String meetingUserName;
+    //会议发起人手机号
+    String meetingUserPhone;
+    //用户名
+    String userName;
+    //用户所属分公司
+    String userCompany;
+    //管家推荐码
+    String referralCode;
 
 }

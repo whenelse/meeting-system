@@ -14,6 +14,8 @@ public class User {
     String userName;
     //手机号
     String telephone;
+    //所属分工资
+    String userCompany;
     //根用户编号
     int rootUserId;
     //上级用户编号
@@ -21,7 +23,7 @@ public class User {
     //推荐码
     String referralCode;
     //用户等级
-    String levelNo;
+    int levelNo;
     //落地省
     String userProvince;
     //落地市
