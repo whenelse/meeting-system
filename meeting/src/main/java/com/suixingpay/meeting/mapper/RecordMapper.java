@@ -1,14 +1,16 @@
 package com.suixingpay.meeting.mapper;
 
 import com.suixingpay.meeting.pojo.Record;
-import org.springframework.stereotype.Component;
 
-@Component
+import java.util.Date;
+
+
 public interface RecordMapper {
 
-    Record signIn(Integer recordMeetingId, Integer recordUserId);
+    Record signIn(Record record);
 
-    void updatesignIn(String str);
+    void updateSignIn(Date str);
 
     void insertSingIn(Record records);
+
 }

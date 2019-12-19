@@ -20,4 +20,12 @@ public interface MeetingService {
 
     Result selectAllMeeting(Meeting meeting);
 
+    /**
+     * @Description 查询会议详细信息
+     * @Author zhu_jinsheng[zhu_js@suixingpay.com]
+     * @Param meetingId:  会议Id
+     * @return: com.suixingpay.meeting.pojo.Result
+     * @Date 2019/12/19 10:11
+     */
+    Result selectMeetingDetails(int meetingId);
 }

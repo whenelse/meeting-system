@@ -1,17 +1,22 @@
 package com.suixingpay.meeting.controller;
 
 import com.suixingpay.meeting.pojo.Meeting;
+import com.suixingpay.meeting.groups.SelectById;
+import com.suixingpay.meeting.pojo.Meeting;
 import com.suixingpay.meeting.pojo.Result;
 import com.suixingpay.meeting.service.MeetingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/meeting", produces = "application/json; charset=utf-8")
 public class MeetingController {
+
     @Autowired
     MeetingService meetingService;
 
@@ -38,6 +43,17 @@ public class MeetingController {
         return meetingService.queryMeetingByPUser(userId);
     }
 
+    /**
+     * @Description 查询会议详情
+     * @Author zhu_jinsheng[zhu_js@suixingpay.com]
+     * @Param meeting:  使用会议持久化类去接收会议Id
+     * @return: com.suixingpay.meeting.pojo.Result
+     * @Date 2019/12/19 10:42
+     */
+    @PostMapping("/select/meeting/details")
+    public Result selectMeetingDetails(@Validated(SelectById.class) @RequestBody Meeting meeting) {
+        return meetingService.selectMeetingDetails(meeting.getMeetingId());
+    }
     @PostMapping("/detailselect")
     public Result selectDetailMeeting(int meetingId){
         return meetingService.selectMeetingById(meetingId);

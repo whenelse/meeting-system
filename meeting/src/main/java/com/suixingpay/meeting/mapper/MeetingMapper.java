@@ -4,8 +4,13 @@ import com.suixingpay.meeting.pojo.Meeting;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 import com.suixingpay.meeting.pojo.Meeting;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 public interface MeetingMapper {
     //测试，查询所有
@@ -23,5 +28,16 @@ public interface MeetingMapper {
     Meeting selectMeetingById(int meetingId);
 
     List<Meeting> queryAllMeeting(Meeting meeting);
-    Meeting QRcode(Integer meetingId);
+
+    /**
+     * @Description 查询会议详细信息
+     * @Author zhu_jinsheng[zhu_js@suixingpay.com]
+     * @Param meetingId:  会议Id
+     * @return: com.suixingpay.meeting.pojo.Meeting
+     * @Date 2019/12/19 10:16
+     */
+    Meeting selectMeetingDetails(@Param("meetingId") int meetingId);
+
+    Meeting selectDate(@RequestParam("meetingId") int meetingId);
+
 }
