@@ -1,5 +1,6 @@
 package com.suixingpay.meeting.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
@@ -22,12 +23,14 @@ public class Meeting {
     //是否收费，0 是 1 否
     int meetingCharge;
     //开始日期
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     Date meetingStartTime;
     //会议地点
     String meetingAddress;
     //详细地址
     String meetingDetailedAddress;
     //报名截止时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     Date meetingEnrollEndTime;
     //会议描述
     String meetingDescribe;

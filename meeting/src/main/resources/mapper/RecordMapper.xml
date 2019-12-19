@@ -10,7 +10,30 @@
     </resultMap>
 
     <sql id="record_column_list">
-        record_id, record_meeting_id, record_housekeeper_id, record_housekeeper_phone, record_housekeeper_name,
-        record_housekeeper_province, record_housekeeper_city, record_enroll_time, record_sign_in_time
+        record_id, record_meeting_id,record_user_id, record_enroll_time, record_sign_in_time
     </sql>
+    
+    <insert id="enroll" parameterType="com.suixingpay.meeting.pojo.Record">
+        insert into record
+        (record_meeting_id,record_user_id,record_enroll_time)
+        values
+        (#{recordMeetingId},#{recordUserId},#{recordEnrollTime})
+    </insert>
+
+    <select id="selectRecord" resultMap="RecordResultMap" parameterType="com.suixingpay.meeting.pojo.Record">
+        select <include refid="record_column_list"/>
+        from record
+        <trim prefix="where" prefixOverrides="AND">
+            <if test="recordMeetingId!=null"> record_meeting_id=#{recordMeetingId}</if>
+            <if test="recordUserId!=null">and record_user_id=#{recordUserId}</if>
+            <if test="recordEnrollTime!=null">and record_enroll_time=#{recordEnrollTime}</if>
+            <if test="recordSignInTime!=null">and record_sign_in_time=#{recordSignInTime}</if>
+        </trim>
+    </select>
+
+    <select id="selectByUserId" resultMap="RecordResultMap" parameterType="Integer">
+        select <include refid="record_column_list"/>
+        from record
+        where record_user_id=#{recordUserId}
+    </select>
 </mapper>

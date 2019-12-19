@@ -22,13 +22,13 @@ public class MeetingController {
     }
     //会议审核通过
     @RequestMapping("/auditPass")
-    public Result auditPass(@RequestBody Meeting meeting){
-        return meetingService.auditPass(meeting);
+    public Result auditPass(int meetingId){
+        return meetingService.auditPass(meetingId);
     }
     //会议审核驳回
     @RequestMapping("/auditReject")
-    public Result auditReject(@RequestBody Meeting meeting){
-        return meetingService.auditReject(meeting);
+    public Result auditReject( int meetingId){
+        return meetingService.auditReject(meetingId);
     }
 
 

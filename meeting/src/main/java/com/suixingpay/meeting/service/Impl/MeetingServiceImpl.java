@@ -30,11 +30,12 @@ public class MeetingServiceImpl implements MeetingService {
     }
     /**
      * 管理员审核会议通过
-     * @param meeting
+     * @param meetingId
      * @return
      */
     @Override
-    public Result auditPass(Meeting meeting) {
+    public Result auditPass(int meetingId) {
+        Meeting meeting = meetingMapper.selectById(meetingId);
         if(meeting.getMeetingAuditStatus()==0){
             meeting.setMeetingAuditStatus(2);
             if(meetingMapper.updateMeeting(meeting)<1){
@@ -69,11 +70,14 @@ public class MeetingServiceImpl implements MeetingService {
 
     /**
      * 管理员审核会议驳回
-     * @param meeting
+     * @param meetingId
      * @return
      */
     @Override
-    public Result auditReject(Meeting meeting) {
+    public Result auditReject(int meetingId) {
+        Meeting meeting = meetingMapper.selectById(meetingId);
+        System.out.println("++++++++++++++++++++++++++++++++++++");
+        System.out.println(meeting.getMeetingAuditStatus());
         if(meeting.getMeetingAuditStatus()==0){
             meeting.setMeetingAuditStatus(1);
             if(meetingMapper.updateMeeting(meeting)<1){

@@ -14,4 +14,6 @@ public interface MeetingMapper {
 
     Meeting queryMeetingByUserId(int userId);
 
+    Meeting selectById(int meetingId);
+
 }
