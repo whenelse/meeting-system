@@ -8,22 +8,22 @@ import java.util.Date;
 @Data
 @Component
 public class User {
-    //用户表主键-1管理员
-    int id;
     //用户编号
-    String userId;
+    int userId;
     //用户姓名
     String userName;
     //手机号
     String telephone;
+    //所属分工资
+    String userCompany;
     //根用户编号
-    String rootUserId;
+    int rootUserId;
     //上级用户编号
-    String pUserId;
+    int pUserId;
     //推荐码
     String referralCode;
     //用户等级
-    String level_no;
+    int levelNo;
     //落地省
     String userProvince;
     //落地市

@@ -16,13 +16,16 @@
 
     <select id="signIn"  parameterType="com.suixingpay.meeting.pojo.Record" resultType="com.suixingpay.meeting.pojo.Record">
         select <include refid="record_column_list"/>
-        from record where record_meeting_id=#{record_meeting_id} and #record_user_id={record_user_id}
+        from record where record_meeting_id=#{recordMeetingId} and #record_user_id={recordUserId}
     </select>
 
     <update id="updateSignIn" parameterType="com.suixingpay.meeting.pojo.Record" >
         update record set record_sign_in_time=#{record_sign_in_time}
     </update>
-    <insert id="insertSingIn">
-        insert  into record()
+
+    <insert id="insertSingIn" parameterType="com.suixingpay.meeting.pojo.Record">
+        insert  into record(record_meeting_id,record_user_id,record_enroll_time,record_sign_in_time)
+        values (#{recordMeetingId,jdbcType=INTEGER},#{recordUserId,jdbcType=INTEGER},
+        #{recordEnrollTime,jdbcType=TIMESTAMP},#{recordSignInTime,jdbcType=TIMESTAMP})
     </insert>
 </mapper>

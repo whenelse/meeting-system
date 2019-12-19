@@ -4,6 +4,7 @@ package com.suixingpay.meeting.controller;
 import com.suixingpay.meeting.code.QrCode;
 import com.suixingpay.meeting.pojo.Record;
 import com.suixingpay.meeting.service.MeetingService;
+import com.suixingpay.meeting.service.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +18,8 @@ import java.io.OutputStream;
 public class RecordController {
     @Autowired
     MeetingService meetingService;
+    @Autowired
+    RecordService recordService;
 
 
     @RequestMapping("/QRcode")
@@ -34,7 +37,7 @@ public class RecordController {
     public Record signIn(@RequestParam("recordMeetingId") Integer recordMeetingId,
                          @RequestParam("recordUserId")Integer recordUserId){
 
-        return meetingService.signIn(recordMeetingId,recordUserId);
+        return recordService.signIn(recordMeetingId,recordUserId);
 
     }
 }

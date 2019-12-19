@@ -35,5 +35,8 @@ public class Meeting {
     //会议审核状态 0 待审批 1驳回 2审核通过
     int meetingAuditStatus;
 
+    //用户名
+    String userName;
+
 
 }
