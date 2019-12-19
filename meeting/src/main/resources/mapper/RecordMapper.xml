@@ -10,7 +10,6 @@
     </resultMap>
 
     <sql id="record_column_list">
-        record_id, record_meeting_id, record_housekeeper_id, record_housekeeper_phone, record_housekeeper_name,
-        record_housekeeper_province, record_housekeeper_city, record_enroll_time, record_sign_in_time
+        record_id, record_meeting_id, record_user_id, record_enroll_time, record_sign_in_time
     </sql>
 </mapper>

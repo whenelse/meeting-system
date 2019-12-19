@@ -36,5 +36,9 @@ public class Meeting {
 
     //用户名
     String userName;
+    //用户所属分公司
+    String userCompany;
+    //管家推荐码
+    String referralCode;
 
 }

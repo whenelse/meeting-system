@@ -16,6 +16,8 @@
         <result column="meeting_describe" property="meetingDescribe" jdbcType="VARCHAR"/>
         <result column="meeting_audit_status" property="meetingAuditStatus" jdbcType="INTEGER"/>
         <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="referral_code" property="referralCode" jdbcType="VARCHAR"/>
+        <result column="user_company" property="userCompany" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="meeting_cloumn_list">
@@ -34,7 +36,7 @@
 
 <!--    <select id="queryAllMeeting" parameterMap="Meeting" resultMap="MeetingResultMap">-->
 <!--        select-->
-<!--            <include refid="meeting_cloumn_list"/>,user_name-->
+<!--            <include refid="meeting_cloumn_list"/>,user_name,referral_code,user_company-->
 <!--        from meeting left join user on meeting_user_id = user_id-->
 <!--        <where>-->
 <!--            <if test=""></if>-->
