@@ -18,6 +18,8 @@
         <result column="user_name" property="userName" jdbcType="VARCHAR"/>
         <result column="referral_code" property="referralCode" jdbcType="VARCHAR"/>
         <result column="user_company" property="userCompany" jdbcType="VARCHAR"/>
+        <result column="meetingUserName" property="user_name" jdbcType="VARCHAR"/>
+        <result column="meetingUserPhone" property="telephone" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="meeting_cloumn_list">
@@ -42,7 +44,7 @@
 <!--            <if test=""></if>-->
 <!--        </where>-->
 <!--    </select>-->
-    
+
     <update id="updateMeeting" parameterType="com.suixingpay.meeting.pojo.Meeting">
         update meeting
         <trim prefix="SET" prefixOverrides=",">
@@ -65,5 +67,11 @@
     <select id="selectAll" resultMap="MeetingResultMap" >
         select <include refid="meeting_cloumn_list"/>
         from meeting
+    </select>
+<!--    查询会议详细信息-->
+    <select id="selectMeetingDetails" resultMap="MeetingResultMap">
+        select <include refid="meeting_cloumn_list"/>,u.user_name ,u.telephone
+        from (select <include refid="meeting_cloumn_list"/> from meeting where meeting_id = 1) m
+        left join user u on m.meeting_user_id = u.user_id
     </select>
 </mapper>
