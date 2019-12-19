@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.Date;
+
 /**
  * @description: Token实体类
  * @author: Huang Yafeng
@@ -21,13 +23,36 @@ public class Token {
 
     private int userId;  //用户ID
 
+    //用户姓名
+    private String userName;
+    //手机号
+    private String telephone;
+    //根用户编号
+    private int rootUserId;
+    //上级用户编号
+    private int pUserId;
+    //推荐码
+    private String referralCode;
+    //用户等级
+    private String levelNo;
+    //落地省
+    private String userProvince;
+    //落地市
+    private String userCity;
+    //创建时间
+    private Date createDate;
+    //修改时间
+    private Date updateDate;
+    //状态（0:正常，1删除）
+    private String status;
+
 
     /*public Token() {
-    }
+    }*/
 
     public Token( String token, int userId) {
         this.userId = userId;
         this.token = token;
-    }*/
+    }
 
 }

@@ -23,7 +23,7 @@
 
 
     <select id="selectUserLogin" parameterType="String"  resultMap="UserResultMap">
-        select <include refid="User_Column_List" />
+        select <include refid="user_column_list" />
         from user where telephone = #{userPhone}
     </select>
 

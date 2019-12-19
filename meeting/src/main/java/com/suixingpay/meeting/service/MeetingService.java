@@ -34,4 +34,14 @@ public interface MeetingService {
      * @Date 2019/12/19 10:11
      */
     Result selectMeetingDetails(int meetingId);
+   // Result queryMeetingByPUser(int userId);
+
+    /**
+     * @description 导出会议信息到EXCEL表
+     * @author Huang Yafeng
+     * @date 2019/12/19 10:59
+     * @param
+     * @return
+     */
+    Result exportMeetingInfo();
 }

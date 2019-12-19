@@ -1,10 +1,9 @@
 package com.suixingpay.meeting.token.impl;
 
-import com.suixingpay.seckill.pojo.User;
-import com.suixingpay.seckill.redis.RedisClient;
-import com.suixingpay.seckill.token.Token;
-import com.suixingpay.seckill.token.TokenHelper;
-import com.suixingpay.seckill.util.SymmetricJiam;
+import com.suixingpay.meeting.pojo.User;
+import com.suixingpay.meeting.redis.RedisClient;
+import com.suixingpay.meeting.token.Token;
+import com.suixingpay.meeting.token.TokenHelper;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,8 +21,6 @@ public class TokenHelperImpl implements TokenHelper {
     @Autowired
     private RedisClient redisClient;
 
-    @Autowired
-    private SymmetricJiam symmetricJiam;
 
     /**
      * @description  token生成
@@ -35,7 +32,9 @@ public class TokenHelperImpl implements TokenHelper {
     @Override
     public Token create(User user) {
         String token = UUID.randomUUID().toString().replace("-", "");
-        Token tokenModel = new Token(token, user.getUserName(), user.getUserSex(), user.getUserProvince() ,user.getUserId());
+        Token tokenModel = new Token(token, user.getUserId(),user.getUserName(),user.getTelephone(),user.getRootUserId(),
+                user.getPUserId(),user.getReferralCode(),user.getLevelNo(),user.getUserProvince(),user.getUserCity(),
+                user.getCreateDate(),user.getUpdateDate(),user.getStatus());
         String userId = String.valueOf(user.getUserId());
         redisClient.set(userId, token, RedisClient.TOKEN_EXPIRES_SECOND);
         return tokenModel;

@@ -1,6 +1,7 @@
 package com.suixingpay.meeting.token;
 
-import com.suixingpay.seckill.pojo.User;
+
+import com.suixingpay.meeting.pojo.User;
 
 /**
  * @description:
