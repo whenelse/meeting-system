@@ -45,10 +45,6 @@
         where record_user_id=#{recordUserId}
     </select>
 
-
-    <select id="selectEnrollList" resultMap="RecordResultMap"></select>
-
-
 <!--    查询会议报名信息-->
     <select id="selectEnrollList" resultMap="RecordResultMap">
         select

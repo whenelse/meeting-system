@@ -4,6 +4,7 @@ import com.suixingpay.meeting.mapper.RecordMapper;
 import com.suixingpay.meeting.pojo.Record;
 import com.suixingpay.meeting.pojo.Result;
 import com.suixingpay.meeting.service.RecordService;
+import com.suixingpay.meeting.util.RecordUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import lombok.Synchronized;
@@ -32,7 +33,7 @@ public class RecordServiceImpl implements RecordService {
     public Result enroll(int userId, int meetingId) {
         //校验该场会议是否已经报名
         List<Record> list = recordMapper.selectByUserId(userId);
-        if(!RecordCheck(list,meetingId)){
+        if(!RecordUtil.RecordCheck(list,meetingId)){
             result.set(400,"您已经报名，请不要多次报名",null);
             return result;
         }
@@ -51,9 +52,6 @@ public class RecordServiceImpl implements RecordService {
         }
 
     }
-
-    @Autowired
-    private RecordMapper recordMapper;
 
     /**
      * @Description 查询报名信息

@@ -1,12 +1,9 @@
 package com.suixingpay.meeting.mapper;
 
 import com.suixingpay.meeting.pojo.Meeting;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 
 public interface MeetingMapper {
     //测试，查询所有
