@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 
-import static com.suixingpay.meeting.util.RecordUtil.RecordCheck;
+import com.suixingpay.meeting.util.RecordUtil;
 
 @Service
 public class RecordServiceImpl implements RecordService {
@@ -32,7 +32,7 @@ public class RecordServiceImpl implements RecordService {
     public Result enroll(int userId, int meetingId) {
         //校验该场会议是否已经报名
         List<Record> list = recordMapper.selectByUserId(userId);
-        if(!RecordCheck(list,meetingId)){
+        if(!RecordUtil.RecordCheck(list,meetingId)){
             result.set(400,"您已经报名，请不要多次报名",null);
             return result;
         }
