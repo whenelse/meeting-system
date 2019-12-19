@@ -1,5 +1,6 @@
 package com.suixingpay.meeting.controller;
 
+import com.suixingpay.meeting.pojo.Meeting;
 import com.suixingpay.meeting.pojo.Result;
 import com.suixingpay.meeting.service.MeetingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,16 @@ public class MeetingController {
     @PostMapping("/userquery")
     public Result userQueryMeeting(int userId){
         return meetingService.queryMeetingByPUser(userId);
+    }
+
+    @PostMapping("/detailselect")
+    public Result selectDetailMeeting(int meetingId){
+        return meetingService.selectMeetingById(meetingId);
+    }
+
+    @PostMapping("/selectall")
+    public Result queryAllMeeting(Meeting meeting){
+        return meetingService.selectAllMeeting(meeting);
     }
 
 

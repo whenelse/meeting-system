@@ -20,20 +20,50 @@ public class MeetingServiceImpl implements MeetingService {
     @Autowired
     UserMapper userMapper;
 
+    /**
+     * 鑫管家查看任务
+     * @param userId
+     * @return
+     */
     @Override
     public Result queryMeetingByPUser(int userId) {
         Result result = new Result();
-        List list = new ArrayList();
+        List<Meeting> list = new ArrayList();
         User user = userMapper.selectUserByUserId(userId);
-        Meeting meeting = meetingMapper.queryMeetingByUserId(userId);
-        list.add(meeting);
-        if (user.getRootUserId()!=user.getPUserId()){
-            meeting = meetingMapper.queryMeetingByUserId(user.getUserId());
-            list.add(meeting);
+        List<Meeting> meeting = meetingMapper.queryMeetingByUserId(userId);
+        list.addAll(meeting);
+        if (user.getRootUserId() != user.getPUserId()){
             user = userMapper.selectUserByUserId(user.getPUserId());
+            meeting = meetingMapper.queryMeetingByUserId(user.getUserId());
+            list.addAll(meeting);
         }
 
         result.set(200,"查询成功",list);
         return result;
+    }
+
+    /**
+     * 查看任务详情
+     * @param meetingId
+     * @return
+     */
+    @Override
+    public Result selectMeetingById(int meetingId) {
+        Result result = new Result();
+        Meeting meeting = meetingMapper.selectMeetingById(meetingId);
+        result.set(200,"查询成功",meeting);
+        return result;
+    }
+
+    /**
+     * 多项模糊查询所有会议
+     * @param meeting
+     * @return
+     */
+    @Override
+    public Result selectAllMeeting(Meeting meeting) {
+        Result result = new Result();
+
+        return null;
     }
 }

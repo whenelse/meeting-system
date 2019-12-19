@@ -15,6 +15,7 @@
         <result column="meeting_enroll_end_time" property="meetingEnrollEndTime" jdbcType="TIMESTAMP"/>
         <result column="meeting_describe" property="meetingDescribe" jdbcType="VARCHAR"/>
         <result column="meeting_audit_status" property="meetingAuditStatus" jdbcType="INTEGER"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="meeting_cloumn_list">
@@ -22,5 +23,22 @@
         meeting_sponsor,meeting_charge,meeting_start_time,meeting_address,meeting_detailed_address,
         meeting_enroll_end_time,meeting_describe,meeting_audit_status
     </sql>
+
+    <select id="queryMeetingByUserId" parameterType="INTEGER" resultMap="MeetingResultMap">
+        select <include refid="meeting_cloumn_list"/>,user_name from meeting left join user on meeting_user_id = user_id where meeting_user_id = #{meetingUserId}
+    </select>
+
+    <select id="selectDetailMeeting" parameterMap="INTEGER" resultMap="MeetingResultMap" >
+        select <include refid="meeting_cloumn_list"/>,user_name from meeting left join user on meeting_user_id = user_id where meeting_id = #{meetingId}
+    </select>
+
+<!--    <select id="queryAllMeeting" parameterMap="Meeting" resultMap="MeetingResultMap">-->
+<!--        select-->
+<!--            <include refid="meeting_cloumn_list"/>,user_name-->
+<!--        from meeting left join user on meeting_user_id = user_id-->
+<!--        <where>-->
+<!--            <if test=""></if>-->
+<!--        </where>-->
+<!--    </select>-->
     
 </mapper>
