@@ -25,7 +25,7 @@ public class UserController {
 
     @NoneAuth
     @RequestMapping("/login")
-    public Result login(@RequestBody User user) {
+    public Result login(@RequestBody @Valid User user) {
         String userPhone1 =  user.getTelephone();
         Result result = userService.userLogin(userPhone1);
         if (result.getMsg().equals("账号不存在")) {
@@ -35,7 +35,7 @@ public class UserController {
         Token token = tokenHelper.create(user1);
         if (result.getMsg().equals("管理员登录")) {
             result.set(200, "管理员登录", token);
-        }else {
+        } else {
             result.set(200, "鑫管家登录", token);
         }
         return result;

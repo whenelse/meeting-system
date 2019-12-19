@@ -2,6 +2,9 @@ package com.suixingpay.meeting.service;
 
 import com.suixingpay.meeting.pojo.Result;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 public interface RecordService {
     //报名
     Result enroll(int userId, int meetingId);
@@ -21,4 +24,22 @@ public interface RecordService {
      * @Date 2019/12/19 14:59
      */
     Result selectSignInList(int meetingId);
+
+    /**
+     * @description 导出报名信息
+     * @author Huang Yafeng
+     * @date 2019/12/19 15:30
+     * @param response
+     * @return
+     */
+    void exportEnrollInfo(HttpServletResponse response) throws IOException;
+
+    /**
+     * @description 导出签到信息
+     * @author Huang Yafeng
+     * @date 2019/12/19 15:48
+     * @param response
+     * @return
+     */
+    void exportSignInInfo(HttpServletResponse response) throws IOException;
 }
