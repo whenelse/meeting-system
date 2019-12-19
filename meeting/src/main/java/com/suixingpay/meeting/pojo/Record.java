@@ -9,9 +9,9 @@ import java.util.Date;
 @Data
 @Component
 public class Record {
-    int recordId;
-    int recordMeetingId;
-    int recordUserId;
+    Integer recordId;
+    Integer recordMeetingId;
+    Integer recordUserId;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     Date recordEnrollTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
