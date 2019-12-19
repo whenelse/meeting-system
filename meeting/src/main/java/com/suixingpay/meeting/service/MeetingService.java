@@ -16,4 +16,5 @@ public interface MeetingService {
     Result selectMeetingById(int meetingId);
 
     Result selectAllMeeting(Meeting meeting);
+
 }

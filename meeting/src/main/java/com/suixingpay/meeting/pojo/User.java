@@ -9,7 +9,7 @@ import java.util.Date;
 @Component
 public class User {
     //用户编号
-    int userId;
+    Integer userId;
     //用户姓名
     String userName;
     //手机号
@@ -17,13 +17,13 @@ public class User {
     //所属分工资
     String userCompany;
     //根用户编号
-    int rootUserId;
+    Integer rootUserId;
     //上级用户编号
-    int pUserId;
+    Integer pUserId;
     //推荐码
     String referralCode;
     //用户等级
-    int levelNo;
+    Integer levelNo;
     //落地省
     String userProvince;
     //落地市

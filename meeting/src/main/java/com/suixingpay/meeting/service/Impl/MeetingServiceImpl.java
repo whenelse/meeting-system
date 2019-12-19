@@ -17,10 +17,12 @@ public class MeetingServiceImpl implements MeetingService {
 
     @Autowired
     MeetingMapper meetingMapper;
-    @Autowired
-    Result result;
+
     @Autowired
     UserMapper userMapper;
+
+    @Autowired
+    Result result;
 
 
     @Override
@@ -58,7 +60,6 @@ public class MeetingServiceImpl implements MeetingService {
      */
     @Override
     public Result queryMeetingByPUser(int userId) {
-        Result result = new Result();
         List<Meeting> list = new ArrayList();
         User user = userMapper.selectUserByUserId(userId);
         List<Meeting> meeting = meetingMapper.queryMeetingByUserId(userId);
@@ -80,7 +81,6 @@ public class MeetingServiceImpl implements MeetingService {
      */
     @Override
     public Result selectMeetingById(int meetingId) {
-        Result result = new Result();
         Meeting meeting = meetingMapper.selectMeetingById(meetingId);
         result.set(200,"查询成功",meeting);
         return result;
@@ -93,7 +93,7 @@ public class MeetingServiceImpl implements MeetingService {
      */
     @Override
     public Result selectAllMeeting(Meeting meeting) {
-        Result result = new Result();
+        meetingMapper.queryAllMeeting(meeting);
 
         return null;
     }

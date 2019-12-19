@@ -8,9 +8,9 @@ import java.util.Date;
 @Data
 @Component
 public class Record {
-    int recordId;
-    int recordMeetingId;
-    int recordUserId;
+    Integer recordId;
+    Integer recordMeetingId;
+    Integer recordUserId;
     Date recordEnrollTime;
     Date recordSignInTime;
 }

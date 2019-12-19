@@ -19,6 +19,10 @@ public interface MeetingMapper {
      * @return
      */
     Meeting selectMeetingById(int meetingId);
-
+    /**
+     * 模糊多项查询所有会议
+     * @param meeting
+     * @return
+     */
     List<Meeting> queryAllMeeting(Meeting meeting);
 }
