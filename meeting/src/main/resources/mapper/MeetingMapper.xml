@@ -18,8 +18,8 @@
         <result column="user_name" property="userName" jdbcType="VARCHAR"/>
         <result column="referral_code" property="referralCode" jdbcType="VARCHAR"/>
         <result column="user_company" property="userCompany" jdbcType="VARCHAR"/>
-        <result column="meetingUserName" property="user_name" jdbcType="VARCHAR"/>
-        <result column="meetingUserPhone" property="telephone" jdbcType="VARCHAR"/>
+        <result column="user_name" property="meetingUserName" jdbcType="VARCHAR"/>
+        <result column="telephone" property="meetingUserPhone" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="meeting_cloumn_list">
@@ -32,7 +32,7 @@
         select <include refid="meeting_cloumn_list"/>,user_name from meeting left join user on meeting_user_id = user_id where meeting_user_id = #{meetingUserId}
     </select>
 
-    <select id="selectDetailMeeting" parameterMap="INTEGER" resultMap="MeetingResultMap" >
+    <select id="selectDetailMeeting" parameterType="INTEGER" resultMap="MeetingResultMap" >
         select <include refid="meeting_cloumn_list"/>,user_name from meeting left join user on meeting_user_id = user_id where meeting_id = #{meetingId}
     </select>
 
