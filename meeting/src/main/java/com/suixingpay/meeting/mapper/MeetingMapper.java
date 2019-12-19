@@ -4,6 +4,9 @@ import com.suixingpay.meeting.pojo.Meeting;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface MeetingMapper {
     //测试，查询所有
@@ -25,4 +28,13 @@ public interface MeetingMapper {
      * @return
      */
     List<Meeting> queryAllMeeting(Meeting meeting);
+
+    /**
+     * @Description 查询会议详细信息
+     * @Author zhu_jinsheng[zhu_js@suixingpay.com]
+     * @Param meetingId:  会议Id
+     * @return: com.suixingpay.meeting.pojo.Meeting
+     * @Date 2019/12/19 10:16
+     */
+    Meeting selectMeetingDetails(@Param("meetingId") int meetingId);
 }

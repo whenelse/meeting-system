@@ -6,12 +6,14 @@ import com.suixingpay.meeting.pojo.Meeting;
 import com.suixingpay.meeting.pojo.Result;
 import com.suixingpay.meeting.pojo.User;
 import com.suixingpay.meeting.service.MeetingService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class MeetingServiceImpl implements MeetingService {
 
@@ -121,5 +123,23 @@ public class MeetingServiceImpl implements MeetingService {
         }
     }
 
-
+    /**
+     * @Description 查询会议详细信息
+     * @Author zhu_jinsheng[zhu_js@suixingpay.com]
+     * @Param meetingId:
+     * @return: com.suixingpay.meeting.pojo.Result
+     * @Date 2019/12/19 10:12
+     */
+    @Override
+    public Result selectMeetingDetails(int meetingId) {
+        Result result = new Result();
+        try {
+            Meeting meeting = meetingMapper.selectMeetingDetails(meetingId);
+            result.set(200, "查询成功", meeting);
+        } catch (Exception e) {
+            log.error("数据库查询异常：",e);
+            result.set(200, "查询异常，请稍后", null);
+        }
+        return result;
+    }
 }
