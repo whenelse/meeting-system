@@ -1,10 +1,17 @@
 package com.suixingpay.meeting.mapper;
 
 import com.suixingpay.meeting.pojo.Meeting;
+import org.springframework.stereotype.Component;
 import com.suixingpay.meeting.to.MeetingSel;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+import com.suixingpay.meeting.pojo.Meeting;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 public interface MeetingMapper {
@@ -53,5 +60,14 @@ public interface MeetingMapper {
      */
     Meeting selectMeetingDetails(@Param("meetingId") int meetingId);
 
+
     List<Meeting> selectMeetingAudited();
+
+    /**
+     * 二维码签到
+     * @param meetingId
+     * @return
+     */
+    Meeting selectDate(@Param("RecordMeetingId") int meetingId);
+
 }

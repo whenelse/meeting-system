@@ -62,4 +62,5 @@ public class Meeting {
     //参与表id
     Integer RecordId;
 
+
 }

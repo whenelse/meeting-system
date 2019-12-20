@@ -154,4 +154,8 @@
         from meeting
         where meeting_audit_status=0
     </select>
+
+    <select id="selectDate" resultMap="MeetingResultMap">
+        select meeting_start_time,meeting_hours from meeting where  meeting_id =#{RecordMeetingId}
+    </select>
 </mapper>

@@ -7,6 +7,9 @@ import com.suixingpay.meeting.to.MeetingSel;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
+import com.suixingpay.meeting.pojo.Record;
+
 public interface MeetingService {
 
     //查找所有会议

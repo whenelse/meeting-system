@@ -1,20 +1,24 @@
 package com.suixingpay.meeting.service.Impl;
 
+import com.suixingpay.meeting.mapper.MeetingMapper;
 import com.suixingpay.meeting.mapper.RecordMapper;
+import com.suixingpay.meeting.mapper.UserMapper;
+import com.suixingpay.meeting.pojo.Meeting;
 import com.suixingpay.meeting.pojo.Record;
 import com.suixingpay.meeting.pojo.Result;
+import com.suixingpay.meeting.pojo.User;
+import com.suixingpay.meeting.service.MeetingService;
 import com.suixingpay.meeting.service.RecordService;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.util.CellRangeAddress;
 import com.suixingpay.meeting.util.RecordUtil;
+import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import lombok.Synchronized;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 import java.util.Date;
+import java.util.List;
 
 
 import javax.servlet.http.HttpServletResponse;
@@ -25,9 +29,84 @@ import java.io.OutputStream;
 @Slf4j
 public class RecordServiceImpl implements RecordService {
     @Autowired
+    UserMapper userMapper;
+    @Autowired
     RecordMapper recordMapper;
     @Autowired
-    Result result;
+    MeetingService meetingService;
+    @Autowired
+    MeetingMapper meetingMapper;
+    Result result=new Result();
+
+
+    /**
+     * 二维码签到
+     * @param record
+     * @return
+     */
+    @Override
+    public Result signIn(Record record) {
+//        if (record.getRecordMeetingId()==null) {
+//            result.set(400,"-----",null);
+//            return result;
+//        }
+        Meeting meeting=meetingMapper.selectDate(record.getRecordMeetingId());
+        if (meeting == null) {
+            result.set(400,"会议不存在",null);
+            return  result;
+        }
+//        if (record.getRecordUserId()==null){
+//            result.set(200,"异常",null);
+//            return result;
+//        }
+
+        User user=userMapper.selectUserId(record.getRecordUserId());
+        if (user==null) {
+            result.set(400,"用户不存在",null);
+            return result;
+        }
+
+        //判断时间
+        Date dates=meeting.getMeetingStartTime();
+        //会议开始时间戳 2019-12-19 18:34:30
+        Long startTimes =dates.getTime();
+        //会议时长 转换毫秒
+        Long meetingTimes= (long) meeting.getMeetingHours()*60*60*1000+24*60*60*1000;
+        //当前时间
+        Date date=new Date();
+        //获取当前时间
+        Long curreTimes=date.getTime();
+
+        if (curreTimes >= startTimes+meetingTimes) {
+            result.set(200,"会议已经截止，不能继续签到",null);
+            return  result;
+        }
+
+        //根据传值返回数据库信息
+        Record records=recordMapper.signIn(record);
+        record.setRecordSignInTime(date);
+
+        if (records!=null){
+            if (records.getRecordSignInTime()!=null){
+                result.set(400,"您已经签到成功，勿重复签到",null);
+                return result;
+            }
+            //修改
+            recordMapper.updateSignIn(date, records.getRecordId());
+            result.set(200,"您已经报名,参加成功",null);
+        }else if (records==null){
+            //添加
+            recordMapper.insertSingIn(record);
+            result.set(200,"您未报名,参加成功",null);
+        }
+//        log.info();
+        return result;
+    }
+
+
+
+
+
 
     /**
      * 用户会议报名功能

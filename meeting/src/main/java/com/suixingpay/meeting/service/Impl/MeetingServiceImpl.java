@@ -150,6 +150,7 @@ public class MeetingServiceImpl implements MeetingService {
         return result;
     }
 
+
     /**
      * 管理员审核会议驳回
      * @param meetingId
