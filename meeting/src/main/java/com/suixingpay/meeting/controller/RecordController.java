@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.suixingpay.meeting.pojo.Meeting;
 import com.suixingpay.meeting.pojo.Result;
+import com.suixingpay.meeting.annotation.NoneAuth;
 import com.suixingpay.meeting.service.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.suixingpay.meeting.pojo.Meeting;
@@ -78,6 +79,7 @@ public class RecordController {
      * @return: com.suixingpay.meeting.pojo.Result
      * @Date 2019/12/19 15:10
      */
+    @NoneAuth
     @PostMapping("/select/enroll")
     public Result selectEnrollList(@Validated(SelectById.class) @RequestBody Meeting meeting) {
         return recordService.selectEnrollList(meeting.getMeetingId());
@@ -90,6 +92,7 @@ public class RecordController {
      * @return: com.suixingpay.meeting.pojo.Result
      * @Date 2019/12/19 15:10
      */
+    @NoneAuth
     @PostMapping("/select/sign")
     public Result selectSignInList(@Validated(SelectById.class) @RequestBody Meeting meeting) {
         return recordService.selectSignInList(meeting.getMeetingId());
