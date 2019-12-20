@@ -39,6 +39,11 @@
 
 
 
+
+    <select id="selectIsEnrollRecordIdByUserIdAndMeetingId" parameterType="INTEGER" resultType="INTEGER">
+        select record_id from record where record_meeting_id = #{recordMeetingId} and record_user_id = #{recordUserId}
+    </select>
+
     <insert id="enroll" parameterType="com.suixingpay.meeting.pojo.Record">
         insert into record
         (record_meeting_id,record_user_id,record_enroll_time)

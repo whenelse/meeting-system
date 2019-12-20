@@ -12,6 +12,8 @@ import com.suixingpay.meeting.pojo.Meeting;
 import com.suixingpay.meeting.pojo.Result;
 import com.suixingpay.meeting.service.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.suixingpay.meeting.pojo.Meeting;
+import com.suixingpay.meeting.pojo.Result;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.suixingpay.meeting.groups.SelectById;
 import org.springframework.validation.annotation.Validated;
@@ -22,6 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/record")
@@ -89,4 +94,34 @@ public class RecordController {
     public Result selectSignInList(@Validated(SelectById.class) @RequestBody Meeting meeting) {
         return recordService.selectSignInList(meeting.getMeetingId());
     }
+
+
+    /**
+     * @description 导出报名信息
+     * @author Huang Yafeng
+     * @date 2019/12/19 15:55
+     * @param response
+     * @return
+     */
+    //@NoneAuth
+    @RequestMapping("/export/enroll")
+    public void exportEnrollInfo(HttpServletResponse response, @Validated(SelectById.class) @RequestBody Meeting meeting)
+            throws IOException {
+        recordService.exportEnrollInfo(response, meeting.getMeetingId());
+    }
+
+    /**
+     * @description 导出签到信息
+     * @author Huang Yafeng
+     * @date 2019/12/19 15:57
+     * @param response
+     * @return
+     */
+    //@NoneAuth
+    @RequestMapping("/export/signin")
+    public void exportSignInInfo(HttpServletResponse response, @Validated(SelectById.class) @RequestBody Meeting meeting)
+            throws IOException {
+        recordService.exportSignInInfo(response, meeting.getMeetingId());
+    }
+
 }
