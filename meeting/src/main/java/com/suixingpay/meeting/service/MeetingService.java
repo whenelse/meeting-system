@@ -7,6 +7,9 @@ import com.suixingpay.meeting.to.MeetingSel;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
+import com.suixingpay.meeting.pojo.Record;
+
 public interface MeetingService {
 
     //查找所有会议
@@ -38,6 +41,9 @@ public interface MeetingService {
      * @Date 2019/12/19 10:11
      */
     Result selectMeetingDetails(int meetingId);
+
+    //查询待审核的会议
+    Result selectMeetingAudited();
    // Result queryMeetingByPUser(int userId);
 
     /**

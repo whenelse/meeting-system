@@ -115,6 +115,7 @@
             <if test="meetingName!=null">,meeting_name=#{meetingName,jdbcType=VARCHAR}</if>
             <if test="meetingType!=null">,meeting_type=#{meetingType,jdbcType=VARCHAR}</if>
             <if test="meetingSponsor!=null">,meeting_sponsor=#{meetingSponsor,jdbcType=VARCHAR}</if>
+            <if test="meetingReferralCode!=null">,meeting_referral_code=#{meetingReferralCode,jdbcType=VARCHAR}</if>
             <if test="meetingCharge!=null">,meeting_charge=#{meetingCharge,jdbcType=INTEGER}</if>
             <if test="meetingStartTime!=null">,meeting_start_time=#{meetingStartTime,jdbcType=TIMESTAMP}</if>
             <if test="meetingAddress!=null">,meeting_address=#{meetingAddress,jdbcType=VARCHAR}</if>
@@ -143,7 +144,7 @@
         <include refid="meeting_column_list"/>,
         <include refid="user_column_list"/>
         from
-            (select *
+            (select <include refid="meeting_column_list"/>
              from meeting
              where meeting_user_id = #{userId}
              order by meeting_audit_status,meeting_enroll_end_time,meeting_start_time) m
@@ -159,5 +160,16 @@
             from meeting
             where meeting_id = #{meetingId}) m
         left join user u on m.meeting_user_id = u.user_id
+    </select>
+    
+    <select id="selectMeetingAudited" resultMap="MeetingResultMap" >
+        select
+        <include refid="meeting_column_list"/>
+        from meeting
+        where meeting_audit_status=0
+    </select>
+
+    <select id="selectDate" resultMap="MeetingResultMap">
+        select meeting_start_time,meeting_hours from meeting where  meeting_id =#{RecordMeetingId}
     </select>
 </mapper>

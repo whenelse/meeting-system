@@ -21,10 +21,29 @@
         record_id, record_meeting_id,record_user_id, record_enroll_time, record_sign_in_time
     </sql>
 
+<!--    二维码签到-->
+    <select id="signIn"  parameterType="com.suixingpay.meeting.pojo.Record" resultMap="RecordResultMap">
+        select <include refid="record_column_list"/>
+        from record where record_meeting_id=#{recordMeetingId} and record_user_id=#{recordUserId}
+    </select>
+    <update id="updateSignIn">
+        update record set record_sign_in_time=#{date} where record_id=#{recordId}
+    </update>
+    <insert id="insertSingIn" parameterType="com.suixingpay.meeting.pojo.Record">
+        insert  into record(record_meeting_id,record_user_id,record_enroll_time,record_sign_in_time)
+        values (#{recordMeetingId,jdbcType=INTEGER},#{recordUserId,jdbcType=INTEGER},
+        #{recordEnrollTime,jdbcType=TIMESTAMP},#{recordSignInTime,jdbcType=TIMESTAMP})
+    </insert>
+
+
+
+
+
+
     <select id="selectIsEnrollRecordIdByUserIdAndMeetingId" parameterType="INTEGER" resultType="INTEGER">
         select record_id from record where record_meeting_id = #{recordMeetingId} and record_user_id = #{recordUserId}
     </select>
-    
+
     <insert id="enroll" parameterType="com.suixingpay.meeting.pojo.Record">
         insert into record
         (record_meeting_id,record_user_id,record_enroll_time)

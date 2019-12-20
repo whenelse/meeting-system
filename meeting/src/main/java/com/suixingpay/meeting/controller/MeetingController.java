@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.OutputStream;
 
 @RestController
 @RequestMapping(value = "/meeting", produces = "application/json; charset=utf-8")
@@ -32,6 +31,12 @@ public class MeetingController {
     @RequestMapping("/selectAll")
     public Result selectAll(){
         return meetingService.selectAll();
+    }
+    //查询待审核的会议
+    @NoneAuth
+    @RequestMapping("/selectMeetingAudited")
+    public Result selectMeetingAudited(){
+        return meetingService.selectMeetingAudited();
     }
     //会议审核通过
     @RequestMapping("/auditPass")
@@ -53,6 +58,7 @@ public class MeetingController {
      * @return: com.suixingpay.meeting.pojo.Result
      * @Date 2019/12/19 10:42
      */
+    @NoneAuth
     @PostMapping("/select/create/meetings")
     public Result selectMeetingByUserId(@Validated(SelectById.class) @RequestBody User user) {
         return meetingService.selectMeetingByUserId(user.getUserId());
@@ -64,6 +70,7 @@ public class MeetingController {
      * @return: com.suixingpay.meeting.pojo.Result
      * @Date 2019/12/19 10:42
      */
+    @NoneAuth
     @PostMapping("/select/meeting/details")
     public Result selectMeetingDetails(@Validated(SelectById.class) @RequestBody Meeting meeting) {
         return meetingService.selectMeetingDetails(meeting.getMeetingId());
