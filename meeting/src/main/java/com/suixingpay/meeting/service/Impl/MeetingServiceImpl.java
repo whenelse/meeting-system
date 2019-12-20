@@ -27,10 +27,12 @@ public class MeetingServiceImpl implements MeetingService {
 
     @Autowired
     MeetingMapper meetingMapper;
-    @Autowired
-    Result result;
+
     @Autowired
     UserMapper userMapper;
+
+    @Autowired
+    Result result;
 
 
     @Override
@@ -41,11 +43,12 @@ public class MeetingServiceImpl implements MeetingService {
     }
     /**
      * 管理员审核会议通过
-     * @param meeting
+     * @param meetingId
      * @return
      */
     @Override
-    public Result auditPass(Meeting meeting) {
+    public Result auditPass(int meetingId) {
+        Meeting meeting = meetingMapper.selectById(meetingId);
         if(meeting.getMeetingAuditStatus()==0){
             meeting.setMeetingAuditStatus(2);
             if(meetingMapper.updateMeeting(meeting)<1){
@@ -68,7 +71,6 @@ public class MeetingServiceImpl implements MeetingService {
      */
     @Override
     public Result queryMeetingByPUser(int userId) {
-        Result result = new Result();
         List<Meeting> list = new ArrayList();
         User user = userMapper.selectUserByUserId(userId);
         List<Meeting> meeting = meetingMapper.queryMeetingByUserId(userId);
@@ -90,7 +92,6 @@ public class MeetingServiceImpl implements MeetingService {
      */
     @Override
     public Result selectMeetingById(int meetingId) {
-        Result result = new Result();
         Meeting meeting = meetingMapper.selectMeetingById(meetingId);
         result.set(200,"查询成功",meeting);
         return result;
@@ -103,7 +104,7 @@ public class MeetingServiceImpl implements MeetingService {
      */
     @Override
     public Result selectAllMeeting(Meeting meeting) {
-        Result result = new Result();
+        meetingMapper.queryAllMeeting(meeting);
 
         return null;
     }
@@ -111,11 +112,14 @@ public class MeetingServiceImpl implements MeetingService {
 
     /**
      * 管理员审核会议驳回
-     * @param meeting
+     * @param meetingId
      * @return
      */
     @Override
-    public Result auditReject(Meeting meeting) {
+    public Result auditReject(int meetingId) {
+        Meeting meeting = meetingMapper.selectById(meetingId);
+        System.out.println("++++++++++++++++++++++++++++++++++++");
+        System.out.println(meeting.getMeetingAuditStatus());
         if(meeting.getMeetingAuditStatus()==0){
             meeting.setMeetingAuditStatus(1);
             if(meetingMapper.updateMeeting(meeting)<1){

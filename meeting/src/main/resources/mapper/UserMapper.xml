@@ -26,4 +26,11 @@
         <include refid="user_column_list"/>
         from user where user_id = #{userId}
     </select>
+
+    <select id="selectUserId" parameterType="Integer" resultMap="UserResultMap">
+        select
+        <include refid="user_column_list"/>
+        from user where user_id=#{recordUserId}
+    </select>
+
 </mapper>

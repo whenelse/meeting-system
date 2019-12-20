@@ -26,8 +26,14 @@ public interface MeetingMapper {
      * @return
      */
     Meeting selectMeetingById(int meetingId);
-
+    /**
+     * 模糊多项查询所有会议
+     * @param meeting
+     * @return
+     */
     List<Meeting> queryAllMeeting(Meeting meeting);
+
+    Meeting selectById(int meetingId);
 
     /**
      * @Description 查询会议详细信息
@@ -38,6 +44,11 @@ public interface MeetingMapper {
      */
     Meeting selectMeetingDetails(@Param("meetingId") int meetingId);
 
-    Meeting selectDate(@RequestParam("meetingId") int meetingId);
+    /**
+     * 二维码签到
+     * @param meetingId
+     * @return
+     */
+    Meeting selectDate(@Param("RecordMeetingId") int meetingId);
 
 }

@@ -8,11 +8,12 @@ import com.suixingpay.meeting.pojo.Record;
 
 public interface MeetingService {
 
+    //查找所有会议
     Result selectAll();
-
-    Result auditPass(Meeting meeting);
-
-    Result auditReject(Meeting meeting);
+    //审核通过
+    Result auditPass(int meetingId);
+    //审核驳回
+    Result auditReject(int meetingId);
 
     Result queryMeetingByPUser(int userId);
 

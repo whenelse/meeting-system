@@ -10,6 +10,7 @@
         <result column="meeting_sponsor" property="meetingSponsor" jdbcType="VARCHAR"/>
         <result column="meeting_charge" property="meetingCharge" jdbcType="INTEGER"/>
         <result column="meeting_start_time" property="meetingStartTime" jdbcType="TIMESTAMP"/>
+        <result column="meeting_hours" property="meetingHours" jdbcType="INTEGER"/>
         <result column="meeting_address" property="meetingAddress" jdbcType="VARCHAR"/>
         <result column="meeting_detailed_address" property="meetingDetailedAddress" jdbcType="VARCHAR"/>
         <result column="meeting_enroll_end_time" property="meetingEnrollEndTime" jdbcType="TIMESTAMP"/>
@@ -18,32 +19,67 @@
         <result column="user_name" property="userName" jdbcType="VARCHAR"/>
         <result column="referral_code" property="referralCode" jdbcType="VARCHAR"/>
         <result column="user_company" property="userCompany" jdbcType="VARCHAR"/>
-        <result column="meetingUserName" property="user_name" jdbcType="VARCHAR"/>
-        <result column="meetingUserPhone" property="telephone" jdbcType="VARCHAR"/>
+        <result column="user_name" property="meetingUserName" jdbcType="VARCHAR"/>
+        <result column="telephone" property="meetingUserPhone" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <sql id="meeting_cloumn_list">
-        meeting_id,meeting_initiation_type,meeting_user_id,meeting_name,meeting_type,
-        meeting_sponsor,meeting_charge,meeting_start_time,meeting_address,meeting_detailed_address,
+    <sql id="meeting_column_list">
+        meeting_id,meeting_initiation_type,meeting_user_id,meeting_name,meeting_type,meeting_sponsor,
+        meeting_charge,meeting_start_time,meeting_hours,meeting_address,meeting_detailed_address,
         meeting_enroll_end_time,meeting_describe,meeting_audit_status
     </sql>
 
     <select id="queryMeetingByUserId" parameterType="INTEGER" resultMap="MeetingResultMap">
-        select <include refid="meeting_cloumn_list"/>,user_name from meeting left join user on meeting_user_id = user_id where meeting_user_id = #{meetingUserId}
+        select <include refid="meeting_column_list"/>,user_name from meeting left join user on meeting_user_id = user_id where meeting_user_id = #{meetingUserId}
     </select>
 
-    <select id="selectDetailMeeting" parameterType="INTEGER" resultMap="MeetingResultMap" >
-        select <include refid="meeting_cloumn_list"/>,user_name from meeting left join user on meeting_user_id = user_id where meeting_id = #{meetingId}
+    <select id="selectMeetingById" parameterType="INTEGER" resultMap="MeetingResultMap" >
+        select <include refid="meeting_column_list"/>,user_name from meeting left join user on meeting_user_id = user_id where meeting_id = #{meetingId}
     </select>
 
-<!--    <select id="queryAllMeeting" parameterMap="Meeting" resultMap="MeetingResultMap">-->
-<!--        select-->
-<!--            <include refid="meeting_cloumn_list"/>,user_name-->
-<!--        from meeting left join user on meeting_user_id = user_id-->
-<!--        <where>-->
-<!--            <if test=""></if>-->
-<!--        </where>-->
-<!--    </select>-->
+    <select id="queryAllMeeting" parameterType="com.suixingpay.meeting.to.MeetingSel" resultMap="MeetingResultMap">
+        select
+            <include refid="meeting_column_list"/>,user_name,referral_code,user_company
+        from meeting left join user on meeting_user_id = user_id
+        <where>
+            <if test="referralCode!=null and referralCode!=''">
+                referral_code = #{referralCode}
+            </if>
+            <if test="meetingCharge!=null and meetingCharge!=''">
+                and meeting_charge = #{meetingCharge}
+            </if>
+            <if test="userCompany!=null and userCompany!=''">
+                and user_company = #{userCompany}
+            </if>
+            <if test="meetingType!=null and meetingType!=''">
+                and meeting_type = #{meetingType}
+            </if>
+            <if test="meetingInitiationType!=null and meetingInitiationType!=''">
+                and meeting_initiation_type = #{meetingInitiationType}
+            </if>
+            <if test="meetingAuditStatus!=null and meetingAuditStatus!=''">
+                and meeting_audit_status = #{meetingAuditStatus}
+            </if>
+            <if test="beginTime!=null and beginTime!=''">
+                and meeting_start_time > #{beginTime}
+            </if>
+            <if test="endTime!=null and endTime!=''">
+                and #{endTime} > meeting_start_time
+            </if>
+            <if test="meetingStatus==0">
+                and meeting_audit_status !=2
+            </if>
+            <if test="meetingStatus==1">
+                and meeting_audit_status =2 and meeting_enroll_end_time > NOW()
+            </if>
+            <if test="meetingStatus==2">
+                and meeting_audit_status =2 and NOW() > meeting_enroll_end_time and meeting_start_time > NOW()
+            </if>
+            <if test="meetingStatus==3">
+                and meeting_audit_status =2 and NOW() > meeting_start_time
+            </if>
+        </where>
+    </select>
 
     <update id="updateMeeting" parameterType="com.suixingpay.meeting.pojo.Meeting">
         update meeting
@@ -65,16 +101,23 @@
     </update>
 
     <select id="selectAll" resultMap="MeetingResultMap" >
-        select <include refid="meeting_cloumn_list"/>
+        select <include refid="meeting_column_list"/>
         from meeting
+    </select>
+
+<!--    根据会议id查找-->
+    <select id="selectById" resultMap="MeetingResultMap">
+        select <include refid="meeting_column_list"/>
+        from meeting
+        where meeting_id=#{meetingId,jdbcType=INTEGER}
     </select>
 <!--    查询会议详细信息-->
     <select id="selectMeetingDetails" resultMap="MeetingResultMap">
-        select <include refid="meeting_cloumn_list"/>,u.user_name ,u.telephone
-        from (select <include refid="meeting_cloumn_list"/> from meeting where meeting_id = 1) m
+        select <include refid="meeting_column_list"/>,u.user_name ,u.telephone
+        from (select <include refid="meeting_column_list"/> from meeting where meeting_id = #{meetingId}) m
         left join user u on m.meeting_user_id = u.user_id
     </select>
     <select id="selectDate" resultMap="MeetingResultMap">
-        select meeting_start_time,meeting_hours from meeting where  meeting_id =#{meetingId}
+        select meeting_start_time,meeting_hours from meeting where  meeting_id =#{RecordMeetingId}
     </select>
 </mapper>
