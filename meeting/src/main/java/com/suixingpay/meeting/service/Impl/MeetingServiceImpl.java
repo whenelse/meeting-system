@@ -1,11 +1,15 @@
 package com.suixingpay.meeting.service.Impl;
 
 import com.suixingpay.meeting.mapper.MeetingMapper;
+import com.suixingpay.meeting.mapper.RecordMapper;
 import com.suixingpay.meeting.mapper.UserMapper;
 import com.suixingpay.meeting.pojo.Meeting;
 import com.suixingpay.meeting.pojo.Result;
 import com.suixingpay.meeting.pojo.User;
 import com.suixingpay.meeting.service.MeetingService;
+import com.suixingpay.meeting.to.MeetingSel;
+import com.suixingpay.meeting.util.MeetingIsEnrollCompare;
+import com.suixingpay.meeting.util.MeetingStartTimeCompare;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +26,9 @@ public class MeetingServiceImpl implements MeetingService {
 
     @Autowired
     UserMapper userMapper;
+
+    @Autowired
+    RecordMapper recordMapper;
 
     @Autowired
     Result result;
@@ -61,18 +68,42 @@ public class MeetingServiceImpl implements MeetingService {
      * @return
      */
     @Override
-    public Result queryMeetingByPUser(int userId) {
+    public Result queryMeetingByPUser(Integer userId) {
+        if (userId == null){
+            result.set(200,"参数异常",null);
+        }
         List<Meeting> list = new ArrayList();
+        //获取当前用户
         User user = userMapper.selectUserByUserId(userId);
-        List<Meeting> meeting = meetingMapper.queryMeetingByUserId(userId);
-        list.addAll(meeting);
-        if (user.getRootUserId() != user.getPUserId()){
+        List<Meeting> meeting = null;
+        //当用户的上级不是根上级时
+        while (user.getRootUserId() != user.getPUserId()){
+            //获取用户上级
             user = userMapper.selectUserByUserId(user.getPUserId());
+            //获取用户上级的会议
             meeting = meetingMapper.queryMeetingByUserId(user.getUserId());
             list.addAll(meeting);
         }
+        user = userMapper.selectUserByUserId(user.getPUserId());
+        meeting = meetingMapper.queryMeetingByUserId(user.getUserId());
+        list.addAll(meeting);
 
-        result.set(200,"查询成功",list);
+        //判断用户是否已报名会议
+        for(Meeting m:list){
+            m.setRecordId(recordMapper.selectIsEnrollRecordIdByUserIdAndMeetingId(m.getMeetingId(),userId));
+        }
+
+        //按开始时间排序
+        list.sort(new MeetingStartTimeCompare());
+        //按是否已报名排序
+        list.sort(new MeetingIsEnrollCompare());
+
+        if (list == null){
+            result.set(200,"当前尚无会议",null);
+        }else {
+            result.set(200,"查询成功",list);
+        }
+
         return result;
     }
 
@@ -82,22 +113,34 @@ public class MeetingServiceImpl implements MeetingService {
      * @return
      */
     @Override
-    public Result selectMeetingById(int meetingId) {
-        Meeting meeting = meetingMapper.selectMeetingById(meetingId);
-        result.set(200,"查询成功",meeting);
+    public Result selectMeetingById(Integer meetingId) {
+        if (meetingId == null){
+            result.set(200,"参数异常",null);
+        }
+        try{
+            Meeting meeting = meetingMapper.selectMeetingById(meetingId);
+            result.set(200,"查询成功",meeting);
+        }catch (Exception e){
+            result.set(200,"查询失败",null);
+        }
+
         return result;
     }
 
     /**
      * 多项模糊查询所有会议
-     * @param meeting
+     * @param meetingSel
      * @return
      */
     @Override
-    public Result selectAllMeeting(Meeting meeting) {
-        meetingMapper.queryAllMeeting(meeting);
-
-        return null;
+    public Result selectAllMeeting(MeetingSel meetingSel) {
+        try {
+            List<Meeting> list = meetingMapper.queryAllMeeting(meetingSel);
+            result.set(200,"查询成功",list);
+        }catch (Exception e){
+            result.set(200,"查询失败",null);
+        }
+        return result;
     }
 
 

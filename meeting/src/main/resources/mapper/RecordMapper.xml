@@ -12,6 +12,10 @@
     <sql id="record_column_list">
         record_id, record_meeting_id, record_user_id, record_enroll_time, record_sign_in_time
     </sql>
+
+    <select id="selectIsEnrollRecordIdByUserIdAndMeetingId" parameterType="INTEGER" resultType="INTEGER">
+        select record_id from record where record_meeting_id = #{recordMeetingId} and record_user_id = #{recordUserId}
+    </select>
     
     <select id="selectEnrollList" resultMap="RecordResultMap"></select>
 </mapper>

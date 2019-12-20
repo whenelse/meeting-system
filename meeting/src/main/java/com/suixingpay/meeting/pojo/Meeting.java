@@ -12,7 +12,7 @@ public class Meeting {
     //发起类型
     String meetingInitiationType;
     //发起人
-    String meetingUserId;
+    Integer meetingUserId;
     //会议名称
     String meetingName;
     //会议类型
@@ -47,5 +47,7 @@ public class Meeting {
     String userCompany;
     //管家推荐码
     String referralCode;
+    //参与表id
+    Integer RecordId;
 
 }

@@ -10,6 +10,7 @@
         <result column="meeting_sponsor" property="meetingSponsor" jdbcType="VARCHAR"/>
         <result column="meeting_charge" property="meetingCharge" jdbcType="INTEGER"/>
         <result column="meeting_start_time" property="meetingStartTime" jdbcType="TIMESTAMP"/>
+        <result column="meeting_hours" property="meetingHours" jdbcType="INTEGER"/>
         <result column="meeting_address" property="meetingAddress" jdbcType="VARCHAR"/>
         <result column="meeting_detailed_address" property="meetingDetailedAddress" jdbcType="VARCHAR"/>
         <result column="meeting_enroll_end_time" property="meetingEnrollEndTime" jdbcType="TIMESTAMP"/>
@@ -20,6 +21,7 @@
         <result column="user_company" property="userCompany" jdbcType="VARCHAR"/>
         <result column="user_name" property="meetingUserName" jdbcType="VARCHAR"/>
         <result column="telephone" property="meetingUserPhone" jdbcType="VARCHAR"/>
+        <result column="record_id" property="recordId" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="meeting_column_list">
@@ -29,11 +31,16 @@
     </sql>
 
     <select id="queryMeetingByUserId" parameterType="INTEGER" resultMap="MeetingResultMap">
-        select <include refid="meeting_column_list"/>,user_name from meeting left join user on meeting_user_id = user_id where meeting_user_id = #{meetingUserId}
+        select
+        <include refid="meeting_column_list"/>
+        from meeting
+        where meeting_user_id = #{meetingUserId}  order by meeting_start_time
     </select>
 
     <select id="selectMeetingById" parameterType="INTEGER" resultMap="MeetingResultMap" >
-        select <include refid="meeting_column_list"/>,user_name from meeting left join user on meeting_user_id = user_id where meeting_id = #{meetingId}
+        select <include refid="meeting_column_list"/>,user_name
+        from meeting left join user on meeting_user_id = user_id
+        where meeting_id = #{meetingId}
     </select>
 
     <select id="queryAllMeeting" parameterType="com.suixingpay.meeting.to.MeetingSel" resultMap="MeetingResultMap">
@@ -105,8 +112,8 @@
     </select>
 <!--    查询会议详细信息-->
     <select id="selectMeetingDetails" resultMap="MeetingResultMap">
-        select <include refid="meeting_cloumn_list"/>,u.user_name ,u.telephone
-        from (select <include refid="meeting_cloumn_list"/> from meeting where meeting_id = 1) m
+        select <include refid="meeting_column_list"/>,u.user_name ,u.telephone
+        from (select <include refid="meeting_column_list"/> from meeting where meeting_id = 1) m
         left join user u on m.meeting_user_id = u.user_id
     </select>
 </mapper>

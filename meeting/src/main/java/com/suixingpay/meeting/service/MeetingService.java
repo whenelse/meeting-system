@@ -2,6 +2,7 @@ package com.suixingpay.meeting.service;
 
 import com.suixingpay.meeting.pojo.Meeting;
 import com.suixingpay.meeting.pojo.Result;
+import com.suixingpay.meeting.to.MeetingSel;
 
 public interface MeetingService {
 
@@ -11,11 +12,11 @@ public interface MeetingService {
 
     Result auditReject(Meeting meeting);
 
-    Result queryMeetingByPUser(int userId);
+    Result queryMeetingByPUser(Integer userId);
 
-    Result selectMeetingById(int meetingId);
+    Result selectMeetingById(Integer meetingId);
 
-    Result selectAllMeeting(Meeting meeting);
+    Result selectAllMeeting(MeetingSel meetingSel);
 
     /**
      * @Description 查询会议详细信息
