@@ -1,14 +1,19 @@
 package com.suixingpay.meeting.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.suixingpay.meeting.groups.SelectById;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
 @Component
 public class User {
+    @NotNull(message = "用户Id不能为空", groups = SelectById.class)
+    @Min(value = 1, message = "用户Id不能小于1", groups = SelectById.class)
     //用户编号
     Integer userId;
     //用户姓名

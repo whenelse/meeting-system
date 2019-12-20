@@ -3,6 +3,7 @@ package com.suixingpay.meeting.controller;
 import com.suixingpay.meeting.pojo.Meeting;
 import com.suixingpay.meeting.groups.SelectById;
 import com.suixingpay.meeting.pojo.Result;
+import com.suixingpay.meeting.pojo.User;
 import com.suixingpay.meeting.service.MeetingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,6 +42,17 @@ public class MeetingController {
         return meetingService.queryMeetingByPUser(userId);
     }
 
+    /**
+     * @Description 查询鑫管家自己创建的会议列表
+     * @Author zhu_jinsheng[zhu_js@suixingpay.com]
+     * @Param meeting:  使用用户持久化类去接收鑫管家Id
+     * @return: com.suixingpay.meeting.pojo.Result
+     * @Date 2019/12/19 10:42
+     */
+    @PostMapping("/select/create/meetings")
+    public Result selectMeetingByUserId(@Validated(SelectById.class) @RequestBody User user) {
+        return meetingService.selectMeetingByUserId(user.getUserId());
+    }
     /**
      * @Description 查询会议详情
      * @Author zhu_jinsheng[zhu_js@suixingpay.com]
