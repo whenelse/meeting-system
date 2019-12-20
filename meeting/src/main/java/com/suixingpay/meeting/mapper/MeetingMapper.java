@@ -45,5 +45,5 @@ public interface MeetingMapper {
      */
     Meeting selectMeetingDetails(@Param("meetingId") int meetingId);
 
-    int insertMeeting(Meeting meeting,int meetingUserId);
+    int insertMeeting(Meeting meeting);
 }

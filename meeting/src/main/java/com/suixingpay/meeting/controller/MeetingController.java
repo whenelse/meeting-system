@@ -20,7 +20,7 @@ public class MeetingController {
     MeetingService meetingService;
 
     @PostMapping("/insertMeeting")
-    public Result insertMeeting(@RequestBody Meeting meeting){
+    public Result insertMeeting(@Validated(SelectById.class) @RequestBody Meeting meeting){
         return meetingService.insertMeeting(meeting);
     }
     //测试，查找所有会议

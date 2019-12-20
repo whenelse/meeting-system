@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.suixingpay.meeting.util.MeetingCheck.enrollCheck;
+import static com.suixingpay.meeting.util.MeetingCheck.paramCheck;
 import static com.suixingpay.meeting.util.MeetingCheck.timeCheck;
 
 @Slf4j
@@ -172,25 +173,27 @@ public class MeetingServiceImpl implements MeetingService {
 
     @Override
     public Result insertMeeting(Meeting meeting) {
-        if (!enrollCheck(meeting)){
-            result.set(200,"报名截止时间不符要求",null);
+        if (!paramCheck(meeting)){
+            result.set(200,"请补全信息哦",null);
             return result;
         }
-//        User user = userMapper.selectUserByUserId(meeting.getMeetingUserId());
-        User user =new User();
-        user.setLevelNo(9);
+        if (!enrollCheck(meeting)){
+            result.set(200,"请检查您输入的信息",null);
+            return result;
+        }
+        User user = userMapper.selectUserByUserId(meeting.getMeetingUserId());
         if (meeting.getMeetingUserId() !=1 || user.getLevelNo() < 5){
             result.set(200,"对不起，只有V5以上等级的鑫管家才能发起会议",null);
             return result;
         }
         Meeting newMeeting=new Meeting();
         newMeeting.setMeetingUserId(user.getUserId());
-        List<Meeting> meetingList= meetingMapper.queryAllMeeting(meeting);
+        List<Meeting> meetingList= meetingMapper.selectMeetingByUserId(meeting.getMeetingUserId());
         boolean b = timeCheck(meetingList,meeting);
         if (!b) {
             result.set(200, "同一时间不能有两场会议", null);
         }
-        else if (meetingMapper.insertMeeting(meeting,user.getUserId()) == 0) {
+        else if (meetingMapper.insertMeeting(meeting) == 0) {
             result.set(200, "添加会议失败", null);
         }
         else {

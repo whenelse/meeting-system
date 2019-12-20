@@ -7,6 +7,14 @@ import java.util.List;
 
 public class MeetingCheck {
 
+    public static boolean paramCheck(Object... inputs) {
+        for (Object input : inputs) {
+            if ((input == null) || "".equals(input) ) {
+                return false;
+            }
+        }
+        return true;
+    }
     public static boolean enrollCheck(Meeting meeting) {
         Date date = new Date();
         if ((meeting.getMeetingEnrollEndTime().getTime()) < date.getTime() || (meeting.getMeetingEnrollEndTime().getTime()) > (meeting.getMeetingStartTime().getTime())) {
@@ -25,7 +33,7 @@ public class MeetingCheck {
         }
         for (Meeting meeting1 : meetingList) {
             Long start1 = meeting1.getMeetingStartTime().getTime();
-            Long end1 = meeting.getMeetingStartTime().getTime() + (meeting.getMeetingHours() * 60 * 60 * 1000);
+            Long end1 = meeting1.getMeetingStartTime().getTime() + (meeting.getMeetingHours() * 60 * 60 * 1000);
             if (!(conflictCheck(start, end, start1, end1))) {
                 return false;
             }

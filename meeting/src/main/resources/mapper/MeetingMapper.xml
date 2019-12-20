@@ -33,7 +33,7 @@
         meeting (meeting_initiation_type,meeting_user_id,meeting_name,meeting_type,meeting_sponsor,
         meeting_charge,meeting_start_time,meeting_hours,meeting_address,meeting_detailed_address,
         meeting_enroll_end_time,meeting_describe,meeting_audit_status)
-        values (#{meetingInitiationType},#{meetingUserId},#{meetingName},#{meetingType},#{meetingSponsor},#{meetingCharge}
+        values (#{meetingInitiationType},#{meetingUserId},#{meetingName},#{meetingType},#{meetingSponsor},#{meetingCharge},
         #{meetingStartTime},#{meetingHours},#{meetingAddress},#{meetingDetailedAddress},#{meetingEnrollEndTime},#{meetingDescribe},0)
     </insert>
 
