@@ -16,4 +16,7 @@ public class Record {
     Date recordEnrollTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     Date recordSignInTime;
+
+    //连用户表查询属性
+    User user;
 }

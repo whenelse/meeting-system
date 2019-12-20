@@ -110,8 +110,6 @@ public class MeetingServiceImpl implements MeetingService {
     @Override
     public Result auditReject(int meetingId) {
         Meeting meeting = meetingMapper.selectById(meetingId);
-        System.out.println("++++++++++++++++++++++++++++++++++++");
-        System.out.println(meeting.getMeetingAuditStatus());
         if(meeting.getMeetingAuditStatus()==0){
             meeting.setMeetingAuditStatus(1);
             if(meetingMapper.updateMeeting(meeting)<1){

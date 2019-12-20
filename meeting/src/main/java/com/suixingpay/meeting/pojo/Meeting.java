@@ -6,11 +6,16 @@ import com.suixingpay.meeting.groups.SelectById;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
 @Component
 public class Meeting {
+    @NotNull(message = "会议Id不能为空", groups = SelectById.class)
+    @Min(value = 0, message = "会议Id不能小于0", groups = SelectById.class)
+    //会议Id
     Integer meetingId;
     //发起类型
     String meetingInitiationType;

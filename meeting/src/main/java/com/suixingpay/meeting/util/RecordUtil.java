@@ -1,6 +1,5 @@
 package com.suixingpay.meeting.util;
 
-import com.suixingpay.meeting.pojo.Meeting;
 import com.suixingpay.meeting.pojo.Record;
 
 import java.util.List;
