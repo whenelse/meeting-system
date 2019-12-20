@@ -1,0 +1,38 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:mysql://172.16.43.117:3306/meeting_system?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+    driverClassName: com.mysql.jdbc.Driver
+
+  redis:
+    host: 172.16.43.117
+    port: 6379
+    lettcue:
+      pool:
+        ### 连接池最大连接数（使用负值表示没有限制）
+        max-active: 2048
+        ### 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: 1500
+        ### 连接池中的最大空闲连接
+        max-idle: 200
+        ### 连接池中的最小空闲连接
+        min-idle: 20
+    ### Redis数据库索引(默认为0)
+    database: 0
+    ### 连接超时时间（毫秒）
+    timeout: 60000
+
+mybatis:
+  typeAliasesPackage: com.suixingpay.seckill.pojo
+  mapperLocations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#AES加密秘钥
+#AESKEY: xxxxxxxxxxxxxxal
+
