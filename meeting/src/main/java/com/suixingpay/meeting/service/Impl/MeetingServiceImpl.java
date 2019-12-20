@@ -101,7 +101,6 @@ public class MeetingServiceImpl implements MeetingService {
         return null;
     }
 
-
     /**
      * 管理员审核会议驳回
      * @param meetingId
@@ -123,6 +122,26 @@ public class MeetingServiceImpl implements MeetingService {
             result.set(400,"该会议不需要审核",null);
             return result;
         }
+    }
+
+    /**
+     * @Description 查询鑫管家自己创建的会议列表
+     * @Author zhu_jinsheng[zhu_js@suixingpay.com]
+     * @Param userId: 用户Id
+     * @return: com.suixingpay.meeting.pojo.Result
+     * @Date 2019/12/20 9:52
+     */
+    @Override
+    public Result selectMeetingByUserId(int userId) {
+        Result result = new Result();
+        try {
+            List<Meeting> list = meetingMapper.selectMeetingByUserId(userId);
+            result.set(200, "查询成功", list);
+        } catch (Exception e) {
+            log.error("数据库查询异常：",e);
+            result.set(200, "查询异常，请稍后", null);
+        }
+        return result;
     }
 
     /**

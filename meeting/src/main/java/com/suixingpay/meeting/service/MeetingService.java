@@ -19,6 +19,14 @@ public interface MeetingService {
     Result selectAllMeeting(Meeting meeting);
 
     /**
+     * @Description 查询鑫管家自己创建的会议列表
+     * @Author zhu_jinsheng[zhu_js@suixingpay.com]
+     * @Param userId: 用户Id
+     * @return: com.suixingpay.meeting.pojo.Result
+     * @Date 2019/12/20 9:52
+     */
+    Result selectMeetingByUserId(int userId);
+    /**
      * @Description 查询会议详细信息
      * @Author zhu_jinsheng[zhu_js@suixingpay.com]
      * @Param meetingId:  会议Id

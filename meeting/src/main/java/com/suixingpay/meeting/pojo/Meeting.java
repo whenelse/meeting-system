@@ -14,13 +14,13 @@ import java.util.Date;
 @Component
 public class Meeting {
     @NotNull(message = "会议Id不能为空", groups = SelectById.class)
-    @Min(value = 0, message = "会议Id不能小于0", groups = SelectById.class)
+    @Min(value = 1, message = "会议Id不能小于1", groups = SelectById.class)
     //会议Id
     Integer meetingId;
     //发起类型
     String meetingInitiationType;
     //发起人
-    String meetingUserId;
+    Integer meetingUserId;
     //会议名称
     String meetingName;
     //会议类型
