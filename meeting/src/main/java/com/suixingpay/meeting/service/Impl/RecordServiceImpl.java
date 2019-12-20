@@ -4,9 +4,8 @@ import com.suixingpay.meeting.mapper.RecordMapper;
 import com.suixingpay.meeting.pojo.Record;
 import com.suixingpay.meeting.pojo.Result;
 import com.suixingpay.meeting.service.RecordService;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.util.CellRangeAddress;
 import com.suixingpay.meeting.util.RecordUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -112,16 +111,16 @@ public class RecordServiceImpl implements RecordService {
      * @return
      */
     @Override
-    public void exportEnrollInfo(HttpServletResponse response) throws IOException {
+    public void exportEnrollInfo(HttpServletResponse response, int meetingId) throws IOException {
+        List<Record> records = recordMapper.selectEnrollList(meetingId);
+
         HSSFWorkbook wb = new HSSFWorkbook();
-
         HSSFSheet sheet = wb.createSheet("获取报名信息（EXCEL）");
-
         HSSFRow row = null;
-
         row = sheet.createRow(0); //创建第一个单元格
         row.setHeight((short) (27 * 20));
         row.createCell(0).setCellValue("报名信息"); //为第一行单元格设值
+        //cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);  //居中
         //合并单元格  CellRangeAddress(起始行号，终止行号， 起始列号，终止列号）
         CellRangeAddress rowRegion = new CellRangeAddress(0, 0, 0, 2);
         sheet.addMergedRegion(rowRegion);
@@ -130,15 +129,29 @@ public class RecordServiceImpl implements RecordService {
         row.setHeight((short) (23 * 20)); //设置行高
         row.createCell(0).setCellValue("姓名"); //为第一个单元格设值
         row.createCell(1).setCellValue("手机号码"); //为第二个单元格设值
-        row.createCell(2).setCellValue("签到时间");
+        row.createCell(2).setCellValue("报名时间");
 
-        /*for (int i = 0; i < users.size(); i++) {
+        for (int i = 0; i < records.size(); i++) {
             row = sheet.createRow(i + 2);
-            User user = users.get(i);
-            row.createCell(0).setCellValue(user.getUid());
-            row.createCell(1).setCellValue(user.getUsername());
-            row.createCell(2).setCellValue(user.getPassword());
-        }*/
+            Record record = records.get(i);
+            row.createCell(0).setCellValue(record.getUser().getUserName());
+            row.createCell(1).setCellValue(record.getUser().getTelephone());
+
+            CellStyle cellStyle = wb.createCellStyle();
+            HSSFCell cell = row.createCell(2);
+            HSSFDataFormat format = wb.createDataFormat();
+            cellStyle.setDataFormat(format.getFormat("yyyy-MM-dd HH:mm:ss"));
+            cell.setCellValue(record.getRecordEnrollTime());
+            cell.setCellStyle(cellStyle);
+
+            /*cell.setCellValue(new Date(2008,5,5));
+            //set date format
+            HSSFCellStyle cellStyle = demoWorkBook.createCellStyle();
+            HSSFDataFormat format= demoWorkBook.createDataFormat();
+            cellStyle.setDataFormat(format.getFormat("yyyy年m月d日"));
+            cell.setCellStyle(cellStyle);*/
+
+        }
         sheet.setDefaultRowHeight((short) (16.5 * 20));
         //列宽自适应
         for (int i = 0; i <= 2; i++) {
@@ -161,13 +174,12 @@ public class RecordServiceImpl implements RecordService {
      * @return
      */
     @Override
-    public void exportSignInInfo(HttpServletResponse response) throws IOException {
+    public void exportSignInInfo(HttpServletResponse response, int meetingId) throws IOException {
+        List<Record> records = recordMapper.selectSignInList(meetingId);
+
         HSSFWorkbook wb = new HSSFWorkbook();
-
         HSSFSheet sheet = wb.createSheet("获取签到信息（EXCEL）");
-
         HSSFRow row = null;
-
         row = sheet.createRow(0); //创建第一个单元格
         row.setHeight((short) (27 * 20));
         row.createCell(0).setCellValue("签到信息"); //为第一行单元格设值
@@ -181,13 +193,19 @@ public class RecordServiceImpl implements RecordService {
         row.createCell(1).setCellValue("手机号码"); //为第二个单元格设值
         row.createCell(2).setCellValue("报名时间");
 
-        /*for (int i = 0; i < users.size(); i++) {
+        for (int i = 0; i < records.size(); i++) {
             row = sheet.createRow(i + 2);
-            User user = users.get(i);
-            row.createCell(0).setCellValue(user.getUid());
-            row.createCell(1).setCellValue(user.getUsername());
-            row.createCell(2).setCellValue(user.getPassword());
-        }*/
+            Record record = records.get(i);
+            row.createCell(0).setCellValue(record.getUser().getUserName());
+            row.createCell(1).setCellValue(record.getUser().getTelephone());
+
+            CellStyle cellStyle = wb.createCellStyle();
+            HSSFCell cell = row.createCell(2);
+            HSSFDataFormat format = wb.createDataFormat();
+            cellStyle.setDataFormat(format.getFormat("yyyy-MM-dd HH:mm:ss"));
+            cell.setCellValue(record.getRecordSignInTime());
+            cell.setCellStyle(cellStyle);
+        }
         sheet.setDefaultRowHeight((short) (16.5 * 20));
         //列宽自适应
         for (int i = 0; i <= 2; i++) {

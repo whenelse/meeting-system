@@ -32,7 +32,7 @@ public interface RecordService {
      * @param response
      * @return
      */
-    void exportEnrollInfo(HttpServletResponse response) throws IOException;
+    void exportEnrollInfo(HttpServletResponse response, int meetingId) throws IOException;
 
     /**
      * @description 导出签到信息
@@ -41,5 +41,5 @@ public interface RecordService {
      * @param response
      * @return
      */
-    void exportSignInInfo(HttpServletResponse response) throws IOException;
+    void exportSignInInfo(HttpServletResponse response, int meetingId) throws IOException;
 }

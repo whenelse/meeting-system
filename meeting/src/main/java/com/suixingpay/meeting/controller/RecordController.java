@@ -1,11 +1,10 @@
 package com.suixingpay.meeting.controller;
 
+import com.suixingpay.meeting.annotation.NoneAuth;
 import com.suixingpay.meeting.service.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.suixingpay.meeting.pojo.Meeting;
 import com.suixingpay.meeting.pojo.Result;
-import com.suixingpay.meeting.service.RecordService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.suixingpay.meeting.groups.SelectById;
 import org.springframework.validation.annotation.Validated;
@@ -60,9 +59,11 @@ public class RecordController {
      * @param response
      * @return
      */
-    @RequestMapping("/exportEnroll")
-    public void exportEnrollInfo(HttpServletResponse response) throws IOException {
-        recordService.exportEnrollInfo(response);
+    @NoneAuth
+    @RequestMapping("/export/enroll")
+    public void exportEnrollInfo(HttpServletResponse response, @Validated(SelectById.class) @RequestBody Meeting meeting)
+            throws IOException {
+        recordService.exportEnrollInfo(response, meeting.getMeetingId());
     }
 
     /**
@@ -72,9 +73,11 @@ public class RecordController {
      * @param response
      * @return
      */
-    @RequestMapping("/exportSignIn")
-    public void exportSignInInfo(HttpServletResponse response) throws IOException {
-        recordService.exportSignInInfo(response);
+    @NoneAuth
+    @RequestMapping("/export/signin")
+    public void exportSignInInfo(HttpServletResponse response, @Validated(SelectById.class) @RequestBody Meeting meeting)
+            throws IOException {
+        recordService.exportSignInInfo(response, meeting.getMeetingId());
     }
 
 }
