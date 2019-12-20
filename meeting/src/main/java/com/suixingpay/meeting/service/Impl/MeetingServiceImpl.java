@@ -163,4 +163,15 @@ public class MeetingServiceImpl implements MeetingService {
         }
         return result;
     }
+
+    /**
+     * 查询所有需要审核的会议
+     * @return
+     */
+    @Override
+    public Result selectMeetingAudited() {
+        List<Meeting> list = meetingMapper.selectMeetingAudited();
+        result.set(200,"查询成功",list);
+        return result;
+    }
 }

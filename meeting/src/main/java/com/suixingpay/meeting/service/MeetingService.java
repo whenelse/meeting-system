@@ -34,4 +34,6 @@ public interface MeetingService {
      * @Date 2019/12/19 10:11
      */
     Result selectMeetingDetails(int meetingId);
+
+    Result selectMeetingAudited();
 }

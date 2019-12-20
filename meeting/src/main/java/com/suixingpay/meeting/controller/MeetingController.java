@@ -24,6 +24,10 @@ public class MeetingController {
     public Result selectAll(){
         return meetingService.selectAll();
     }
+    @RequestMapping("/selectMeetingAudited")
+    public Result selectMeetingAudited(){
+        return meetingService.selectMeetingAudited();
+    }
     //会议审核通过
     @RequestMapping("/auditPass")
     public Result auditPass(int meetingId){

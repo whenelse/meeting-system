@@ -44,4 +44,6 @@ public interface MeetingMapper {
      * @Date 2019/12/19 10:16
      */
     Meeting selectMeetingDetails(@Param("meetingId") int meetingId);
+
+    List<Meeting> selectMeetingAudited();
 }
