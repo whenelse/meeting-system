@@ -129,7 +129,7 @@
         <include refid="meeting_column_list"/>,
         <include refid="user_column_list"/>
         from
-            (select *
+            (select <include refid="meeting_column_list"/>
              from meeting
              where meeting_user_id = #{userId}
              order by meeting_audit_status,meeting_enroll_end_time,meeting_start_time) m

@@ -187,7 +187,11 @@ public class MeetingServiceImpl implements MeetingService {
         Result result = new Result();
         try {
             List<Meeting> list = meetingMapper.selectMeetingByUserId(userId);
-            result.set(200, "查询成功", list);
+            if (list.size() == 0) {
+                result.set(200, "对不起，您还没有发起过会议", list);
+            } else {
+                result.set(200, "查询成功", list);
+            }
         } catch (Exception e) {
             log.error("数据库查询异常：",e);
             result.set(200, "查询异常，请稍后", null);
@@ -198,7 +202,7 @@ public class MeetingServiceImpl implements MeetingService {
     /**
      * @Description 查询会议详细信息
      * @Author zhu_jinsheng[zhu_js@suixingpay.com]
-     * @Param meetingId:
+     * @Param meetingId: 会议Id
      * @return: com.suixingpay.meeting.pojo.Result
      * @Date 2019/12/19 10:12
      */

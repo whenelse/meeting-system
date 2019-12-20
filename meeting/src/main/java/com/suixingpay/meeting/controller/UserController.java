@@ -8,6 +8,14 @@ import com.suixingpay.meeting.token.Token;
 import com.suixingpay.meeting.token.TokenHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
+import com.suixingpay.meeting.groups.SelectById;
+import com.suixingpay.meeting.pojo.Result;
+import com.suixingpay.meeting.pojo.User;
+import com.suixingpay.meeting.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,5 +47,18 @@ public class UserController {
             result.set(200, "鑫管家登录", token);
         }
         return result;
+    }
+    @Autowired
+    private UserService userService;
+    /**
+     * @Description 检查鑫管家是否V5即以上
+     * @Author zhu_jinsheng[zhu_js@suixingpay.com]
+     * @Param meeting:  使用用户持久化类去接收鑫管家Id
+     * @return: com.suixingpay.meeting.pojo.Result
+     * @Date 2019/12/19 10:42
+     */
+    @PostMapping("/select/authority")
+    public Result checkUserHaveAuthority(@Validated(SelectById.class) @RequestBody User user) {
+        return userService.checkUserHaveAuthority(user.getUserId());
     }
 }
