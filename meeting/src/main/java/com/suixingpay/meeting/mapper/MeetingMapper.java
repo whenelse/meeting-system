@@ -28,6 +28,19 @@ public interface MeetingMapper {
     List<Meeting> queryMeetingByUserId(int meetingUserId);
 
     /**
+     * 通过推荐码查询会议
+     * @param meetingReferralCode
+     * @return
+     */
+    List<Meeting> queryMeetingByReferralCode(String meetingReferralCode);
+
+    /**
+     * 通过推荐码不为空的查询会议
+     * @return
+     */
+    List<Meeting> queryMeetingByReferralCodeIsNull();
+
+    /**
      * 查看会议详情
      * @param meetingId
      * @return

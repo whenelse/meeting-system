@@ -87,6 +87,7 @@ public class MeetingController {
      * @param userId
      * @return
      */
+    @NoneAuth
     @PostMapping("/userquery")
     public Result userQueryMeeting(int userId){
         return meetingService.queryMeetingByPUser(userId);
@@ -97,6 +98,7 @@ public class MeetingController {
      * @param meetingId
      * @return
      */
+    @NoneAuth
     @PostMapping("/detailselect")
     public Result selectDetailMeeting(int meetingId){
         return meetingService.selectMeetingById(meetingId);
@@ -107,6 +109,7 @@ public class MeetingController {
      * @param meetingSel
      * @return
      */
+    @NoneAuth
     @PostMapping("/selectall")
     public Result queryAllMeeting(MeetingSel meetingSel){
         return meetingService.selectAllMeeting(meetingSel);

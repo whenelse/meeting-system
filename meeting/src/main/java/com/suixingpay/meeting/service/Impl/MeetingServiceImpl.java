@@ -88,11 +88,16 @@ public class MeetingServiceImpl implements MeetingService {
             //获取用户上级
             user = userMapper.selectUserByUserId(user.getPUserId());
             //获取用户上级的会议
-            meeting = meetingMapper.queryMeetingByUserId(user.getUserId());
+            meeting = meetingMapper.queryMeetingByReferralCode(user.getReferralCode());
             list.addAll(meeting);
         }
+        //查询出根上级的会议
         user = userMapper.selectUserByUserId(user.getPUserId());
-        meeting = meetingMapper.queryMeetingByUserId(user.getUserId());
+        meeting = meetingMapper.queryMeetingByReferralCode(user.getReferralCode());
+        list.addAll(meeting);
+
+        //查询管理员创建的面向所有人的会议
+        meeting = meetingMapper.queryMeetingByReferralCodeIsNull();
         list.addAll(meeting);
 
         //判断用户是否已报名会议
@@ -146,6 +151,7 @@ public class MeetingServiceImpl implements MeetingService {
             result.set(200,"查询成功",list);
         }catch (Exception e){
             result.set(200,"查询失败",null);
+            log.info(e.getMessage());
         }
         return result;
     }

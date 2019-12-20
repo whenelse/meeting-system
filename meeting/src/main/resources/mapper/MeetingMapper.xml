@@ -40,7 +40,21 @@
         select
         <include refid="meeting_column_list"/>
         from meeting
-        where meeting_user_id = #{meetingUserId}  order by meeting_start_time
+        where meeting_user_id = #{meetingUserId} order by meeting_start_time
+    </select>
+
+    <select id="queryMeetingByReferralCode" parameterType="String" resultMap="MeetingResultMap">
+        select
+        <include refid="meeting_column_list"/>
+        from meeting
+        where meeting_referral_code = #{meetingReferralCode} order by meeting_start_time
+    </select>
+
+    <select id="queryMeetingByReferralCodeIsNull" resultMap="MeetingResultMap">
+        select
+        <include refid="meeting_column_list"/>
+        from meeting
+        where meeting_referral_code is null order by meeting_start_time
     </select>
 
     <select id="selectMeetingById" parameterType="INTEGER" resultMap="MeetingResultMap" >
@@ -51,11 +65,11 @@
 
     <select id="queryAllMeeting" parameterType="com.suixingpay.meeting.to.MeetingSel" resultMap="MeetingResultMap">
         select
-            <include refid="meeting_column_list"/>,user_name,referral_code,user_company
+            <include refid="meeting_column_list"/>,user_name,user_company
         from meeting left join user on meeting_user_id = user_id
         <where>
-            <if test="referralCode!=null and referralCode!=''">
-                referral_code = #{referralCode}
+            <if test="meetingReferralCode!=null and meetingReferralCode!=''">
+                meeting_referral_code = #{meetingReferralCode}
             </if>
             <if test="meetingCharge!=null and meetingCharge!=''">
                 and meeting_charge = #{meetingCharge}

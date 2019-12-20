@@ -57,8 +57,6 @@ public class Meeting {
     String userName;
     //用户所属分公司
     String userCompany;
-    //管家推荐码
-    String referralCode;
     //参与表id
     Integer RecordId;
 
