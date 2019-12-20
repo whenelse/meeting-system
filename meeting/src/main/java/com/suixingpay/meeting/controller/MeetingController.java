@@ -1,5 +1,6 @@
 package com.suixingpay.meeting.controller;
 
+import com.suixingpay.meeting.annotation.NoneAuth;
 import com.suixingpay.meeting.pojo.Meeting;
 import com.suixingpay.meeting.groups.SelectById;
 import com.suixingpay.meeting.pojo.Result;
@@ -79,15 +80,17 @@ public class MeetingController {
     }
 
     /**
-     * @description 导出会议信息到EXCEL表
+     * @description 将该鑫管家创建的所有会议信息导出到EXCEL表
      * @author Huang Yafeng
      * @date 2019/12/19 11:49
      * @param
      * @return
      */
-    @RequestMapping("/exportMeeting")
-    public void exportMeetingInfo(HttpServletResponse response) throws IOException {
-        meetingService.exportMeetingInfo(response);
+    //@NoneAuth
+    @RequestMapping("/export/meeting")
+    public void exportMeetingInfo(HttpServletResponse response,@Validated(SelectById.class) @RequestBody User user)
+            throws IOException {
+        meetingService.exportMeetingInfo(response, user.getUserId());
     }
 
 }

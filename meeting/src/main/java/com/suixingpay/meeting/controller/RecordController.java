@@ -59,7 +59,7 @@ public class RecordController {
      * @param response
      * @return
      */
-    @NoneAuth
+    //@NoneAuth
     @RequestMapping("/export/enroll")
     public void exportEnrollInfo(HttpServletResponse response, @Validated(SelectById.class) @RequestBody Meeting meeting)
             throws IOException {
@@ -73,7 +73,7 @@ public class RecordController {
      * @param response
      * @return
      */
-    @NoneAuth
+    //@NoneAuth
     @RequestMapping("/export/signin")
     public void exportSignInInfo(HttpServletResponse response, @Validated(SelectById.class) @RequestBody Meeting meeting)
             throws IOException {

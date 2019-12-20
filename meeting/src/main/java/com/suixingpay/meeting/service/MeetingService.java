@@ -40,11 +40,11 @@ public interface MeetingService {
    // Result queryMeetingByPUser(int userId);
 
     /**
-     * @description 导出会议信息到EXCEL表
+     * @description 将该鑫管家创建的所有会议信息导出到EXCEL表
      * @author Huang Yafeng
      * @date 2019/12/19 10:59
      * @param
      * @return
      */
-    void exportMeetingInfo(HttpServletResponse response) throws IOException;
+    void exportMeetingInfo(HttpServletResponse response, int userId) throws IOException;
 }

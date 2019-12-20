@@ -152,15 +152,15 @@ public class RecordServiceImpl implements RecordService {
             cell.setCellStyle(cellStyle);*/
 
         }
-        sheet.setDefaultRowHeight((short) (16.5 * 20));
+        sheet.setDefaultRowHeight((short) (17 * 20));
         //列宽自适应
         for (int i = 0; i <= 2; i++) {
-            sheet.autoSizeColumn(i);
+            sheet.setColumnWidth(i, 20 * 256);
         }
 
         response.setContentType("application/vnd.ms-excel;charset=utf-8");
         OutputStream os = response.getOutputStream();
-        response.setHeader("Content-disposition", "attachment;filename=user.xls");//默认Excel名称
+        response.setHeader("Content-disposition", "attachment;filename=enrollExcel.xls");//默认Excel名称
         wb.write(os);
         os.flush();
         os.close();
@@ -206,15 +206,15 @@ public class RecordServiceImpl implements RecordService {
             cell.setCellValue(record.getRecordSignInTime());
             cell.setCellStyle(cellStyle);
         }
-        sheet.setDefaultRowHeight((short) (16.5 * 20));
+        sheet.setDefaultRowHeight((short) (17 * 20));
         //列宽自适应
         for (int i = 0; i <= 2; i++) {
-            sheet.autoSizeColumn(i);
+            sheet.setColumnWidth(i, 20 * 256);
         }
 
         response.setContentType("application/vnd.ms-excel;charset=utf-8");
         OutputStream os = response.getOutputStream();
-        response.setHeader("Content-disposition", "attachment;filename=user.xls");//默认Excel名称
+        response.setHeader("Content-disposition", "attachment;filename=signInExcel.xls");//默认Excel名称
         wb.write(os);
         os.flush();
         os.close();

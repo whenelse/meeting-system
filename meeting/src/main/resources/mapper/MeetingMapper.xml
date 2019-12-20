@@ -10,6 +10,7 @@
         <result column="meeting_sponsor" property="meetingSponsor" jdbcType="VARCHAR"/>
         <result column="meeting_charge" property="meetingCharge" jdbcType="INTEGER"/>
         <result column="meeting_start_time" property="meetingStartTime" jdbcType="TIMESTAMP"/>
+        <result column="meeting_hours" property="meetingHours" jdbcType="INTEGER"/>
         <result column="meeting_address" property="meetingAddress" jdbcType="VARCHAR"/>
         <result column="meeting_detailed_address" property="meetingDetailedAddress" jdbcType="VARCHAR"/>
         <result column="meeting_enroll_end_time" property="meetingEnrollEndTime" jdbcType="TIMESTAMP"/>
