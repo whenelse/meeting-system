@@ -33,6 +33,7 @@ public class MeetingController {
         return meetingService.selectAll();
     }
     //查询待审核的会议
+    @NoneAuth
     @RequestMapping("/selectMeetingAudited")
     public Result selectMeetingAudited(){
         return meetingService.selectMeetingAudited();
