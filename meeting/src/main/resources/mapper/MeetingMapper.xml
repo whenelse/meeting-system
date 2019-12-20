@@ -158,4 +158,24 @@
     <select id="selectDate" resultMap="MeetingResultMap">
         select meeting_start_time,meeting_hours from meeting where  meeting_id =#{RecordMeetingId}
     </select>
+
+    <select id="selectMeetingSelective" resultMap="MeetingResultMap" parameterType="com.suixingpay.meeting.pojo.Meeting">
+        select <include refid="meeting_column_list"/>
+        from meeting
+        <trim prefix="where" prefixOverrides="and">
+            <if test="meetingInitiationType!=null">meeting_initiation_type=#{meetingInitiationType,jdbcType=VARCHAR}</if>
+            <if test="meetingUserId!=null">and meeting_user_id=#{meetingUserId,jdbcType=VARCHAR}</if>
+            <if test="meetingName!=null">and meeting_name like concat('%',#{meetingName,jdbcType=VARCHAR},'%')</if>
+            <if test="meetingType!=null">and meeting_type=#{meetingType,jdbcType=VARCHAR}</if>
+            <if test="meetingSponsor!=null">and meeting_sponsor=#{meetingSponsor,jdbcType=VARCHAR}</if>
+            <if test="meetingReferralCode!=null">and meeting_referral_code=#{meetingReferralCode,jdbcType=VARCHAR}</if>
+            <if test="meetingCharge!=null">and meeting_charge=#{meetingCharge,jdbcType=INTEGER}</if>
+            <if test="meetingStartTime!=null">and meeting_start_time=#{meetingStartTime,jdbcType=TIMESTAMP}</if>
+            <if test="meetingAddress!=null">and meeting_address=#{meetingAddress,jdbcType=VARCHAR}</if>
+            <if test="meetingDetailedAddress!=null">and meeting_detailed_address=#{meetingDetailedAddress,jdbcType=VARCHAR}</if>
+            <if test="meetingEnrollEndTime!=null">and meeting_enroll_end_time=#{meetingEnrollEndTime,jdbcType=TIMESTAMP}</if>
+            <if test="meetingDescribe!=null">and meeting_describe=#{meetingDescribe,jdbcType=VARCHAR}</if>
+            <if test="meetingAuditStatus!=null">and meeting_audit_status=#{meetingAuditStatus,jdbcType=INTEGER}</if>
+        </trim>
+    </select>
 </mapper>
