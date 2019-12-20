@@ -1,6 +1,5 @@
 package com.suixingpay.meeting.controller;
 
-import com.suixingpay.meeting.annotation.NoneAuth;
 import com.suixingpay.meeting.service.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.suixingpay.meeting.pojo.Meeting;

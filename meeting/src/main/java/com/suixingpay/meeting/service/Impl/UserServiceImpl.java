@@ -3,14 +3,8 @@ package com.suixingpay.meeting.service.Impl;
 import com.suixingpay.meeting.mapper.UserMapper;
 import com.suixingpay.meeting.pojo.Result;
 import com.suixingpay.meeting.pojo.User;
-import com.suixingpay.meeting.mapper.UserMapper;
-import com.suixingpay.meeting.pojo.Meeting;
-import com.suixingpay.meeting.pojo.Result;
-import com.suixingpay.meeting.pojo.User;
 import com.suixingpay.meeting.service.UserService;
 import com.suixingpay.meeting.token.Token;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,8 +35,6 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
-    @Autowired
-    private UserMapper userMapper;
     @Override
     public Result checkUserHaveAuthority(int userId) {
         Result result = new Result();
