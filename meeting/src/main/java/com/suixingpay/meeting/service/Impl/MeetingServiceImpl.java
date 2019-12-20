@@ -11,7 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import static com.suixingpay.meeting.util.MeetingCheck.enrollCheck;
+import static com.suixingpay.meeting.util.MeetingCheck.timeCheck;
 
 @Slf4j
 @Service
@@ -162,6 +166,35 @@ public class MeetingServiceImpl implements MeetingService {
         } catch (Exception e) {
             log.error("数据库查询异常：",e);
             result.set(200, "查询异常，请稍后", null);
+        }
+        return result;
+    }
+
+    @Override
+    public Result insertMeeting(Meeting meeting) {
+        if (!enrollCheck(meeting)){
+            result.set(200,"报名截止时间不符要求",null);
+            return result;
+        }
+//        User user = userMapper.selectUserByUserId(meeting.getMeetingUserId());
+        User user =new User();
+        user.setLevelNo(9);
+        if (meeting.getMeetingUserId() !=1 || user.getLevelNo() < 5){
+            result.set(200,"对不起，只有V5以上等级的鑫管家才能发起会议",null);
+            return result;
+        }
+        Meeting newMeeting=new Meeting();
+        newMeeting.setMeetingUserId(user.getUserId());
+        List<Meeting> meetingList= meetingMapper.queryAllMeeting(meeting);
+        boolean b = timeCheck(meetingList,meeting);
+        if (!b) {
+            result.set(200, "同一时间不能有两场会议", null);
+        }
+        else if (meetingMapper.insertMeeting(meeting,user.getUserId()) == 0) {
+            result.set(200, "添加会议失败", null);
+        }
+        else {
+            result.set(200, "恭喜你创建成功，审核通过后会展示其他鑫管家查看", null);
         }
         return result;
     }

@@ -2,6 +2,7 @@ package com.suixingpay.meeting.service;
 
 import com.suixingpay.meeting.pojo.Meeting;
 import com.suixingpay.meeting.pojo.Result;
+import com.suixingpay.meeting.pojo.User;
 
 public interface MeetingService {
 
@@ -34,4 +35,6 @@ public interface MeetingService {
      * @Date 2019/12/19 10:11
      */
     Result selectMeetingDetails(int meetingId);
+
+    Result insertMeeting(Meeting meeting);
 }

@@ -19,6 +19,10 @@ public class MeetingController {
     @Autowired
     MeetingService meetingService;
 
+    @PostMapping("/insertMeeting")
+    public Result insertMeeting(@RequestBody Meeting meeting){
+        return meetingService.insertMeeting(meeting);
+    }
     //测试，查找所有会议
     @RequestMapping("/selectAll")
     public Result selectAll(){

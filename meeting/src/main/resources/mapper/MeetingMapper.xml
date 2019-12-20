@@ -10,6 +10,7 @@
         <result column="meeting_sponsor" property="meetingSponsor" jdbcType="VARCHAR"/>
         <result column="meeting_charge" property="meetingCharge" jdbcType="INTEGER"/>
         <result column="meeting_start_time" property="meetingStartTime" jdbcType="TIMESTAMP"/>
+        <result column="meeting_hours" property="meetingHours" jdbcType="INTEGER"/>
         <result column="meeting_address" property="meetingAddress" jdbcType="VARCHAR"/>
         <result column="meeting_detailed_address" property="meetingDetailedAddress" jdbcType="VARCHAR"/>
         <result column="meeting_enroll_end_time" property="meetingEnrollEndTime" jdbcType="TIMESTAMP"/>
@@ -27,6 +28,14 @@
         meeting_charge,meeting_start_time,meeting_hours,meeting_address,meeting_detailed_address,
         meeting_enroll_end_time,meeting_describe,meeting_audit_status
     </sql>
+    <insert id="insertMeeting">
+        insert into
+        meeting (meeting_initiation_type,meeting_user_id,meeting_name,meeting_type,meeting_sponsor,
+        meeting_charge,meeting_start_time,meeting_hours,meeting_address,meeting_detailed_address,
+        meeting_enroll_end_time,meeting_describe,meeting_audit_status)
+        values (#{meetingInitiationType},#{meetingUserId},#{meetingName},#{meetingType},#{meetingSponsor},#{meetingCharge}
+        #{meetingStartTime},#{meetingHours},#{meetingAddress},#{meetingDetailedAddress},#{meetingEnrollEndTime},#{meetingDescribe},0)
+    </insert>
 
     <sql id="user_column_list">
         user_id,user_name,telephone,user_company,root_user_id,p_user_id,referral_code,level_no,user_province,
