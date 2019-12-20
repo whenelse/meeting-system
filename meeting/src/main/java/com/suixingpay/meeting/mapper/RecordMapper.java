@@ -1,10 +1,20 @@
 package com.suixingpay.meeting.mapper;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.suixingpay.meeting.pojo.Record;
 import java.util.List;
 import com.suixingpay.meeting.pojo.Meeting;
 
 public interface RecordMapper {
+    /**
+     * 查询用户是否参加活动
+     * @param recordMeetingId
+     * @param recordUserId
+     * @return
+     */
+    Integer selectIsEnrollRecordIdByUserIdAndMeetingId(@Param("recordMeetingId") int recordMeetingId,@Param("recordUserId") int recordUserId);
+
     int enroll(Record record);
 
     List<Meeting> selectRecord(Record record);

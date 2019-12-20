@@ -6,6 +6,7 @@ import com.suixingpay.meeting.groups.SelectById;
 import com.suixingpay.meeting.pojo.Result;
 import com.suixingpay.meeting.pojo.User;
 import com.suixingpay.meeting.service.MeetingService;
+import com.suixingpay.meeting.to.MeetingSel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.validation.annotation.Validated;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.OutputStream;
 
 @RestController
 @RequestMapping(value = "/meeting", produces = "application/json; charset=utf-8")
@@ -23,6 +23,9 @@ public class MeetingController {
 
     @Autowired
     MeetingService meetingService;
+
+    @Autowired
+    Result result;
 
     //测试，查找所有会议
     @RequestMapping("/selectAll")
@@ -47,11 +50,6 @@ public class MeetingController {
 
 
 
-    @PostMapping("/userquery")
-    public Result userQueryMeeting(int userId){
-        return meetingService.queryMeetingByPUser(userId);
-    }
-
     /**
      * @Description 查询鑫管家自己创建的会议列表
      * @Author zhu_jinsheng[zhu_js@suixingpay.com]
@@ -59,6 +57,7 @@ public class MeetingController {
      * @return: com.suixingpay.meeting.pojo.Result
      * @Date 2019/12/19 10:42
      */
+    @NoneAuth
     @PostMapping("/select/create/meetings")
     public Result selectMeetingByUserId(@Validated(SelectById.class) @RequestBody User user) {
         return meetingService.selectMeetingByUserId(user.getUserId());
@@ -70,18 +69,40 @@ public class MeetingController {
      * @return: com.suixingpay.meeting.pojo.Result
      * @Date 2019/12/19 10:42
      */
+    @NoneAuth
     @PostMapping("/select/meeting/details")
     public Result selectMeetingDetails(@Validated(SelectById.class) @RequestBody Meeting meeting) {
         return meetingService.selectMeetingDetails(meeting.getMeetingId());
     }
+
+    /**
+     * 鑫管家查看会议
+     * @param userId
+     * @return
+     */
+    @PostMapping("/userquery")
+    public Result userQueryMeeting(int userId){
+        return meetingService.queryMeetingByPUser(userId);
+    }
+
+    /**
+     * 鑫管家查看某个会议详情
+     * @param meetingId
+     * @return
+     */
     @PostMapping("/detailselect")
     public Result selectDetailMeeting(int meetingId){
         return meetingService.selectMeetingById(meetingId);
     }
 
+    /**
+     * 管理员查看所有会议
+     * @param meetingSel
+     * @return
+     */
     @PostMapping("/selectall")
-    public Result queryAllMeeting(Meeting meeting){
-        return meetingService.selectAllMeeting(meeting);
+    public Result queryAllMeeting(MeetingSel meetingSel){
+        return meetingService.selectAllMeeting(meetingSel);
     }
 
     /**

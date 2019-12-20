@@ -2,6 +2,7 @@ package com.suixingpay.meeting.service;
 
 import com.suixingpay.meeting.pojo.Meeting;
 import com.suixingpay.meeting.pojo.Result;
+import com.suixingpay.meeting.to.MeetingSel;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -15,11 +16,11 @@ public interface MeetingService {
     //审核驳回
     Result auditReject(int meetingId);
 
-    Result queryMeetingByPUser(int userId);
+    Result queryMeetingByPUser(Integer userId);
 
-    Result selectMeetingById(int meetingId);
+    Result selectMeetingById(Integer meetingId);
 
-    Result selectAllMeeting(Meeting meeting);
+    Result selectAllMeeting(MeetingSel meetingSel);
 
     /**
      * @Description 查询鑫管家自己创建的会议列表
