@@ -28,7 +28,6 @@
     </select>
 
 
-
     <select id="selectUserByUserId" parameterType="Integer" resultMap="UserResultMap">
         select
         <include refid="user_column_list"/>
