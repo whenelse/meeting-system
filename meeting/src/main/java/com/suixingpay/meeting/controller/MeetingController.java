@@ -1,5 +1,6 @@
 package com.suixingpay.meeting.controller;
 
+import com.suixingpay.meeting.annotation.NoneAuth;
 import com.suixingpay.meeting.pojo.Meeting;
 import com.suixingpay.meeting.groups.SelectById;
 import com.suixingpay.meeting.pojo.Result;
@@ -11,6 +12,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
 
 @RestController
 @RequestMapping(value = "/meeting", produces = "application/json; charset=utf-8")
@@ -24,6 +29,7 @@ public class MeetingController {
     public Result selectAll(){
         return meetingService.selectAll();
     }
+    //查询待审核的会议
     @RequestMapping("/selectMeetingAudited")
     public Result selectMeetingAudited(){
         return meetingService.selectMeetingAudited();
@@ -78,5 +84,18 @@ public class MeetingController {
         return meetingService.selectAllMeeting(meeting);
     }
 
+    /**
+     * @description 将该鑫管家创建的所有会议信息导出到EXCEL表
+     * @author Huang Yafeng
+     * @date 2019/12/19 11:49
+     * @param
+     * @return
+     */
+    //@NoneAuth
+    @RequestMapping("/export/meeting")
+    public void exportMeetingInfo(HttpServletResponse response,@Validated(SelectById.class) @RequestBody User user)
+            throws IOException {
+        meetingService.exportMeetingInfo(response, user.getUserId());
+    }
 
 }

@@ -3,6 +3,9 @@ package com.suixingpay.meeting.service;
 import com.suixingpay.meeting.pojo.Meeting;
 import com.suixingpay.meeting.pojo.Result;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 public interface MeetingService {
 
     //查找所有会议
@@ -35,5 +38,16 @@ public interface MeetingService {
      */
     Result selectMeetingDetails(int meetingId);
 
+    //查询待审核的会议
     Result selectMeetingAudited();
+   // Result queryMeetingByPUser(int userId);
+
+    /**
+     * @description 将该鑫管家创建的所有会议信息导出到EXCEL表
+     * @author Huang Yafeng
+     * @date 2019/12/19 10:59
+     * @param
+     * @return
+     */
+    void exportMeetingInfo(HttpServletResponse response, int userId) throws IOException;
 }
