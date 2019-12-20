@@ -20,8 +20,6 @@ public interface MeetingMapper {
      */
     List<Meeting> queryMeetingByUserId(int meetingUserId);
 
-
-
     /**
      * 查看会议详情
      * @param meetingId
@@ -36,6 +34,16 @@ public interface MeetingMapper {
      */
     List<Meeting> queryAllMeeting(MeetingSel meetingSel);
 
+    Meeting selectById(int meetingId);
+
+    /**
+     * @Description 查询鑫管家创建的会议
+     * @Author zhu_jinsheng[zhu_js@suixingpay.com]
+     * @Param userId:  鑫管家Id
+     * @return: java.util.List<com.suixingpay.meeting.pojo.Meeting>
+     * @Date 2019/12/19 18:03
+     */
+    List<Meeting> selectMeetingByUserId(@Param("userId") int userId);
     /**
      * @Description 查询会议详细信息
      * @Author zhu_jinsheng[zhu_js@suixingpay.com]

@@ -7,15 +7,69 @@
         <result column="record_user_id" property="recordUserId" jdbcType="INTEGER"/>
         <result column="record_enroll_time" property="recordEnrollTime" jdbcType="TIMESTAMP"/>
         <result column="record_sign_in_time" property="recordSignInTime" jdbcType="TIMESTAMP"/>
+        <association property="user" javaType="com.suixingpay.meeting.pojo.User">
+            <id column="user_id" property="userId" jdbcType="INTEGER"/>
+            <result column="user_name" property="userName" jdbcType="INTEGER"/>
+            <result column="telephone" property="telephone" jdbcType="INTEGER"/>
+            <result column="referral_code" property="referralCode" jdbcType="INTEGER"/>
+            <result column="user_province" property="userProvince" jdbcType="INTEGER"/>
+            <result column="user_city" property="userCity" jdbcType="INTEGER"/>
+        </association>
     </resultMap>
 
     <sql id="record_column_list">
-        record_id, record_meeting_id, record_user_id, record_enroll_time, record_sign_in_time
+        record_id, record_meeting_id,record_user_id, record_enroll_time, record_sign_in_time
     </sql>
 
     <select id="selectIsEnrollRecordIdByUserIdAndMeetingId" parameterType="INTEGER" resultType="INTEGER">
         select record_id from record where record_meeting_id = #{recordMeetingId} and record_user_id = #{recordUserId}
     </select>
     
-    <select id="selectEnrollList" resultMap="RecordResultMap"></select>
+    <insert id="enroll" parameterType="com.suixingpay.meeting.pojo.Record">
+        insert into record
+        (record_meeting_id,record_user_id,record_enroll_time)
+        values
+        (#{recordMeetingId},#{recordUserId},#{recordEnrollTime})
+    </insert>
+
+    <select id="selectRecord" resultMap="RecordResultMap" parameterType="com.suixingpay.meeting.pojo.Record">
+        select <include refid="record_column_list"/>
+        from record
+        <trim prefix="where" prefixOverrides="AND">
+            <if test="recordMeetingId!=null"> record_meeting_id=#{recordMeetingId}</if>
+            <if test="recordUserId!=null">and record_user_id=#{recordUserId}</if>
+            <if test="recordEnrollTime!=null">and record_enroll_time=#{recordEnrollTime}</if>
+            <if test="recordSignInTime!=null">and record_sign_in_time=#{recordSignInTime}</if>
+        </trim>
+    </select>
+
+    <select id="selectByUserId" resultMap="RecordResultMap" parameterType="Integer">
+        select <include refid="record_column_list"/>
+        from record
+        where record_user_id=#{recordUserId}
+    </select>
+
+<!--    查询会议报名信息-->
+    <select id="selectEnrollList" resultMap="RecordResultMap">
+        select
+        <include refid="record_column_list"/>,
+        user_id,user_name,telephone,referral_code,user_province,user_city
+        from
+        (select <include refid="record_column_list"/>
+        from record
+        where record_meeting_id = #{recordMeetingId} and !ISNULL(record_enroll_time)) r
+        left join user u on r.record_user_id = u.user_id
+    </select>
+
+    <!--    查询会议签到信息-->
+    <select id="selectSignInList" resultMap="RecordResultMap">
+        select
+        <include refid="record_column_list"/>,
+        user_id,user_name,telephone,referral_code,user_province,user_city
+        from
+            (select <include refid="record_column_list"/>
+            from record
+            where record_meeting_id = #{recordMeetingId} and !ISNULL(record_sign_in_time)) r
+        left join user u on r.record_user_id = u.user_id
+    </select>
 </mapper>
