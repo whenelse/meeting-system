@@ -126,9 +126,12 @@ public class MeetingServiceImpl implements MeetingService {
      */
     @Override
     public Result selectMeetingById(Integer meetingId,Integer userId) {
-        if (meetingId == null){
+        if (meetingId == null || userId == null){
             result.set(200,"参数异常",null);
+            return result;
         }
+        System.out.println(meetingId);
+        System.out.println(userId);
         try{
             Meeting meeting = meetingMapper.selectMeetingById(meetingId);
             meeting.setRecordId(recordMapper.selectIsEnrollRecordIdByUserIdAndMeetingId(meetingId,userId));

@@ -3,6 +3,7 @@ package com.suixingpay.meeting.controller;
 import com.suixingpay.meeting.annotation.NoneAuth;
 import com.suixingpay.meeting.pojo.Meeting;
 import com.suixingpay.meeting.groups.SelectById;
+import com.suixingpay.meeting.pojo.Record;
 import com.suixingpay.meeting.pojo.Result;
 import com.suixingpay.meeting.pojo.User;
 import com.suixingpay.meeting.service.MeetingService;
@@ -94,15 +95,16 @@ public class MeetingController {
     }
 
     /**
-     * 鑫管家查看某个会议详情
-     * @param meetingId
-     * @param userId
-     * @return
+     * @Description 鑫管家查看某个会议详情
+     * @Author xia_shibo
+     * @Date 16:23 2019/12/21
+     * @Param [record]
+     * @return com.suixingpay.meeting.pojo.Result
      */
     @NoneAuth
     @PostMapping("/detailSelect")
-    public Result selectDetailMeeting(int meetingId,int userId){
-        return meetingService.selectMeetingById(meetingId,userId);
+    public Result selectDetailMeeting(@RequestBody Record record){
+        return meetingService.selectMeetingById(record.getRecordMeetingId(),record.getRecordUserId());
     }
 
     /**
