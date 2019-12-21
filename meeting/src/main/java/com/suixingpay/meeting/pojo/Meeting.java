@@ -34,6 +34,8 @@ public class Meeting {
     //主办方
     @NotNull(message = "主办方不能为空", groups = insertCheck.class)
     String meetingSponsor;
+    //管家推荐码
+    String meetingReferralCode;
     //是否收费，0 是 1 否
     @NotNull(message = "收费不能为空", groups = insertCheck.class)
     Integer meetingCharge;
@@ -72,5 +74,7 @@ public class Meeting {
     String userCompany;
     //管家推荐码
     String referralCode;
+    //参与表id
+    Integer RecordId;
 
 }

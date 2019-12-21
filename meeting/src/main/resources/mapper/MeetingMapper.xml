@@ -8,6 +8,7 @@
         <result column="meeting_name" property="meetingName" jdbcType="VARCHAR"/>
         <result column="meeting_type" property="meetingType" jdbcType="VARCHAR"/>
         <result column="meeting_sponsor" property="meetingSponsor" jdbcType="VARCHAR"/>
+        <result column="meeting_referral_code" property="meetingReferralCode" jdbcType="VARCHAR"/>
         <result column="meeting_charge" property="meetingCharge" jdbcType="INTEGER"/>
         <result column="meeting_start_time" property="meetingStartTime" jdbcType="TIMESTAMP"/>
         <result column="meeting_hours" property="meetingHours" jdbcType="INTEGER"/>
@@ -21,12 +22,13 @@
         <result column="user_company" property="userCompany" jdbcType="VARCHAR"/>
         <result column="user_name" property="meetingUserName" jdbcType="VARCHAR"/>
         <result column="telephone" property="meetingUserPhone" jdbcType="VARCHAR"/>
+        <result column="record_id" property="recordId" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="meeting_column_list">
         meeting_id,meeting_initiation_type,meeting_user_id,meeting_name,meeting_type,meeting_sponsor,
-        meeting_charge,meeting_start_time,meeting_hours,meeting_address,meeting_detailed_address,
-        meeting_enroll_end_time,meeting_describe,meeting_audit_status
+        meeting_referral_code,meeting_charge,meeting_start_time,meeting_hours,meeting_address,
+        meeting_detailed_address,meeting_enroll_end_time,meeting_describe,meeting_audit_status
     </sql>
     <insert id="insertMeeting">
         insert into
@@ -43,11 +45,16 @@
     </sql>
 
     <select id="queryMeetingByUserId" parameterType="INTEGER" resultMap="MeetingResultMap">
-        select <include refid="meeting_column_list"/>,user_name from meeting left join user on meeting_user_id = user_id where meeting_user_id = #{meetingUserId}
+        select
+        <include refid="meeting_column_list"/>
+        from meeting
+        where meeting_user_id = #{meetingUserId}  order by meeting_start_time
     </select>
 
     <select id="selectMeetingById" parameterType="INTEGER" resultMap="MeetingResultMap" >
-        select <include refid="meeting_column_list"/>,user_name from meeting left join user on meeting_user_id = user_id where meeting_id = #{meetingId}
+        select <include refid="meeting_column_list"/>,user_name
+        from meeting left join user on meeting_user_id = user_id
+        where meeting_id = #{meetingId}
     </select>
 
     <select id="queryAllMeeting" parameterType="com.suixingpay.meeting.to.MeetingSel" resultMap="MeetingResultMap">

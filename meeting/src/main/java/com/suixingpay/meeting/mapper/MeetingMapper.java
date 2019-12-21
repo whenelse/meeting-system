@@ -1,9 +1,11 @@
 package com.suixingpay.meeting.mapper;
 
 import com.suixingpay.meeting.pojo.Meeting;
+import com.suixingpay.meeting.to.MeetingSel;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
 
 public interface MeetingMapper {
     //测试，查询所有
@@ -11,6 +13,11 @@ public interface MeetingMapper {
     //测试，修改会议
     Integer updateMeeting(Meeting meeting);
 
+    /**
+     * 查询鑫管家创建的会议
+     * @param meetingUserId
+     * @return
+     */
     List<Meeting> queryMeetingByUserId(int meetingUserId);
 
     /**
@@ -19,12 +26,13 @@ public interface MeetingMapper {
      * @return
      */
     Meeting selectMeetingById(int meetingId);
+
     /**
      * 模糊多项查询所有会议
-     * @param meeting
+     * @param meetingSel
      * @return
      */
-    List<Meeting> queryAllMeeting(Meeting meeting);
+    List<Meeting> queryAllMeeting(MeetingSel meetingSel);
 
     Meeting selectById(int meetingId);
 
