@@ -125,12 +125,13 @@ public class MeetingServiceImpl implements MeetingService {
      * @return
      */
     @Override
-    public Result selectMeetingById(Integer meetingId) {
+    public Result selectMeetingById(Integer meetingId,Integer userId) {
         if (meetingId == null){
             result.set(200,"参数异常",null);
         }
         try{
             Meeting meeting = meetingMapper.selectMeetingById(meetingId);
+            meeting.setRecordId(recordMapper.selectIsEnrollRecordIdByUserIdAndMeetingId(meetingId,userId));
             result.set(200,"查询成功",meeting);
         }catch (Exception e){
             result.set(200,"查询失败",null);

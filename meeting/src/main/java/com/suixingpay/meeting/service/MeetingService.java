@@ -21,7 +21,7 @@ public interface MeetingService {
 
     Result queryMeetingByPUser(Integer userId);
 
-    Result selectMeetingById(Integer meetingId);
+    Result selectMeetingById(Integer meetingId,Integer userId);
 
     Result selectAllMeeting(MeetingSel meetingSel);
 

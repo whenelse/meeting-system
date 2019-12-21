@@ -82,7 +82,7 @@ public class MeetingController {
      * @return
      */
     @NoneAuth
-    @PostMapping("/userquery")
+    @PostMapping("/userQuery")
     public Result userQueryMeeting(int userId){
         return meetingService.queryMeetingByPUser(userId);
     }
@@ -90,12 +90,13 @@ public class MeetingController {
     /**
      * 鑫管家查看某个会议详情
      * @param meetingId
+     * @param userId
      * @return
      */
     @NoneAuth
-    @PostMapping("/detailselect")
-    public Result selectDetailMeeting(int meetingId){
-        return meetingService.selectMeetingById(meetingId);
+    @PostMapping("/detailSelect")
+    public Result selectDetailMeeting(int meetingId,int userId){
+        return meetingService.selectMeetingById(meetingId,userId);
     }
 
     /**
@@ -104,7 +105,7 @@ public class MeetingController {
      * @return
      */
     @NoneAuth
-    @PostMapping("/selectall")
+    @PostMapping("/selectAll")
     public Result queryAllMeeting(MeetingSel meetingSel){
         return meetingService.selectAllMeeting(meetingSel);
     }

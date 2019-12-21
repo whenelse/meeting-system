@@ -35,13 +35,8 @@
         #{recordEnrollTime,jdbcType=TIMESTAMP},#{recordSignInTime,jdbcType=TIMESTAMP})
     </insert>
 
-
-
-
-
-
     <select id="selectIsEnrollRecordIdByUserIdAndMeetingId" parameterType="INTEGER" resultType="INTEGER">
-        select record_id from record where record_meeting_id = #{recordMeetingId} and record_user_id = #{recordUserId}
+        select record_id from record where record_meeting_id = #{recordMeetingId} and record_user_id = #{recordUserId} and record_enroll_time is not null
     </select>
 
     <insert id="enroll" parameterType="com.suixingpay.meeting.pojo.Record">
