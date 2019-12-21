@@ -185,6 +185,39 @@ public class MeetingServiceImpl implements MeetingService {
     }
 
     /**
+     * @Description 检查鑫管家是否V5即以上并且查看是否有会议
+     * @Author zhu_jinsheng[zhu_js@suixingpay.com]
+     * @Param userId:  鑫管家Id
+     * @return: com.suixingpay.meeting.pojo.Result
+     * @Date 2019/12/19 10:42
+     */
+    @Override
+    public Result checkUserHaveAuthority(int userId) {
+        Result result = new Result();
+        try {
+            User user = userMapper.selectUserByUserId(userId);
+            if (user != null) {
+                if(user.getLevelNo() < 5) {
+                    result.set(200, "没有权限", null);
+                } else {
+                    List<Meeting> list = meetingMapper.selectMeetingByUserId(userId);
+                    if (list.size() == 0) {
+                        result.set(200, "未发起过会议", null);
+                    } else {
+                        result.set(200, "有权限", null);
+                    }
+                }
+            } else {
+                result.set(200, "用户不存在", null);
+            }
+
+        } catch (Exception e) {
+            log.error("数据库查询异常：",e);
+            result.set(200, "系统异常，请稍后", null);
+        }
+        return result;
+    }
+    /**
      * @Description 查询鑫管家自己创建的会议列表
      * @Author zhu_jinsheng[zhu_js@suixingpay.com]
      * @Param userId: 用户Id

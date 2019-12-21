@@ -35,25 +35,4 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
-    @Override
-    public Result checkUserHaveAuthority(int userId) {
-        Result result = new Result();
-        try {
-            User user = userMapper.selectUserByUserId(userId);
-            if (user != null) {
-                if(user.getLevelNo() < 5) {
-                    result.set(200, "您的鑫管家等级小于5，没有权限", null);
-                } else {
-                    result.set(200, "有权限", null);
-                }
-            } else {
-                result.set(200, "用户不存在", null);
-            }
-
-        } catch (Exception e) {
-            log.error("数据库查询异常：",e);
-            result.set(200, "系统异常，请稍后", null);
-        }
-        return result;
-    }
 }

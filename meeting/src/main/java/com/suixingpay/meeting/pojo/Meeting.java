@@ -53,6 +53,8 @@ public class Meeting {
     String meetingUserName;
     //会议发起人手机号
     String meetingUserPhone;
+    //会议发起人推荐码
+    String referralCode;
     //用户名
     String userName;
     //用户所属分公司

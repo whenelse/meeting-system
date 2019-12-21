@@ -26,6 +26,14 @@ public interface MeetingService {
     Result selectAllMeeting(MeetingSel meetingSel);
 
     /**
+     * @Description 检查鑫管家是否V5即以上并且查看是否有会议
+     * @Author zhu_jinsheng[zhu_js@suixingpay.com]
+     * @Param userId:  鑫管家Id
+     * @return: com.suixingpay.meeting.pojo.Result
+     * @Date 2019/12/19 10:42
+     */
+    Result checkUserHaveAuthority(int userId);
+    /**
      * @Description 查询鑫管家自己创建的会议列表
      * @Author zhu_jinsheng[zhu_js@suixingpay.com]
      * @Param userId: 用户Id

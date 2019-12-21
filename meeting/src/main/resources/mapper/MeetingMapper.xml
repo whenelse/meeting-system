@@ -144,10 +144,12 @@
         <include refid="meeting_column_list"/>,
         <include refid="user_column_list"/>
         from
-            (select <include refid="meeting_column_list"/>
+            (select <include refid="meeting_column_list"/>,
+             case when meeting_start_time &lt;= now() then 1 else 0 end as A,
+             case when meeting_enroll_end_time &lt;= now() then 1 else 0 end as B
              from meeting
              where meeting_user_id = #{userId}
-             order by meeting_audit_status,meeting_enroll_end_time,meeting_start_time) m
+             order by meeting_audit_status,A,B,meeting_enroll_end_time,meeting_start_time) m
         left join user u on m.meeting_user_id = u.user_id
     </select>
 <!--    查询会议详细信息-->
