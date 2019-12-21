@@ -32,6 +32,12 @@ public class MeetingController {
     public Result selectAll(){
         return meetingService.selectAll();
     }
+    //条件查询会议信息
+    @NoneAuth
+    @RequestMapping("/selectMeetingSelective")
+    public Result selectMeetingSelective(@RequestBody Meeting meeting){
+        return meetingService.selectMeetingSelective(meeting);
+    }
     //查询待审核的会议
     @NoneAuth
     @RequestMapping("/selectMeetingAudited")

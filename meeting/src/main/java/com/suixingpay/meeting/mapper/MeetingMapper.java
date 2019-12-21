@@ -83,4 +83,6 @@ public interface MeetingMapper {
      */
     Meeting selectDate(@Param("RecordMeetingId") int meetingId);
 
+    //条件查询会议信息
+    List<Meeting> selectMeetingSelective(Meeting meeting);
 }

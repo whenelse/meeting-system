@@ -316,4 +316,16 @@ public class MeetingServiceImpl implements MeetingService {
 
     }
 
+    //条件查询会议信息
+    @Override
+    public Result selectMeetingSelective(Meeting meeting) {
+        if(meeting == null){
+            result.set(400,"查询信息不能为空",null);
+            return result;
+        }
+        List<Meeting> list = meetingMapper.selectMeetingSelective(meeting);
+        result.set(200,"查询成功",list);
+        return result;
+    }
+
 }
