@@ -25,7 +25,6 @@ import java.util.Date;
 import java.util.List;
 
 import static com.suixingpay.meeting.util.MeetingCheck.enrollCheck;
-import static com.suixingpay.meeting.util.MeetingCheck.paramCheck;
 import static com.suixingpay.meeting.util.MeetingCheck.timeCheck;
 
 @Slf4j
@@ -220,24 +219,28 @@ public class MeetingServiceImpl implements MeetingService {
         return result;
     }
 
+    //新增会议 djq
     @Override
     public Result insertMeeting(Meeting meeting) {
-        if (!paramCheck(meeting)){
-            result.set(200,"请补全信息哦",null);
-            return result;
-        }
         if (!enrollCheck(meeting)){
-            result.set(200,"请检查您输入的信息",null);
+            result.set(200,"请检查您输入的时间信息",null);
             return result;
         }
         User user = userMapper.selectUserByUserId(meeting.getMeetingUserId());
-        if (meeting.getMeetingUserId() !=1 || user.getLevelNo() < 5){
+        if (user == null){
+            result.set(200,"请先登录",null);
+            return result;
+        }
+        if (meeting.getMeetingUserId() !=1 && user.getLevelNo() < 5){
             result.set(200,"对不起，只有V5以上等级的鑫管家才能发起会议",null);
             return result;
         }
         Meeting newMeeting=new Meeting();
         newMeeting.setMeetingUserId(user.getUserId());
         List<Meeting> meetingList= meetingMapper.selectMeetingByUserId(meeting.getMeetingUserId());
+        if (user.getUserId()!=1){
+            meeting.setMeetingReferralCode(user.getReferralCode());
+        }
         boolean b = timeCheck(meetingList,meeting);
         if (!b) {
             result.set(200, "同一时间不能有两场会议", null);
@@ -331,4 +334,33 @@ public class MeetingServiceImpl implements MeetingService {
 
     }
 
+    //修改会议 djq
+    @Override
+    public Result updateMeeting(Meeting meeting) {
+
+        if (!enrollCheck(meeting)){
+            result.set(200,"请检查您修改的时间信息",null);
+            return result;
+        }
+        List<Meeting> meetingList= meetingMapper.selectMeetingByUserId(meeting.getMeetingUserId());
+
+        for (Meeting meeting1:meetingList){
+            if (meeting1.getMeetingId()==meeting.getMeetingId()){
+                meetingList.remove(meeting1);
+                break;
+            }
+        }
+        boolean b = timeCheck(meetingList,meeting);
+
+        if (!b) {
+            result.set(200, "同一时间不能有两场会议", null);
+        }
+        else if (meetingMapper.updateMeeting(meeting) == 0) {
+            result.set(200, "修改会议失败", null);
+        }
+        else {
+            result.set(200, "修改成功", null);
+        }
+        return result;
+    }
 }

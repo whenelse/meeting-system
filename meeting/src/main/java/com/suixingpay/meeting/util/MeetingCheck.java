@@ -7,14 +7,6 @@ import java.util.List;
 
 public class MeetingCheck {
 
-    public static boolean paramCheck(Object... inputs) {
-        for (Object input : inputs) {
-            if ((input == null) || "".equals(input) ) {
-                return false;
-            }
-        }
-        return true;
-    }
     public static boolean enrollCheck(Meeting meeting) {
         Date date = new Date();
         if ((meeting.getMeetingEnrollEndTime().getTime()) < date.getTime() || (meeting.getMeetingEnrollEndTime().getTime()) > (meeting.getMeetingStartTime().getTime())) {
