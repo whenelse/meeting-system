@@ -150,6 +150,7 @@ public class MeetingServiceImpl implements MeetingService {
      */
     @Override
     public Result selectAllMeeting(MeetingSel meetingSel) {
+        System.out.println(meetingSel.getMeetingCharge());
         try {
             List<Meeting> list = meetingMapper.queryAllMeeting(meetingSel);
             result.set(200,"查询成功",list);

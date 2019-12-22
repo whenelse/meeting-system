@@ -71,7 +71,8 @@
         from
         (select <include refid="record_column_list"/>
         from record
-        where record_meeting_id = #{recordMeetingId} and !ISNULL(record_enroll_time)) r
+        where record_meeting_id = #{recordMeetingId} and !ISNULL(record_enroll_time)
+        order by record_enroll_time,record_sign_in_time) r
         left join user u on r.record_user_id = u.user_id
     </select>
 
@@ -83,7 +84,8 @@
         from
             (select <include refid="record_column_list"/>
             from record
-            where record_meeting_id = #{recordMeetingId} and !ISNULL(record_sign_in_time)) r
+            where record_meeting_id = #{recordMeetingId} and !ISNULL(record_sign_in_time)
+            order by record_enroll_time,record_sign_in_time) r
         left join user u on r.record_user_id = u.user_id
     </select>
 </mapper>

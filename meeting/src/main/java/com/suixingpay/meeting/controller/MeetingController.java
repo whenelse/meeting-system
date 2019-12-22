@@ -126,7 +126,7 @@ public class MeetingController {
      */
     @NoneAuth
     @PostMapping("/selectAll")
-    public Result queryAllMeeting(MeetingSel meetingSel){
+    public Result queryAllMeeting(@RequestBody MeetingSel meetingSel){
         return meetingService.selectAllMeeting(meetingSel);
     }
 
