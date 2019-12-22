@@ -80,7 +80,7 @@
             <if test="meetingReferralCode!=null and meetingReferralCode!=''">
                 meeting_referral_code = #{meetingReferralCode}
             </if>
-            <if test="meetingCharge!=null and meetingCharge!=''">
+            <if test="meetingCharge != null">
                 and meeting_charge = #{meetingCharge}
             </if>
             <if test="userCompany!=null and userCompany!=''">
@@ -92,14 +92,14 @@
             <if test="meetingInitiationType!=null and meetingInitiationType!=''">
                 and meeting_initiation_type = #{meetingInitiationType}
             </if>
-            <if test="meetingAuditStatus!=null and meetingAuditStatus!=''">
+            <if test="meetingAuditStatus!=null">
                 and meeting_audit_status = #{meetingAuditStatus}
             </if>
-            <if test="beginTime!=null and beginTime!=''">
-                and meeting_start_time > #{beginTime}
+            <if test="beginTime!= null">
+                and DATE_FORMAT( meeting_start_time, '%Y-%m-%d' ) >= DATE_FORMAT( #{beginTime}, '%Y-%m-%d' )
             </if>
-            <if test="endTime!=null and endTime!=''">
-                and #{endTime} > meeting_start_time
+            <if test="endTime!= null">
+                and DATE_FORMAT(  #{endTime} , '%Y-%m-%d' ) >= DATE_FORMAT( meeting_start_time, '%Y-%m-%d' )
             </if>
             <if test="meetingStatus==0">
                 and meeting_audit_status !=2
@@ -165,7 +165,8 @@
 <!--    查询会议详细信息-->
     <select id="selectMeetingDetails" resultMap="MeetingResultMap">
         select
-        <include refid="meeting_column_list"/>,u.user_name ,u.telephone
+        <include refid="meeting_column_list"/>,
+        u.user_name ,u.telephone,u.referral_code,u.user_company
         from
             (select
             <include refid="meeting_column_list"/>
