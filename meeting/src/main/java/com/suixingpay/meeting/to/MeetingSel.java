@@ -19,6 +19,8 @@ public class MeetingSel {
     String meetingType;
     //主办方
     String meetingSponsor;
+    //管家推荐码
+    String meetingReferralCode;
     //是否收费，0 是 1 否
     Integer meetingCharge;
     //开始日期

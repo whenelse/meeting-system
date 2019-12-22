@@ -1,10 +1,17 @@
 package com.suixingpay.meeting.mapper;
 
 import com.suixingpay.meeting.pojo.Meeting;
+import org.springframework.stereotype.Component;
 import com.suixingpay.meeting.to.MeetingSel;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+import com.suixingpay.meeting.pojo.Meeting;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 public interface MeetingMapper {
@@ -19,6 +26,19 @@ public interface MeetingMapper {
      * @return
      */
     List<Meeting> queryMeetingByUserId(int meetingUserId);
+
+    /**
+     * 通过推荐码查询会议
+     * @param meetingReferralCode
+     * @return
+     */
+    List<Meeting> queryMeetingByReferralCode(String meetingReferralCode);
+
+    /**
+     * 通过推荐码不为空的查询会议
+     * @return
+     */
+    List<Meeting> queryMeetingByReferralCodeIsNull();
 
     /**
      * 查看会议详情
@@ -52,6 +72,19 @@ public interface MeetingMapper {
      * @Date 2019/12/19 10:16
      */
     Meeting selectMeetingDetails(@Param("meetingId") int meetingId);
+
+
+    List<Meeting> selectMeetingAudited();
+
+    /**
+     * 二维码签到
+     * @param meetingId
+     * @return
+     */
+    Meeting selectDate(@Param("RecordMeetingId") int meetingId);
+
+    //条件查询会议信息
+    List<Meeting> selectMeetingSelective(Meeting meeting);
 
     int insertMeeting(Meeting meeting);
 }

@@ -17,4 +17,5 @@ out/
 *.bak
 public/
 *.yml
+images/
 

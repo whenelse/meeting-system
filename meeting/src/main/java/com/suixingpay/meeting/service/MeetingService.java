@@ -8,6 +8,9 @@ import com.suixingpay.meeting.to.MeetingSel;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
+import com.suixingpay.meeting.pojo.Record;
+
 public interface MeetingService {
 
     //查找所有会议
@@ -19,10 +22,18 @@ public interface MeetingService {
 
     Result queryMeetingByPUser(Integer userId);
 
-    Result selectMeetingById(Integer meetingId);
+    Result selectMeetingById(Integer meetingId,Integer userId);
 
     Result selectAllMeeting(MeetingSel meetingSel);
 
+    /**
+     * @Description 检查鑫管家是否V5即以上并且查看是否有会议
+     * @Author zhu_jinsheng[zhu_js@suixingpay.com]
+     * @Param userId:  鑫管家Id
+     * @return: com.suixingpay.meeting.pojo.Result
+     * @Date 2019/12/19 10:42
+     */
+    Result checkUserHaveAuthority(int userId);
     /**
      * @Description 查询鑫管家自己创建的会议列表
      * @Author zhu_jinsheng[zhu_js@suixingpay.com]
@@ -40,6 +51,9 @@ public interface MeetingService {
      */
     Result selectMeetingDetails(int meetingId);
 
+    //查询待审核的会议
+    Result selectMeetingAudited();
+
     Result insertMeeting(Meeting meeting);
    // Result queryMeetingByPUser(int userId);
 
@@ -53,4 +67,6 @@ public interface MeetingService {
     void exportMeetingInfo(HttpServletResponse response, int userId) throws IOException;
 
     Result updateMeeting(Meeting meeting);
+
+    Result selectMeetingSelective(Meeting meeting);
 }

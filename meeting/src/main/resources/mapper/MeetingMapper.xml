@@ -49,7 +49,21 @@
         select
         <include refid="meeting_column_list"/>
         from meeting
-        where meeting_user_id = #{meetingUserId}  order by meeting_start_time
+        where meeting_user_id = #{meetingUserId} order by meeting_start_time
+    </select>
+
+    <select id="queryMeetingByReferralCode" parameterType="String" resultMap="MeetingResultMap">
+        select
+        <include refid="meeting_column_list"/>
+        from meeting
+        where meeting_referral_code = #{meetingReferralCode} order by meeting_start_time
+    </select>
+
+    <select id="queryMeetingByReferralCodeIsNull" resultMap="MeetingResultMap">
+        select
+        <include refid="meeting_column_list"/>
+        from meeting
+        where meeting_referral_code is null order by meeting_start_time
     </select>
 
     <select id="selectMeetingById" parameterType="INTEGER" resultMap="MeetingResultMap" >
@@ -60,11 +74,11 @@
 
     <select id="queryAllMeeting" parameterType="com.suixingpay.meeting.to.MeetingSel" resultMap="MeetingResultMap">
         select
-            <include refid="meeting_column_list"/>,user_name,referral_code,user_company
+            <include refid="meeting_column_list"/>,user_name,user_company
         from meeting left join user on meeting_user_id = user_id
         <where>
-            <if test="referralCode!=null and referralCode!=''">
-                referral_code = #{referralCode}
+            <if test="meetingReferralCode!=null and meetingReferralCode!=''">
+                meeting_referral_code = #{meetingReferralCode}
             </if>
             <if test="meetingCharge!=null and meetingCharge!=''">
                 and meeting_charge = #{meetingCharge}
@@ -140,10 +154,12 @@
         <include refid="meeting_column_list"/>,
         <include refid="user_column_list"/>
         from
-            (select *
+            (select <include refid="meeting_column_list"/>,
+             case when meeting_start_time &lt;= now() then 1 else 0 end as A,
+             case when meeting_enroll_end_time &lt;= now() then 1 else 0 end as B
              from meeting
              where meeting_user_id = #{userId}
-             order by meeting_audit_status,meeting_enroll_end_time,meeting_start_time) m
+             order by meeting_audit_status,A,B,meeting_enroll_end_time,meeting_start_time) m
         left join user u on m.meeting_user_id = u.user_id
     </select>
 <!--    查询会议详细信息-->
@@ -156,5 +172,36 @@
             from meeting
             where meeting_id = #{meetingId}) m
         left join user u on m.meeting_user_id = u.user_id
+    </select>
+    
+    <select id="selectMeetingAudited" resultMap="MeetingResultMap" >
+        select
+        <include refid="meeting_column_list"/>
+        from meeting
+        where meeting_audit_status=0
+    </select>
+
+    <select id="selectDate" resultMap="MeetingResultMap">
+        select meeting_start_time,meeting_hours from meeting where  meeting_id =#{RecordMeetingId}
+    </select>
+
+    <select id="selectMeetingSelective" resultMap="MeetingResultMap" parameterType="com.suixingpay.meeting.pojo.Meeting">
+        select <include refid="meeting_column_list"/>
+        from meeting
+        <trim prefix="where" prefixOverrides="and">
+            <if test="meetingInitiationType!=null">meeting_initiation_type=#{meetingInitiationType,jdbcType=VARCHAR}</if>
+            <if test="meetingUserId!=null">and meeting_user_id=#{meetingUserId,jdbcType=VARCHAR}</if>
+            <if test="meetingName!=null">and meeting_name like concat('%',#{meetingName,jdbcType=VARCHAR},'%')</if>
+            <if test="meetingType!=null">and meeting_type=#{meetingType,jdbcType=VARCHAR}</if>
+            <if test="meetingSponsor!=null">and meeting_sponsor=#{meetingSponsor,jdbcType=VARCHAR}</if>
+            <if test="meetingReferralCode!=null">and meeting_referral_code=#{meetingReferralCode,jdbcType=VARCHAR}</if>
+            <if test="meetingCharge!=null">and meeting_charge=#{meetingCharge,jdbcType=INTEGER}</if>
+            <if test="meetingStartTime!=null">and meeting_start_time=#{meetingStartTime,jdbcType=TIMESTAMP}</if>
+            <if test="meetingAddress!=null">and meeting_address=#{meetingAddress,jdbcType=VARCHAR}</if>
+            <if test="meetingDetailedAddress!=null">and meeting_detailed_address=#{meetingDetailedAddress,jdbcType=VARCHAR}</if>
+            <if test="meetingEnrollEndTime!=null">and meeting_enroll_end_time=#{meetingEnrollEndTime,jdbcType=TIMESTAMP}</if>
+            <if test="meetingDescribe!=null">and meeting_describe=#{meetingDescribe,jdbcType=VARCHAR}</if>
+            <if test="meetingAuditStatus!=null">and meeting_audit_status=#{meetingAuditStatus,jdbcType=INTEGER}</if>
+        </trim>
     </select>
 </mapper>

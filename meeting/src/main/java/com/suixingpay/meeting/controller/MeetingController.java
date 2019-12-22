@@ -4,6 +4,7 @@ import com.suixingpay.meeting.annotation.NoneAuth;
 import com.suixingpay.meeting.groups.insertCheck;
 import com.suixingpay.meeting.pojo.Meeting;
 import com.suixingpay.meeting.groups.SelectById;
+import com.suixingpay.meeting.pojo.Record;
 import com.suixingpay.meeting.pojo.Result;
 import com.suixingpay.meeting.pojo.User;
 import com.suixingpay.meeting.service.MeetingService;
@@ -70,21 +71,47 @@ public class MeetingController {
 
     //测试，查找所有会议
     @RequestMapping("/selectAll")
-    public Result selectAll() {
+    public Result selectAll(){
         return meetingService.selectAll();
     }
 
+    //条件查询会议信息
+    @NoneAuth
+    @RequestMapping("/selectMeetingSelective")
+    public Result selectMeetingSelective(@RequestBody Meeting meeting){
+        return meetingService.selectMeetingSelective(meeting);
+    }
+    //查询待审核的会议
+    @NoneAuth
+    @RequestMapping("/selectMeetingAudited")
+    public Result selectMeetingAudited(){
+        return meetingService.selectMeetingAudited();
+    }
     //会议审核通过
     @RequestMapping("/auditPass")
-    public Result auditPass(int meetingId) {
+    public Result auditPass(int meetingId){
         return meetingService.auditPass(meetingId);
     }
 
     //会议审核驳回
     @RequestMapping("/auditReject")
-    public Result auditReject(int meetingId) {
+    public Result auditReject( int meetingId){
         return meetingService.auditReject(meetingId);
     }
+
+    /**
+     * @Description 检查鑫管家是否V5即以上并且查看是否有会议
+     * @Author zhu_jinsheng[zhu_js@suixingpay.com]
+     * @Param meeting:  使用用户持久化类去接收鑫管家Id
+     * @return: com.suixingpay.meeting.pojo.Result
+     * @Date 2019/12/19 10:42
+     */
+    @NoneAuth
+    @PostMapping("/select/authority")
+    public Result checkUserHaveAuthority(@Validated(SelectById.class) @RequestBody User user) {
+        return meetingService.checkUserHaveAuthority(user.getUserId());
+    }
+
 
     /**
      * @Description 查询鑫管家自己创建的会议列表
@@ -93,6 +120,7 @@ public class MeetingController {
      * @return: com.suixingpay.meeting.pojo.Result
      * @Date 2019/12/19 10:42
      */
+    @NoneAuth
     @PostMapping("/select/create/meetings")
     public Result selectMeetingByUserId(@Validated(SelectById.class) @RequestBody User user) {
         return meetingService.selectMeetingByUserId(user.getUserId());
@@ -105,6 +133,7 @@ public class MeetingController {
      * @return: com.suixingpay.meeting.pojo.Result
      * @Date 2019/12/19 10:42
      */
+    @NoneAuth
     @PostMapping("/select/meeting/details")
     public Result selectMeetingDetails(@Validated(SelectById.class) @RequestBody Meeting meeting) {
         return meetingService.selectMeetingDetails(meeting.getMeetingId());
@@ -112,47 +141,49 @@ public class MeetingController {
 
     /**
      * 鑫管家查看会议
-     *
      * @param userId
      * @return
      */
-    @PostMapping("/userquery")
-    public Result userQueryMeeting(int userId) {
+    @NoneAuth
+    @PostMapping("/userQuery")
+    public Result userQueryMeeting(int userId){
         return meetingService.queryMeetingByPUser(userId);
     }
 
     /**
-     * 鑫管家查看某个会议详情
-     *
-     * @param meetingId
-     * @return
+     * @Description 鑫管家查看某个会议详情
+     * @Author xia_shibo
+     * @Date 16:23 2019/12/21
+     * @Param [record]
+     * @return com.suixingpay.meeting.pojo.Result
      */
-    @PostMapping("/detailselect")
-    public Result selectDetailMeeting(int meetingId) {
-        return meetingService.selectMeetingById(meetingId);
+    @NoneAuth
+    @PostMapping("/detailSelect")
+    public Result selectDetailMeeting(@RequestBody Record record){
+        return meetingService.selectMeetingById(record.getRecordMeetingId(),record.getRecordUserId());
     }
 
     /**
      * 管理员查看所有会议
-     *
      * @param meetingSel
      * @return
      */
-    @PostMapping("/selectall")
-    public Result queryAllMeeting(MeetingSel meetingSel) {
+    @NoneAuth
+    @PostMapping("/selectAll")
+    public Result queryAllMeeting(MeetingSel meetingSel){
         return meetingService.selectAllMeeting(meetingSel);
     }
 
     /**
-     * @param
-     * @return
      * @description 将该鑫管家创建的所有会议信息导出到EXCEL表
      * @author Huang Yafeng
      * @date 2019/12/19 11:49
+     * @param
+     * @return
      */
     //@NoneAuth
     @RequestMapping("/export/meeting")
-    public void exportMeetingInfo(HttpServletResponse response, @Validated(SelectById.class) @RequestBody User user)
+    public void exportMeetingInfo(HttpServletResponse response,@Validated(SelectById.class) @RequestBody User user)
             throws IOException {
         meetingService.exportMeetingInfo(response, user.getUserId());
     }

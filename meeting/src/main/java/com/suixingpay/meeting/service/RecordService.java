@@ -1,11 +1,23 @@
 package com.suixingpay.meeting.service;
 
+import com.suixingpay.meeting.pojo.Record;
+import com.suixingpay.meeting.pojo.Result;
+
 import com.suixingpay.meeting.pojo.Result;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public interface RecordService {
+    /**
+     * 二维码签到
+     * @param record
+     * @return
+     */
+    Result signIn(Record record);
+
+
+
     //报名
     Result enroll(int userId, int meetingId);
     /**

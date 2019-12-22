@@ -92,11 +92,16 @@ public class MeetingServiceImpl implements MeetingService {
             //获取用户上级
             user = userMapper.selectUserByUserId(user.getPUserId());
             //获取用户上级的会议
-            meeting = meetingMapper.queryMeetingByUserId(user.getUserId());
+            meeting = meetingMapper.queryMeetingByReferralCode(user.getReferralCode());
             list.addAll(meeting);
         }
+        //查询出根上级的会议
         user = userMapper.selectUserByUserId(user.getPUserId());
-        meeting = meetingMapper.queryMeetingByUserId(user.getUserId());
+        meeting = meetingMapper.queryMeetingByReferralCode(user.getReferralCode());
+        list.addAll(meeting);
+
+        //查询管理员创建的面向所有人的会议
+        meeting = meetingMapper.queryMeetingByReferralCodeIsNull();
         list.addAll(meeting);
 
         //判断用户是否已报名会议
@@ -124,12 +129,16 @@ public class MeetingServiceImpl implements MeetingService {
      * @return
      */
     @Override
-    public Result selectMeetingById(Integer meetingId) {
-        if (meetingId == null){
+    public Result selectMeetingById(Integer meetingId,Integer userId) {
+        if (meetingId == null || userId == null){
             result.set(200,"参数异常",null);
+            return result;
         }
+        System.out.println(meetingId);
+        System.out.println(userId);
         try{
             Meeting meeting = meetingMapper.selectMeetingById(meetingId);
+            meeting.setRecordId(recordMapper.selectIsEnrollRecordIdByUserIdAndMeetingId(meetingId,userId));
             result.set(200,"查询成功",meeting);
         }catch (Exception e){
             result.set(200,"查询失败",null);
@@ -150,9 +159,11 @@ public class MeetingServiceImpl implements MeetingService {
             result.set(200,"查询成功",list);
         }catch (Exception e){
             result.set(200,"查询失败",null);
+            log.info(e.getMessage());
         }
         return result;
     }
+
 
     /**
      * 管理员审核会议驳回
@@ -162,8 +173,6 @@ public class MeetingServiceImpl implements MeetingService {
     @Override
     public Result auditReject(int meetingId) {
         Meeting meeting = meetingMapper.selectById(meetingId);
-        System.out.println("++++++++++++++++++++++++++++++++++++");
-        System.out.println(meeting.getMeetingAuditStatus());
         if(meeting.getMeetingAuditStatus()==0){
             meeting.setMeetingAuditStatus(1);
             if(meetingMapper.updateMeeting(meeting)<1){
@@ -180,6 +189,39 @@ public class MeetingServiceImpl implements MeetingService {
     }
 
     /**
+     * @Description 检查鑫管家是否V5即以上并且查看是否有会议
+     * @Author zhu_jinsheng[zhu_js@suixingpay.com]
+     * @Param userId:  鑫管家Id
+     * @return: com.suixingpay.meeting.pojo.Result
+     * @Date 2019/12/19 10:42
+     */
+    @Override
+    public Result checkUserHaveAuthority(int userId) {
+        Result result = new Result();
+        try {
+            User user = userMapper.selectUserByUserId(userId);
+            if (user != null) {
+                if(user.getLevelNo() < 5) {
+                    result.set(200, "没有权限", null);
+                } else {
+                    List<Meeting> list = meetingMapper.selectMeetingByUserId(userId);
+                    if (list.size() == 0) {
+                        result.set(200, "未发起过会议", null);
+                    } else {
+                        result.set(200, "有权限", null);
+                    }
+                }
+            } else {
+                result.set(200, "用户不存在", null);
+            }
+
+        } catch (Exception e) {
+            log.error("数据库查询异常：",e);
+            result.set(200, "系统异常，请稍后", null);
+        }
+        return result;
+    }
+    /**
      * @Description 查询鑫管家自己创建的会议列表
      * @Author zhu_jinsheng[zhu_js@suixingpay.com]
      * @Param userId: 用户Id
@@ -191,7 +233,11 @@ public class MeetingServiceImpl implements MeetingService {
         Result result = new Result();
         try {
             List<Meeting> list = meetingMapper.selectMeetingByUserId(userId);
-            result.set(200, "查询成功", list);
+            if (list.size() == 0) {
+                result.set(200, "对不起，您还没有发起过会议", list);
+            } else {
+                result.set(200, "查询成功", list);
+            }
         } catch (Exception e) {
             log.error("数据库查询异常：",e);
             result.set(200, "查询异常，请稍后", null);
@@ -202,7 +248,7 @@ public class MeetingServiceImpl implements MeetingService {
     /**
      * @Description 查询会议详细信息
      * @Author zhu_jinsheng[zhu_js@suixingpay.com]
-     * @Param meetingId:
+     * @Param meetingId: 会议Id
      * @return: com.suixingpay.meeting.pojo.Result
      * @Date 2019/12/19 10:12
      */
@@ -216,6 +262,17 @@ public class MeetingServiceImpl implements MeetingService {
             log.error("数据库查询异常：",e);
             result.set(200, "查询异常，请稍后", null);
         }
+        return result;
+    }
+
+    /**
+     * 查询所有需要审核的会议
+     * @return
+     */
+    @Override
+    public Result selectMeetingAudited() {
+        List<Meeting> list = meetingMapper.selectMeetingAudited();
+        result.set(200,"查询成功",list);
         return result;
     }
 
@@ -332,6 +389,18 @@ public class MeetingServiceImpl implements MeetingService {
         os.close();
 
 
+    }
+
+    //条件查询会议信息
+    @Override
+    public Result selectMeetingSelective(Meeting meeting) {
+        if(meeting == null){
+            result.set(400,"查询信息不能为空",null);
+            return result;
+        }
+        List<Meeting> list = meetingMapper.selectMeetingSelective(meeting);
+        result.set(200,"查询成功",list);
+        return result;
     }
 
     //修改会议 djq

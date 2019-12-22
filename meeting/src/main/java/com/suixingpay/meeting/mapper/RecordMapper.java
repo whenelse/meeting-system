@@ -3,8 +3,14 @@ package com.suixingpay.meeting.mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.suixingpay.meeting.pojo.Record;
+
+import java.util.Date;
+
+
+import com.suixingpay.meeting.pojo.Record;
 import java.util.List;
 import com.suixingpay.meeting.pojo.Meeting;
+import org.apache.ibatis.annotations.Param;
 
 public interface RecordMapper {
     /**
@@ -18,6 +24,17 @@ public interface RecordMapper {
     int enroll(Record record);
 
     List<Meeting> selectRecord(Record record);
+
+    /**
+     * 二维码签到
+     * @param record
+     * @return
+     */
+    Record signIn(Record record);
+    void insertSingIn(Record records);
+    void updateSignIn(@Param(value ="date") Date date, @Param(value = "recordId") Integer recordId);
+
+
 
     List<Record> selectByUserId(int userId);
 
@@ -38,4 +55,5 @@ public interface RecordMapper {
      * @Date 2019/12/19 13:54
      */
     List<Record> selectSignInList(int recordMeetingId);
+
 }

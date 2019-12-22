@@ -13,5 +13,4 @@ public interface UserService {
      */
     Result userLogin(String userPhone);
 
-
 }
