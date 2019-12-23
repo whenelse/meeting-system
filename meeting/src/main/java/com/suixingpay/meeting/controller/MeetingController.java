@@ -208,7 +208,7 @@ public class MeetingController {
      * @param
      * @return
      */
-    //@NoneAuth
+    @NoneAuth
     @RequestMapping("/export/meeting")
     public void exportMeetingInfo(HttpServletResponse response,@Validated(SelectById.class) @RequestBody User user)
             throws IOException {

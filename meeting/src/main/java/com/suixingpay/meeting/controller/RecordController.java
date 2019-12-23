@@ -25,38 +25,7 @@ import java.io.IOException;
 @RequestMapping("/record")
 public class RecordController {
     @Autowired
-    MeetingService meetingService;
-    @Autowired
     RecordService recordService;
-    Result result;
-    /**
-     * 生成二维码
-     * @param request
-     * @param response
-     */
-
-    @RequestMapping("/QRcode")
-    public void QRcode(HttpServletRequest request,
-                       HttpServletResponse response){
-        try {
-            OutputStream os = response.getOutputStream();
-            QrCode.encode("https://www.baidu.com/", "/static/images/1.png", os, true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * 扫描二维码签到
-     * @param record
-     * @return
-     */
-    @RequestMapping("/signIn")
-    public Result signIn(@Validated(SelectById.class)@RequestBody Record record){
-        return recordService.signIn(record);
-
-    }
-
 
     //会议报名
     @RequestMapping("/enroll")
