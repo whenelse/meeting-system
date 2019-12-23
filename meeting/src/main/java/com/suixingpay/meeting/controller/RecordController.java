@@ -28,13 +28,13 @@ public class RecordController {
     MeetingService meetingService;
     @Autowired
     RecordService recordService;
-    Result result;
+
     /**
      * 生成二维码
      * @param request
      * @param response
      */
-
+    @NoneAuth
     @RequestMapping("/QRcode")
     public void QRcode(HttpServletRequest request,
                        HttpServletResponse response){
@@ -98,11 +98,11 @@ public class RecordController {
      * @param response
      * @return
      */
-    //@NoneAuth
+    @NoneAuth
     @RequestMapping("/export/enroll")
-    public void exportEnrollInfo(HttpServletResponse response, @Validated(SelectById.class) @RequestBody Meeting meeting)
+    public void exportEnrollInfo(HttpServletResponse response, int meetingId)
             throws IOException {
-        recordService.exportEnrollInfo(response, meeting.getMeetingId());
+        recordService.exportEnrollInfo(response, meetingId);
     }
 
     /**
@@ -112,11 +112,11 @@ public class RecordController {
      * @param response
      * @return
      */
-    //@NoneAuth
+    @NoneAuth
     @RequestMapping("/export/signin")
-    public void exportSignInInfo(HttpServletResponse response, @Validated(SelectById.class) @RequestBody Meeting meeting)
+    public void exportSignInInfo(HttpServletResponse response, int meetingId)
             throws IOException {
-        recordService.exportSignInInfo(response, meeting.getMeetingId());
+        recordService.exportSignInInfo(response, meetingId);
     }
 
 }
