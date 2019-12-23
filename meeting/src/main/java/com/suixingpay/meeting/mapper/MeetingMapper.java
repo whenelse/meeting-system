@@ -54,6 +54,15 @@ public interface MeetingMapper {
      */
     List<Meeting> queryAllMeeting(MeetingSel meetingSel);
 
+    /**
+     * @description 查询所有会议
+     * @author Huang Yafeng
+     * @date 2019/12/23 16:28
+     * @param
+     * @return
+     */
+    List<Meeting> queryAllMeetingTwo();
+
     Meeting selectById(int meetingId);
 
     /**
