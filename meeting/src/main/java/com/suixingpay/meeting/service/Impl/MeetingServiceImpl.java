@@ -189,6 +189,25 @@ public class MeetingServiceImpl implements MeetingService {
         }
     }
 
+    @Override
+    public Result auditCheck(Meeting meeting) {
+        Meeting meeting1 = meetingMapper.selectById(meeting.getMeetingId());
+        if(meeting.getMeetingAuditStatus()!= meeting1.getMeetingAuditStatus()){
+           try{
+                meetingMapper.updateMeeting(meeting);
+                result.set(400,"修改成功",null);
+                return result;
+            } catch (Exception e){
+               log.info("会议审核异常",e.getMessage());
+                result.set(200,"修改失败",null);
+                return result;
+            }
+        }else{
+            result.set(400,"该会议不需要审核",null);
+            return result;
+        }
+    }
+
     /**
      * @Description 检查鑫管家是否V5即以上并且查看是否有会议
      * @Author zhu_jinsheng[zhu_js@suixingpay.com]
@@ -411,7 +430,7 @@ public class MeetingServiceImpl implements MeetingService {
     //修改会议 djq
     @Override
     public Result updateMeeting(Meeting meeting) {
-
+        meeting.setMeetingHours(Integer.valueOf(meeting.getMeetingHours()));
         if (!enrollCheck(meeting)){
             result.set(200,"请检查您修改的时间信息",null);
             return result;

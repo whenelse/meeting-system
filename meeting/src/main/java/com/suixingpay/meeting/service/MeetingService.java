@@ -20,6 +20,8 @@ public interface MeetingService {
     //审核驳回
     Result auditReject(int meetingId);
 
+    Result auditCheck(Meeting meeting);
+
     Result queryMeetingByPUser(Integer userId);
 
     Result selectMeetingById(Integer meetingId,Integer userId);

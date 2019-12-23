@@ -65,24 +65,23 @@ public class MeetingController {
      * @Author:djq
      */
     //@NoneAuth
-    @PostMapping("/updateMeetingOne")
-    public Result updateMeetingStatusNO(@Validated(updateCheck.class) @RequestBody Meeting meeting) {
-        meeting.setMeetingHours(Integer.valueOf(meeting.getMeetingHours()));
+    @PostMapping("/updateMeeting")
+    public Result updateMeetingStatus(@Validated(updateCheck.class) @RequestBody Meeting meeting) {
         return meetingService.updateMeeting(meeting);
     }
 
-    @NoneAuth
-    @PostMapping("/updateMeetingTwo")
-    public Result updateMeetingStatusYes(@RequestBody Meeting meeting) {
-        Meeting meeting1 = new Meeting();
-        meeting1.setMeetingHours(Integer.valueOf(meeting.getMeetingHours()));
-        meeting1.setMeetingEnrollEndTime(meeting.getMeetingEnrollEndTime());
-        meeting1.setMeetingId(meeting.getMeetingId());
-        meeting1.setMeetingStartTime(meeting.getMeetingStartTime());
-        meeting1.setMeetingUserId(meeting.getMeetingUserId());
-        meeting1.setMeetingHours(meeting.getMeetingHours());
-        return meetingService.updateMeeting(meeting1);
-    }
+//    @NoneAuth
+//    @PostMapping("/updateMeetingTwo")
+//    public Result updateMeetingStatusYes(@RequestBody Meeting meeting) {
+//        Meeting meeting1 = new Meeting();
+//        meeting1.setMeetingHours(Integer.valueOf(meeting.getMeetingHours()));
+//        meeting1.setMeetingEnrollEndTime(meeting.getMeetingEnrollEndTime());
+//        meeting1.setMeetingId(meeting.getMeetingId());
+//        meeting1.setMeetingStartTime(meeting.getMeetingStartTime());
+//        meeting1.setMeetingUserId(meeting.getMeetingUserId());
+//        meeting1.setMeetingHours(meeting.getMeetingHours());
+//        return meetingService.updateMeeting(meeting1);
+//    }
 
 
     //测试，查找所有会议
@@ -113,6 +112,18 @@ public class MeetingController {
     @RequestMapping("/auditReject")
     public Result auditReject( int meetingId){
         return meetingService.auditReject(meetingId);
+    }
+
+    /**
+     * @Description 审核会议
+     * @Author xia_shibo
+     * @Date  13:25
+     * @Param [meeting]
+     * @return com.suixingpay.meeting.pojo.Result
+     */
+    @RequestMapping("/check")
+    public Result auditCheck(@RequestBody Meeting meeting){
+        return meetingService.auditCheck(meeting);
     }
 
     /**

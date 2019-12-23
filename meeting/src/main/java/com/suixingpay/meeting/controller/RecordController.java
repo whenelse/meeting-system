@@ -60,8 +60,8 @@ public class RecordController {
 
     //会议报名
     @RequestMapping("/enroll")
-    public Result enroll(int userId, int meetingId){
-        return recordService.enroll(userId,meetingId);
+    public Result enroll(@RequestBody Meeting meeting){
+        return recordService.enroll(meeting.getMeetingUserId(),meeting.getMeetingId());
     }
 
     /**
