@@ -208,11 +208,11 @@ public class MeetingController {
      * @param
      * @return
      */
-    //@NoneAuth
+    @NoneAuth
     @RequestMapping("/export/meeting")
-    public void exportMeetingInfo(HttpServletResponse response,@Validated(SelectById.class) @RequestBody User user)
+    public void exportMeetingInfo(HttpServletResponse response)
             throws IOException {
-        meetingService.exportMeetingInfo(response, user.getUserId());
+        meetingService.exportMeetingInfo(response);
     }
 
 }

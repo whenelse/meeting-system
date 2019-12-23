@@ -66,7 +66,7 @@ public interface MeetingService {
      * @param
      * @return
      */
-    void exportMeetingInfo(HttpServletResponse response, int userId) throws IOException;
+    void exportMeetingInfo(HttpServletResponse response) throws IOException;
 
     Result updateMeeting(Meeting meeting);
 

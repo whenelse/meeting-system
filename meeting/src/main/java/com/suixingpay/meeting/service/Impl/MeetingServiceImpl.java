@@ -29,7 +29,7 @@ import static com.suixingpay.meeting.util.MeetingCheck.timeCheck;
 
 @Slf4j
 @Service
-public class MeetingServiceImpl implements MeetingService {
+public class    MeetingServiceImpl implements MeetingService {
 
     @Autowired
     MeetingMapper meetingMapper;
@@ -341,8 +341,8 @@ public class MeetingServiceImpl implements MeetingService {
      * @return
      */
     @Override
-    public void exportMeetingInfo(HttpServletResponse response, int userId) throws IOException {
-        List<Meeting> meetings = meetingMapper.selectMeetingByUserId(userId);
+    public void exportMeetingInfo(HttpServletResponse response  ) throws IOException {
+        List<Meeting> meetings = meetingMapper.queryAllMeetingTwo();
 
         HSSFWorkbook wb = new HSSFWorkbook();
         HSSFSheet sheet = wb.createSheet("获取会议信息");

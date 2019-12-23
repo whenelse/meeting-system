@@ -117,6 +117,12 @@
         </where>
     </select>
 
+    <select id="queryAllMeetingTwo"  resultMap="MeetingResultMap">
+        select
+        <include refid="meeting_column_list"/>,user_name,user_company
+        from meeting left join user on meeting_user_id = user_id
+    </select>
+
     <update id="updateMeeting" parameterType="com.suixingpay.meeting.pojo.Meeting">
         update meeting
         <trim prefix="SET" prefixOverrides=",">
