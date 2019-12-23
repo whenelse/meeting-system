@@ -54,9 +54,10 @@
 
     <select id="queryMeetingByReferralCode" parameterType="String" resultMap="MeetingResultMap">
         select
-        <include refid="meeting_column_list"/>
+            <include refid="meeting_column_list"/>
         from meeting
-        where meeting_referral_code = #{meetingReferralCode} order by meeting_start_time
+        where meeting_referral_code = #{meetingReferralCode} and meeting_audit_status = 2
+        order by meeting_start_time
     </select>
 
     <select id="queryMeetingByReferralCodeIsNull" resultMap="MeetingResultMap">
