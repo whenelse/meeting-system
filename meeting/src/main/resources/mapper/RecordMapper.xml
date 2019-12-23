@@ -72,8 +72,9 @@
         (select <include refid="record_column_list"/>
         from record
         where record_meeting_id = #{recordMeetingId} and !ISNULL(record_enroll_time)
-        order by record_enroll_time,record_sign_in_time) r
+        ) r
         left join user u on r.record_user_id = u.user_id
+        order by record_enroll_time,record_sign_in_time
     </select>
 
     <!--    查询会议签到信息-->
@@ -85,7 +86,8 @@
             (select <include refid="record_column_list"/>
             from record
             where record_meeting_id = #{recordMeetingId} and !ISNULL(record_sign_in_time)
-            order by record_enroll_time,record_sign_in_time) r
+            ) r
         left join user u on r.record_user_id = u.user_id
+        order by record_enroll_time,record_sign_in_time
     </select>
 </mapper>
