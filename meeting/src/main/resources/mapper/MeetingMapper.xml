@@ -151,7 +151,7 @@
 <!--    查询鑫管家自己创建的会议-->
     <select id="selectMeetingByUserId" resultMap="MeetingResultMap">
         select
-        <include refid="meeting_column_list"/>,
+        <include refid="meeting_column_list"/>,A,B
         <include refid="user_column_list"/>
         from
             (select <include refid="meeting_column_list"/>,
@@ -159,8 +159,9 @@
              case when meeting_enroll_end_time &lt;= now() then 1 else 0 end as B
              from meeting
              where meeting_user_id = #{userId}
-             order by meeting_audit_status,A,B,meeting_enroll_end_time,meeting_start_time) m
+             ) m
         left join user u on m.meeting_user_id = u.user_id
+        order by meeting_audit_status,A,B,meeting_enroll_end_time,meeting_start_time
     </select>
 <!--    查询会议详细信息-->
     <select id="selectMeetingDetails" resultMap="MeetingResultMap">

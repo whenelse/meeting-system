@@ -1,6 +1,7 @@
 package com.suixingpay.meeting.service;
 
 import com.suixingpay.meeting.pojo.Result;
+import com.suixingpay.meeting.pojo.User;
 
 public interface UserService {
 
@@ -13,4 +14,5 @@ public interface UserService {
      */
     Result userLogin(String userPhone);
 
+    User selectUserByUserId(Integer meetingUserId);
 }

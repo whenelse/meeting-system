@@ -69,4 +69,6 @@ public interface MeetingService {
     Result updateMeeting(Meeting meeting);
 
     Result selectMeetingSelective(Meeting meeting);
+
+
 }

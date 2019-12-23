@@ -280,6 +280,7 @@ public class MeetingServiceImpl implements MeetingService {
     //新增会议 djq
     @Override
     public Result insertMeeting(Meeting meeting) {
+        meeting.setMeetingHours(Integer.valueOf(meeting.getMeetingHours()));
         if (!enrollCheck(meeting)){
             result.set(200,"请检查您输入的时间信息",null);
             return result;
@@ -311,6 +312,8 @@ public class MeetingServiceImpl implements MeetingService {
         }
         return result;
     }
+
+
     /**
      * @description  将该鑫管家创建的所有会议信息导出到EXCEL表
      * @author Huang Yafeng
@@ -403,6 +406,7 @@ public class MeetingServiceImpl implements MeetingService {
         result.set(200,"查询成功",list);
         return result;
     }
+
 
     //修改会议 djq
     @Override

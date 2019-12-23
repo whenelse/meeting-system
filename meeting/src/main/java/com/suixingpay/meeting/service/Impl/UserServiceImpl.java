@@ -35,4 +35,9 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
+    @Override
+    public User selectUserByUserId(Integer meetingUserId) {
+         return userMapper.selectUserByUserId(meetingUserId);
+    }
+
 }

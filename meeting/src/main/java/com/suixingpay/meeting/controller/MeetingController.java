@@ -2,12 +2,14 @@ package com.suixingpay.meeting.controller;
 
 import com.suixingpay.meeting.annotation.NoneAuth;
 import com.suixingpay.meeting.groups.insertCheck;
+import com.suixingpay.meeting.groups.updateCheck;
 import com.suixingpay.meeting.pojo.Meeting;
 import com.suixingpay.meeting.groups.SelectById;
 import com.suixingpay.meeting.pojo.Record;
 import com.suixingpay.meeting.pojo.Result;
 import com.suixingpay.meeting.pojo.User;
 import com.suixingpay.meeting.service.MeetingService;
+import com.suixingpay.meeting.service.UserService;
 import com.suixingpay.meeting.to.MeetingSel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +30,10 @@ public class MeetingController {
     MeetingService meetingService;
 
     @Autowired
+    UserService userService;
+
+
+    @Autowired
     Result result;
 
     /**
@@ -43,6 +49,14 @@ public class MeetingController {
         return meetingService.insertMeeting(meeting);
     }
 
+    @NoneAuth
+    @PostMapping("/insertMeetingUser")
+    public Result insertMeetingUser(@Validated(insertCheck.class) @RequestBody Meeting meeting) {
+        User user = userService.selectUserByUserId(meeting.getMeetingUserId());
+        meeting.setMeetingReferralCode(user.getReferralCode());
+        return meetingService.insertMeeting(meeting);
+    }
+
     /**
      * 修改会议
      *
@@ -52,7 +66,8 @@ public class MeetingController {
      */
     //@NoneAuth
     @PostMapping("/updateMeetingOne")
-    public Result updateMeetingStatusNO(@Validated(insertCheck.class) @RequestBody Meeting meeting) {
+    public Result updateMeetingStatusNO(@Validated(updateCheck.class) @RequestBody Meeting meeting) {
+        meeting.setMeetingHours(Integer.valueOf(meeting.getMeetingHours()));
         return meetingService.updateMeeting(meeting);
     }
 
@@ -60,6 +75,7 @@ public class MeetingController {
     @PostMapping("/updateMeetingTwo")
     public Result updateMeetingStatusYes(@RequestBody Meeting meeting) {
         Meeting meeting1 = new Meeting();
+        meeting1.setMeetingHours(Integer.valueOf(meeting.getMeetingHours()));
         meeting1.setMeetingEnrollEndTime(meeting.getMeetingEnrollEndTime());
         meeting1.setMeetingId(meeting.getMeetingId());
         meeting1.setMeetingStartTime(meeting.getMeetingStartTime());
