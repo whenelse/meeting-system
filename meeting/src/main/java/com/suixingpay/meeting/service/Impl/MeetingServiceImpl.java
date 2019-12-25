@@ -87,18 +87,20 @@ public class    MeetingServiceImpl implements MeetingService {
         //获取当前用户
         User user = userMapper.selectUserByUserId(userId);
         List<Meeting> meeting = null;
-        //当用户的上级不是根上级时
-        while (user.getRootUserId() != user.getPUserId()){
-            //获取用户上级
+        if(user.getUserId()!=user.getPUserId()) {
+            //当用户的上级不是根上级时
+            while (user.getRootUserId() != user.getPUserId()) {
+                //获取用户上级
+                user = userMapper.selectUserByUserId(user.getPUserId());
+                //获取用户上级的会议
+                meeting = meetingMapper.queryMeetingByReferralCode(user.getReferralCode());
+                list.addAll(meeting);
+            }
+            //查询出根上级的会议
             user = userMapper.selectUserByUserId(user.getPUserId());
-            //获取用户上级的会议
             meeting = meetingMapper.queryMeetingByReferralCode(user.getReferralCode());
             list.addAll(meeting);
         }
-        //查询出根上级的会议
-        user = userMapper.selectUserByUserId(user.getPUserId());
-        meeting = meetingMapper.queryMeetingByReferralCode(user.getReferralCode());
-        list.addAll(meeting);
 
         //查询管理员创建的面向所有人的会议
         meeting = meetingMapper.queryMeetingByReferralCodeIsNull();
@@ -300,6 +302,12 @@ public class    MeetingServiceImpl implements MeetingService {
     @Override
     public Result insertMeeting(Meeting meeting) {
         meeting.setMeetingHours(Integer.valueOf(meeting.getMeetingHours()));
+        if (meeting.getMeetingReferralCode()!=null){
+            if (userMapper.selectUserByMeetingReferralCode(meeting.getMeetingReferralCode())==null){
+                result.set(200,"鑫管家推荐码不存在",null);
+                return result;
+            }
+        }
         if (!enrollCheck(meeting)){
             result.set(200,"请检查您输入的时间信息",null);
             return result;
@@ -341,7 +349,7 @@ public class    MeetingServiceImpl implements MeetingService {
      * @return
      */
     @Override
-    public void exportMeetingInfo(HttpServletResponse response  ) throws IOException {
+    public void exportMeetingInfo(HttpServletResponse response) throws IOException {
         List<Meeting> meetings = meetingMapper.queryAllMeetingTwo();
 
         HSSFWorkbook wb = new HSSFWorkbook();

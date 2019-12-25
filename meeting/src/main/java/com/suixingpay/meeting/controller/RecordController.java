@@ -4,8 +4,11 @@ package com.suixingpay.meeting.controller;
 import com.suixingpay.meeting.code.QrCode;
 import com.suixingpay.meeting.pojo.Record;
 import com.suixingpay.meeting.pojo.Result;
+import com.suixingpay.meeting.pojo.User;
 import com.suixingpay.meeting.service.MeetingService;
 import com.suixingpay.meeting.service.RecordService;
+import com.suixingpay.meeting.service.UserService;
+import com.suixingpay.meeting.to.Sign;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.suixingpay.meeting.pojo.Meeting;
@@ -28,6 +31,11 @@ public class RecordController {
     MeetingService meetingService;
     @Autowired
     RecordService recordService;
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    Result result;
 
     /**
      * 生成二维码
@@ -47,12 +55,23 @@ public class RecordController {
     }
 
     /**
-     * 扫描二维码签到
-     * @param record
-     * @return
+     * @Description 扫描二维码签到
+     * @Author wangqi
+     * @Date  20:07
+     * @Param [sign]
+     * @return com.suixingpay.meeting.pojo.Result
      */
+    @NoneAuth
     @RequestMapping("/signIn")
-    public Result signIn(@Validated(SelectById.class)@RequestBody Record record){
+    public Result signIn(@Validated(SelectById.class)@RequestBody Sign sign){
+        User user = userService.selectUserByUserTel(sign.getTel());
+        if(user == null){
+            result.set(200,"手机号不存在",null);
+            return result;
+        }
+        Record record = new Record();
+        record.setRecordUserId(user.getUserId());
+        record.setRecordMeetingId(sign.getMeetingId());
         return recordService.signIn(record);
 
     }

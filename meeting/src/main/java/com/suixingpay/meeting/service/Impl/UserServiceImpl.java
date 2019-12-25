@@ -40,4 +40,8 @@ public class UserServiceImpl implements UserService {
          return userMapper.selectUserByUserId(meetingUserId);
     }
 
+    @Override public User selectUserByUserTel(String telephone) {
+        return userMapper.selectUserLogin(telephone);
+    }
+
 }

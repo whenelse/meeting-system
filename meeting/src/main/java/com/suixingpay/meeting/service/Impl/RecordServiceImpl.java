@@ -94,11 +94,11 @@ public class RecordServiceImpl implements RecordService {
             }
             //修改
             recordMapper.updateSignIn(date, records.getRecordId());
-            result.set(200,"您已经报名,参加成功",null);
+            result.set(200,"您已经报名,签到成功",null);
         }else if (records==null){
             //添加
             recordMapper.insertSingIn(record);
-            result.set(200,"您未报名,参加成功",null);
+            result.set(200,"您未报名,签到成功",null);
         }
 //        log.info();
         return result;

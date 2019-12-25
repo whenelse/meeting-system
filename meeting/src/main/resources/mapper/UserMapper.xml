@@ -40,4 +40,10 @@
         from user where user_id=#{recordUserId}
     </select>
 
+    <select id="selectUserByMeetingReferralCode" resultType="com.suixingpay.meeting.pojo.User">
+        select
+        <include refid="user_column_list"/>
+        from user where referral_code=#{meetingReferralCode}
+    </select>
+
 </mapper>

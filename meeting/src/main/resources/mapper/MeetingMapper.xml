@@ -75,7 +75,9 @@
 
     <select id="queryAllMeeting" parameterType="com.suixingpay.meeting.to.MeetingSel" resultMap="MeetingResultMap">
         select
-            <include refid="meeting_column_list"/>,user_name,user_company
+            <include refid="meeting_column_list"/>,user_name,user_company,
+            case when meeting_start_time &lt;= now() then 1 else 0 end as A,
+            case when meeting_enroll_end_time &lt;= now() then 1 else 0 end as B
         from meeting left join user on meeting_user_id = user_id
         <where>
             <if test="meetingReferralCode!=null and meetingReferralCode!=''">
@@ -115,6 +117,7 @@
                 and meeting_audit_status =2 and NOW() > meeting_start_time
             </if>
         </where>
+        order by meeting_audit_status,A,B,meeting_enroll_end_time,meeting_start_time
     </select>
 
     <select id="queryAllMeetingTwo"  resultMap="MeetingResultMap">
@@ -158,12 +161,12 @@
 <!--    查询鑫管家自己创建的会议-->
     <select id="selectMeetingByUserId" resultMap="MeetingResultMap">
         select
-        <include refid="meeting_column_list"/>,A,B
+        <include refid="meeting_column_list"/>,
+        case when meeting_start_time &lt;= now() then 1 else 0 end as A,
+        case when meeting_enroll_end_time &lt;= now() then 1 else 0 end as B,
         <include refid="user_column_list"/>
         from
-            (select <include refid="meeting_column_list"/>,
-             case when meeting_start_time &lt;= now() then 1 else 0 end as A,
-             case when meeting_enroll_end_time &lt;= now() then 1 else 0 end as B
+            (select <include refid="meeting_column_list"/>
              from meeting
              where meeting_user_id = #{userId}
              ) m

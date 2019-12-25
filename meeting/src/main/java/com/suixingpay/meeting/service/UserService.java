@@ -15,4 +15,6 @@ public interface UserService {
     Result userLogin(String userPhone);
 
     User selectUserByUserId(Integer meetingUserId);
+
+    User selectUserByUserTel(String telephone);
 }

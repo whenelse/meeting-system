@@ -22,4 +22,5 @@ public interface UserMapper {
      */
     User selectUserId(Integer recordUserId);
 
+    User selectUserByMeetingReferralCode(String meetingReferralCode);
 }
